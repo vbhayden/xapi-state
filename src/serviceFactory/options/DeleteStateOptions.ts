@@ -7,5 +7,4 @@ export default interface Options {
   readonly client: ClientModel;
   readonly registration?: string;
   readonly stateId: string;
-  readonly ifMatch?: string;
 }

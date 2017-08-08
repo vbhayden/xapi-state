@@ -7,8 +7,6 @@ export default interface Options {
   readonly client: ClientModel;
   readonly content: NodeJS.ReadableStream;
   readonly contentType: string;
-  readonly ifMatch?: string;
-  readonly ifNoneMatch?: string;
   readonly registration?: string;
   readonly stateId: string;
 }

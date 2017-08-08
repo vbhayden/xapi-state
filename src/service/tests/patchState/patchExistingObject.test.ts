@@ -16,7 +16,6 @@ import {
 } from '../../../utils/testValues';
 import setup from '../utils/setup';
 import patchContent from './utils/patchContent';
-import patchExistingContent from './utils/patchExistingContent';
 
 describe('patchState with existing object content', () => {
   const service = setup();
@@ -47,7 +46,7 @@ describe('patchState with existing object content', () => {
 
   it('should merge when patching with object content', async () => {
     await createObjectContent();
-    await patchExistingContent('{"bar": 2}', JSON_CONTENT_TYPE);
+    await patchContent('{"bar": 2}', JSON_CONTENT_TYPE);
     await assertState('{"foo":1,"bar":2}');
   });
 });

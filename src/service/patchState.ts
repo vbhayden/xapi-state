@@ -30,8 +30,6 @@ export default (config: Config) => {
       content,
       contentType: opts.contentType,
       etag,
-      ifMatch: opts.ifMatch,
-      ifNoneMatch: opts.ifNoneMatch,
       registration: opts.registration,
       stateId: opts.stateId,
     });

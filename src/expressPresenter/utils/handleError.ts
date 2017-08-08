@@ -4,18 +4,12 @@ import commonErrorHandler from 'jscommons/dist/expressPresenter/utils/handleErro
 import sendMessage from 'jscommons/dist/expressPresenter/utils/sendMessage';
 import { isNull, isUndefined } from 'lodash';
 import { Warnings } from 'rulr';
-import Conflict from '../../errors/Conflict';
-import IfMatch from '../../errors/IfMatch';
-import IfNoneMatch from '../../errors/IfNoneMatch';
 import InvalidContentType from '../../errors/InvalidContentType';
 import InvalidMethod from '../../errors/InvalidMethod';
-import MaxEtags from '../../errors/MaxEtags';
 import NonJsonObject from '../../errors/NonJsonObject';
 import Translator from '../../translatorFactory/Translator';
 import {
   CLIENT_ERROR_400_HTTP_CODE,
-  CONFLICT_409_HTTP_CODE,
-  PRECONDITION_FAILED_412_HTTP_CODE,
   SERVER_ERROR_500_HTTP_CODE,
 } from './httpCodes';
 import sendWarnings from './sendWarnings';
@@ -36,22 +30,6 @@ export default ({ translator, errorId, res, err }: Options): Response => {
     case InvalidContentType: {
       const code = CLIENT_ERROR_400_HTTP_CODE;
       const message = translator.invalidContentTypeError(err as InvalidContentType);
-      return sendMessage({ res, code, errorId, message });
-    } case MaxEtags: {
-      const code = CLIENT_ERROR_400_HTTP_CODE;
-      const message = translator.maxEtagsError(err as MaxEtags);
-      return sendMessage({ res, code, errorId, message });
-    } case Conflict: {
-      const code = CONFLICT_409_HTTP_CODE;
-      const message = translator.conflictError(err as Conflict);
-      return sendMessage({ res, code, errorId, message });
-    } case IfMatch: {
-      const code = PRECONDITION_FAILED_412_HTTP_CODE;
-      const message = translator.ifMatchError(err as IfMatch);
-      return sendMessage({ res, code, errorId, message });
-    } case IfNoneMatch: {
-      const code = PRECONDITION_FAILED_412_HTTP_CODE;
-      const message = translator.ifNoneMatchError(err as IfNoneMatch);
       return sendMessage({ res, code, errorId, message });
     } case NonJsonObject: {
       const code = CLIENT_ERROR_400_HTTP_CODE;

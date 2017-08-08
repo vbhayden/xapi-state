@@ -7,8 +7,6 @@ interface Options {
   readonly content: any;
   readonly contentType: string;
   readonly etag: string;
-  readonly ifMatch?: string;
-  readonly ifNoneMatch?: string;
   readonly stateId: string;
   readonly registration?: string;
   readonly activityId: string;

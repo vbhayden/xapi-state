@@ -1,39 +1,23 @@
-/* tslint:disable:no-let */
 import NoModel from 'jscommons/dist/errors/NoModel';
-import IfMatch from '../errors/IfMatch';
 import DeleteStateOptions from '../repoFactory/options/DeleteStateOptions';
 import DeleteStateResult from '../repoFactory/results/DeleteStateResult';
 import Config from './Config';
-import matchStateIdentifier from './utils/matchStateIdentifier';
+import isMatchingState from './utils/isMatchingState';
 
 export default (config: Config) => {
   return async (opts: DeleteStateOptions): Promise<DeleteStateResult> => {
     const storedStates = config.state.states;
-    const client = opts.client;
-    const activityId = opts.activityId;
-    let existingId: string|undefined;
-    let existingContentType: string|undefined;
     const remainingStates = storedStates.filter((state) => {
-      const isMatch = (
-        matchStateIdentifier({ client, activityId, state }) &&
-        state.stateId === opts.stateId
-      );
-
-      if (isMatch) {
-        existingId = state.id;
-        existingContentType = state.contentType;
-
-        if (opts.ifMatch !== undefined && state.etag !== opts.ifMatch) {
-          throw new IfMatch();
-        }
-      }
-
-      return !isMatch;
+      return !isMatchingState(state, opts);
+    });
+    const matchingStates = storedStates.filter((state) => {
+      return isMatchingState(state, opts);
     });
 
-    if (existingId !== undefined && existingContentType !== undefined) {
+    if (matchingStates.length > 0) {
+      const existingState = matchingStates[0];
       config.state.states = remainingStates;
-      return { id: existingId, contentType: existingContentType };
+      return { id: existingState.id, contentType: existingState.contentType };
     }
 
     throw new NoModel('State');

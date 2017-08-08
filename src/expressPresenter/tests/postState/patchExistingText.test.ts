@@ -14,7 +14,6 @@ import {
 import { CLIENT_ERROR_400_HTTP_CODE } from '../../utils/httpCodes';
 import setup from '../utils/setup';
 import patchContent from './utils/patchContent';
-import patchExistingContent from './utils/patchExistingContent';
 
 describe('expressPresenter.postState with existing text content', () => {
   const { service } = setup();
@@ -43,6 +42,6 @@ describe('expressPresenter.postState with existing text content', () => {
 
   it('should error when patching with object content', async () => {
     await createTextContent();
-    await patchExistingContent(TEST_OBJECT_CONTENT, JSON_CONTENT_TYPE, CLIENT_ERROR_400_HTTP_CODE);
+    await patchContent(TEST_OBJECT_CONTENT, JSON_CONTENT_TYPE).expect(CLIENT_ERROR_400_HTTP_CODE);
   });
 });

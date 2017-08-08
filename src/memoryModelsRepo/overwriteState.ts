@@ -1,52 +1,35 @@
-/* tslint:disable:no-let */
-import Conflict from '../errors/Conflict';
 import OverwriteStateOptions from '../repoFactory/options/OverwriteStateOptions';
 import OverwriteStateResult from '../repoFactory/results/OverwriteStateResult';
 import Config from './Config';
-import checkEtag from './utils/checkEtag';
-import checkMaxEtags from './utils/checkMaxEtags';
 import createState from './utils/createState';
-import matchUniqueState from './utils/matchUniqueState';
+import isMatchingState from './utils/isMatchingState';
 
 export default (config: Config) => {
   return async (opts: OverwriteStateOptions): Promise<OverwriteStateResult> => {
-    // Overwrites the content if the state does already exist.
-    let existingId: string|undefined;
-    const { activityId, stateId, client, ifMatch, ifNoneMatch } = opts;
-    checkMaxEtags(ifMatch, ifNoneMatch);
-    config.state.states = config.state.states.map((state) => {
-      const isMatch = matchUniqueState({ client, activityId, state, stateId });
+    const storedStates = config.state.states;
+    const matchingStates = storedStates.filter((state) => {
+      return isMatchingState(state, opts);
+    });
 
-      if (!isMatch) {
-        return state;
-      }
-
-      checkEtag({ state, ifMatch, ifNoneMatch });
-
-      if (ifMatch === undefined && ifNoneMatch === undefined) {
-        throw new Conflict();
-      }
-
-      existingId = state.id;
-      return {
-        ...state,
-
-        // Overwrites the content and contentType.
+    // Updates the state if it does exist, otherwise it creates the state.
+    if (matchingStates.length > 0) {
+      const update = {
         content: opts.content,
         contentType: opts.contentType,
         etag: opts.etag,
-
-        // Updates updatedAt time.
         updatedAt: new Date(),
       };
-    });
-
-    // Creates the State if the state doesn't already exist.
-    if (existingId === undefined) {
+      const updatedStates = storedStates.map((state) => {
+        if (!isMatchingState(state, opts)) {
+          return state;
+        }
+        return { ...state, ...update };
+      });
+      config.state.states = updatedStates;
+      return { id: matchingStates[0].id };
+    } else {
       const createdState = createState(config, opts);
       return { id: createdState.id };
     }
-
-    return { id: existingId };
   };
 };

@@ -22,19 +22,12 @@ describe('overwriteState replacing states', () => {
     await overwriteState(TEST_ACTIVITY_ID, initialContent);
 
     // Overwrites model with expected content.
-    const getStateResult = await service.getState({
-      activityId: TEST_ACTIVITY_ID,
-      agent: TEST_MBOX_AGENT,
-      client: TEST_CLIENT,
-      stateId: TEST_STATE_ID,
-    });
     await service.overwriteState({
       activityId: TEST_ACTIVITY_ID,
       agent: TEST_MBOX_AGENT,
       client: TEST_CLIENT,
       content: stringToStream(TEST_CONTENT),
       contentType: TEXT_CONTENT_TYPE,
-      ifMatch: getStateResult.etag,
       registration: TEST_REGISTRATION,
       stateId: TEST_STATE_ID,
     });

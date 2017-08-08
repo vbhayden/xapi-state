@@ -61,12 +61,11 @@ export default async ({ config, method, req, res }: Options) => {
     }
     case 'DELETE': {
       const client = await getClient(config, req.body.Authorization);
-      const ifMatch = req.body['If-Match'];
       const agent = getAgent(req.body.agent);
       const stateId = getStateId(req.body.stateId);
       const activityId = getActivityId(req.body.activityId);
 
-      await config.service.deleteState({ activityId, agent, client, stateId, ifMatch });
+      await config.service.deleteState({ activityId, agent, client, stateId });
       res.status(204).send();
       return;
     }

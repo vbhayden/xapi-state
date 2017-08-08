@@ -13,7 +13,6 @@ export default (config: Config) => {
       activityId: opts.activityId,
       agent: opts.agent,
       client,
-      ifMatch: opts.ifMatch,
       registration: opts.registration,
       stateId: opts.stateId,
     });

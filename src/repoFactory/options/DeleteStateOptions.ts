@@ -5,7 +5,6 @@ interface Options {
   readonly activityId: string;
   readonly agent: Agent;
   readonly client: ClientModel;
-  readonly ifMatch?: string;
   readonly registration?: string;
   readonly stateId: string;
 }

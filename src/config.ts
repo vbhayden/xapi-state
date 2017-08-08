@@ -30,7 +30,7 @@ export default {
     storageDir: defaultTo<string>(process.env.FS_LOCAL_STORAGE_DIR, storageDir),
   },
   mongoModelsRepo: {
-    url: defaultTo<string>(process.env.MONGO_URL, 'mongodb://localhost:27017/xapiagents'),
+    url: defaultTo<string>(process.env.MONGO_URL, 'mongodb://localhost:27017/xapistate'),
   },
   repoFactory: {
     authRepoName: defaultTo<string>(process.env.AUTH_REPO, 'fetch'),
@@ -46,7 +46,7 @@ export default {
       signatureVersion: 'v4',
       sslEnabled: true,
     } as S3.ClientConfiguration,
-    bucketName: defaultTo<string>(process.env.FS_S3_BUCKET, 'xapi-agents'),
+    bucketName: defaultTo<string>(process.env.FS_S3_BUCKET, 'xapi-state'),
     subFolder: defaultTo<string>(process.env.FS_S3_BUCKET_SUBFOLDER, '/storage'),
   },
   winston: {
@@ -58,7 +58,7 @@ export default {
       },
       enabled: defaultTo<boolean>(boolean(process.env.WINSTON_CLOUDWATCH_ENABLED), false),
       level: defaultTo<string>(process.env.WINSTON_CLOUDWATCH_LEVEL, 'info'),
-      logGroupName: defaultTo<string>(process.env.WINSTON_CLOUDWATCH_LOG_GROUP_NAME, 'xapi-agents'),
+      logGroupName: defaultTo<string>(process.env.WINSTON_CLOUDWATCH_LOG_GROUP_NAME, 'xapi-state'),
       logStreamName: process.env.WINSTON_CLOUDWATCH_LOG_STREAM_NAME,
     },
     console: {

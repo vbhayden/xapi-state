@@ -6,7 +6,6 @@ import getActivityId from './getActivityId';
 import getAgent from './getAgent';
 import getClient from './getClient';
 import getContentType from './getContentType';
-import getEtag from './getEtag';
 import getStateId from './getStateId';
 
 const getContent = (req: Request, contentType: string) => {
@@ -22,8 +21,6 @@ const getContent = (req: Request, contentType: string) => {
 
 export default async (config: Config, req: Request) => {
   const client = await getClient(config, req.header('Authorization'));
-  const ifMatch = getEtag(req.header('If-Match'));
-  const ifNoneMatch = getEtag(req.header('If-None-Match'));
   const contentType = getContentType(req.header('Content-Type'));
   const agent = getAgent(req.query.agent);
   const stateId = getStateId(req.query.stateId);
@@ -37,8 +34,6 @@ export default async (config: Config, req: Request) => {
     client,
     content,
     contentType,
-    ifMatch,
-    ifNoneMatch,
     registration,
     stateId,
   };

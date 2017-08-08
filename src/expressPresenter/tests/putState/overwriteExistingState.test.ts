@@ -1,7 +1,6 @@
 import assertState from '../../../utils/assertState';
 import {
   TEST_ACTIVITY_ID,
-  TEST_CLIENT,
   TEST_CONTENT,
   TEST_MBOX_AGENT,
   TEST_REGISTRATION,
@@ -14,7 +13,7 @@ import setup from '../utils/setup';
 import overwriteState from './utils/overwriteState';
 
 describe('expressPresenter.putState with existing model', () => {
-  const { service, supertest } = setup();
+  const { supertest } = setup();
 
   it('should overwrite model when overwriting an existing model', async () => {
     // Creates model with initial content.
@@ -22,16 +21,8 @@ describe('expressPresenter.putState with existing model', () => {
     await overwriteState(TEST_ACTIVITY_ID, initialContent);
 
     // Overwrites model with expected content.
-    const getStateResult = await service.getState({
-      activityId: TEST_ACTIVITY_ID,
-      agent: TEST_MBOX_AGENT,
-      client: TEST_CLIENT,
-      registration: TEST_REGISTRATION,
-      stateId: TEST_STATE_ID,
-    });
     await supertest
       .put('/xAPI/activities/state')
-      .set('If-Match', `"${getStateResult.etag}"`)
       .set('Content-Type', TEXT_CONTENT_TYPE)
       .query({
         activityId: TEST_ACTIVITY_ID,

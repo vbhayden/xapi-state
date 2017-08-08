@@ -1,15 +1,18 @@
 import Agent from '../../models/Agent';
 import ClientModel from '../../models/ClientModel';
+import getStatesFilter from './getStatesFilter';
 
 interface Options {
   readonly activityId: string;
   readonly agent: Agent;
   readonly client: ClientModel;
-  readonly content: any;
-  readonly contentType: string;
-  readonly etag: string;
   readonly registration?: string;
   readonly stateId: string;
 }
 
-export default Options;
+export default (opts: Options) => {
+  return {
+    stateId: opts.stateId,
+    ...getStatesFilter(opts),
+  };
+};

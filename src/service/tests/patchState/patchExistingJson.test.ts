@@ -15,7 +15,6 @@ import {
 } from '../../../utils/testValues';
 import setup from '../utils/setup';
 import patchContent from './utils/patchContent';
-import patchExistingContent from './utils/patchExistingContent';
 
 describe('patchState with existing JSON content', () => {
   const service = setup();
@@ -46,7 +45,7 @@ describe('patchState with existing JSON content', () => {
 
   it('should error when patching with object content', async () => {
     await createJsonContent();
-    const promise = patchExistingContent(TEST_OBJECT_CONTENT, JSON_CONTENT_TYPE);
+    const promise = patchContent(TEST_OBJECT_CONTENT, JSON_CONTENT_TYPE);
     await assertError(NonJsonObject, promise);
   });
 });
