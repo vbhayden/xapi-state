@@ -1,18 +1,7 @@
 import * as assert from 'assert';
-import service from '../../../../utils/testService';
-import {
-  TEST_ACTIVITY_ID,
-  TEST_CLIENT,
-  TEST_MBOX_AGENT,
-  TEST_REGISTRATION,
-} from '../../../../utils/testValues';
+import getStates from './getStates';
 
 export default async () => {
-  const statesResult = await service.getStates({
-    activityId: TEST_ACTIVITY_ID,
-    agent: TEST_MBOX_AGENT,
-    client: TEST_CLIENT,
-    registration: TEST_REGISTRATION,
-  });
+  const statesResult = await getStates();
   assert.deepEqual(statesResult.stateIds, []);
 };

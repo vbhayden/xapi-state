@@ -1,36 +1,26 @@
 import * as assert from 'assert';
 import Forbidden from 'jscommons/dist/errors/Forbidden';
 import assertError from 'jscommons/dist/tests/utils/assertError';
-import { XAPI_READ } from '../../../utils/scopes';
 import {
-  TEST_ACTIVITY_ID,
-  TEST_CLIENT,
-  TEST_MBOX_AGENT,
-  TEST_REGISTRATION,
+  TEST_INVALID_SCOPE_CLIENT,
+  TEST_VALID_SCOPE_CLIENT,
 } from '../../../utils/testValues';
 import setup from '../utils/setup';
+import getStates from './utils/getStates';
 
 describe('getStates with scopes', () => {
-  const service = setup();
+  setup();
 
   it('should throw forbidden error when using invalid scope', async () => {
-    const scopes = ['invalid_scope'];
-    const promise = service.getStates({
-      activityId: TEST_ACTIVITY_ID,
-      agent: TEST_MBOX_AGENT,
-      client: { ...TEST_CLIENT, scopes },
-      registration: TEST_REGISTRATION,
+    const promise = getStates({
+      client: TEST_INVALID_SCOPE_CLIENT,
     });
     await assertError(Forbidden, promise);
   });
 
   it('should return no models when using valid scopes', async () => {
-    const scopes = [XAPI_READ];
-    const getStatesResult = await service.getStates({
-      activityId: TEST_ACTIVITY_ID,
-      agent: TEST_MBOX_AGENT,
-      client: { ...TEST_CLIENT, scopes },
-      registration: TEST_REGISTRATION,
+    const getStatesResult = await getStates({
+      client: TEST_VALID_SCOPE_CLIENT,
     });
     assert.deepEqual(getStatesResult.stateIds, []);
   });
