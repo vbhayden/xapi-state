@@ -76,7 +76,7 @@ export const TEST_ACCOUNT_AGENT: Agent = {
 };
 
 export const TEST_INVALID_AGENT = {
-  foo: 10,
+  mbox: 'hello',
 };
 
 export const TEST_REGISTRATION = '79c60bd0-ebb6-4968-8b57-952b080b8261';

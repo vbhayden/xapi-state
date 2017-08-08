@@ -3,7 +3,7 @@ import * as xapi from 'xapi-validation/dist/factory';
 import IfiCountWarning from 'xapi-validation/dist/warnings/IfiCountWarning';
 import NoIfiWarning from 'xapi-validation/dist/warnings/NoIfiWarning';
 
-export default rulr.maybe(rulr.composeRules([
+const rule = rulr.maybe(rulr.composeRules([
   rulr.restrictToSchema({
     account: rulr.optional(xapi.account),
     mbox: rulr.optional(xapi.mailto),
@@ -21,3 +21,7 @@ export default rulr.maybe(rulr.composeRules([
     return [];
   },
 ]));
+
+export default (data: any) => {
+  return rule(data, ['agent']);
+};

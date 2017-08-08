@@ -1,15 +1,23 @@
 import {
+  TEST_ACTIVITY_ID,
   TEST_MBOX_AGENT,
   TEST_REGISTRATION,
   TEST_STATE_ID,
 } from '../../../../utils/testValues';
 import supertest from '../../utils/supertest';
 
-export default (activityId: string) => {
-  const agent = JSON.stringify(TEST_MBOX_AGENT);
-  const registration = TEST_REGISTRATION;
-  const stateId = TEST_STATE_ID;
+const options = {
+  activityId: TEST_ACTIVITY_ID,
+  agent: JSON.stringify(TEST_MBOX_AGENT),
+  registration: TEST_REGISTRATION,
+  stateId: TEST_STATE_ID,
+};
+
+export default (optsOverrides: object = {}) => {
   return supertest
     .delete('/xAPI/activities/state')
-    .query({ activityId, agent, registration, stateId });
+    .query({
+      ...options,
+      ...optsOverrides,
+    });
 };

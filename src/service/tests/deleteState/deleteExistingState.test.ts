@@ -41,7 +41,7 @@ describe('deleteState with existing state', () => {
 
   it('should delete when deleting text', async () => {
     await createTextState();
-    await deleteState(TEST_ACTIVITY_ID);
+    await deleteState();
     await assertDeleted();
   });
 
@@ -55,7 +55,7 @@ describe('deleteState with existing state', () => {
       registration: TEST_REGISTRATION,
       stateId: TEST_STATE_ID,
     });
-    await deleteState(TEST_ACTIVITY_ID);
+    await deleteState();
     await assertDeleted();
   });
 });

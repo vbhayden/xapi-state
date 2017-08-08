@@ -2,12 +2,16 @@ import DeleteStateOptions from '../serviceFactory/options/DeleteStateOptions';
 import Config from './Config';
 import checkStateWriteScopes from './utils/checkStateWriteScopes';
 import validateActivityId from './utils/validateActivityId';
+import validateAgent from './utils/validateAgent';
+import validateRegistration from './utils/validateRegistration';
 
 export default (config: Config) => {
   return async (opts: DeleteStateOptions): Promise<void> => {
     const client = opts.client;
     checkStateWriteScopes(client.scopes);
     validateActivityId(opts.activityId);
+    validateAgent(opts.agent);
+    validateRegistration(opts.registration);
 
     const deleteResult = await config.repo.deleteState({
       activityId: opts.activityId,

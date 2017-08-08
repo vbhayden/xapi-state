@@ -5,7 +5,7 @@ import validateAgent from '../../utils/validateAgent';
 describe('validateAgent', () => {
   const assertWarnings = (agent: any) => {
     try {
-      validateAgent(agent, []);
+      validateAgent(agent);
     } catch (err) {
       const actualConstructor = err.constructor;
       assert.equal(actualConstructor, Warnings);

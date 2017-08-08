@@ -1,6 +1,8 @@
 import * as rulr from 'rulr';
 import * as xapi from 'xapi-validation/dist/factory';
 
+const rule = rulr.maybe(xapi.iri);
+
 export default (data: string) => {
-  return rulr.maybe(xapi.iri)(data, ['activityId']);
+  return rule(data, ['activityId']);
 };
