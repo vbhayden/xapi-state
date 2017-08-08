@@ -4,11 +4,16 @@ import GetStateResult from '../serviceFactory/results/GetStateResult';
 import Config from './Config';
 import checkStateReadScopes from './utils/checkStateReadScopes';
 import validateActivityId from './utils/validateActivityId';
+import validateAgent from './utils/validateAgent';
+import validateRegistration from './utils/validateRegistration';
 
 export default (config: Config) => {
   return async (opts: GetStateOptions): Promise<GetStateResult> => {
     checkStateReadScopes(opts.client.scopes);
     validateActivityId(opts.activityId);
+    validateAgent(opts.agent);
+    validateRegistration(opts.registration);
+
     const state = await config.repo.getState({
       activityId: opts.activityId,
       agent: opts.agent,
