@@ -4,7 +4,6 @@ import createImmutableState from '../../../utils/createImmutableState';
 import createTextState from '../../../utils/createTextState';
 import {
   TEST_ACCOUNT_AGENT,
-  TEST_CONTENT,
   TEST_IMMUTABLE_CONTENT,
   TEST_MBOX_AGENT,
   TEST_MBOXSHA1_AGENT,
@@ -18,20 +17,20 @@ describe('expressPresenter.putState with existing model', () => {
   setup();
 
   it('should overwrite model when overwriting an existing model', async () => {
-    await overwriteState({}, TEST_CONTENT).expect(NO_CONTENT_204_HTTP_CODE);
+    await createTextState();
     await overwriteState({}, TEST_IMMUTABLE_CONTENT).expect(NO_CONTENT_204_HTTP_CODE);
     await assertState(TEST_IMMUTABLE_CONTENT);
   });
 
   it('should overwrite model when overwriting without a registration', async () => {
-    await overwriteState({}, TEST_CONTENT).expect(NO_CONTENT_204_HTTP_CODE);
+    await createTextState();
     await overwriteState({ registration: undefined }, TEST_IMMUTABLE_CONTENT)
       .expect(NO_CONTENT_204_HTTP_CODE);
     await assertState(TEST_IMMUTABLE_CONTENT);
   });
 
   it('should not overwrite non-matched models', async () => {
-    await overwriteState();
+    await createTextState();
     await createImmutableState();
     await overwriteState();
     await assertImmutableState();

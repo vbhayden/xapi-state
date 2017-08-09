@@ -47,7 +47,7 @@ describe('expressPresenter.postState with existing object content', () => {
   });
 
   it('should not patch existing models when patching a non-existing model', async () => {
-    await patchState();
+    await createObjectState();
     await createImmutableState();
     await patchState();
     await assertImmutableState();
