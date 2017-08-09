@@ -1,13 +1,15 @@
 import * as assert from 'assert';
+import NoModel from 'jscommons/dist/errors/NoModel';
+import assertError from 'jscommons/dist/tests/utils/assertError';
 import * as streamToString from 'stream-to-string';
+import createJsonState from '../../../utils/createJsonState';
+import createTextState from '../../../utils/createTextState';
 import {
   JSON_CONTENT_TYPE,
   TEST_CONTENT,
   TEST_JSON_CONTENT,
   TEXT_CONTENT_TYPE,
 } from '../../../utils/testValues';
-import createJsonState from '../utils/createJsonState';
-import createTextState from '../utils/createTextState';
 import setup from '../utils/setup';
 import getState from './utils/getState';
 
@@ -44,5 +46,11 @@ describe('getState with existing state', () => {
     assert.equal(agentStateResult.contentType, TEXT_CONTENT_TYPE);
     assert.equal(agentStateResult.updatedAt.constructor, Date);
     assert.equal(agentStateResult.etag.constructor, String);
+  });
+
+  it('should error when getting existing model without a registration with one', async () => {
+    await createTextState({ registration: undefined });
+    const promise = getState();
+    await assertError(NoModel, promise);
   });
 });

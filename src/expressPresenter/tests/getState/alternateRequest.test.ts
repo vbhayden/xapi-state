@@ -1,3 +1,4 @@
+import createTextState from '../../../utils/createTextState';
 import {
   ALTERNATE_CONTENT_TYPE,
   TEST_ACTIVITY_ID,
@@ -7,7 +8,6 @@ import {
   TEST_STATE_ID,
 } from '../../../utils/testValues';
 import { OK_200_HTTP_CODE } from '../../utils/httpCodes';
-import createTextState from '../utils/createTextState';
 import setup from '../utils/setup';
 
 describe('expressPresenter.getState using the alternate request syntax', () => {

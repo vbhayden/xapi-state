@@ -31,6 +31,10 @@ describe('expressPresenter.postState with new content', () => {
     await assertState(TEST_OBJECT_CONTENT);
   });
 
+  it('should not throw warnings when patching without a registration', async () => {
+    await patchState({ registration: undefined }).expect(NO_CONTENT_204_HTTP_CODE);
+  });
+
   it('should not patch existing models when patching a non-existing model', async () => {
     await createImmutableState();
     await patchContent(TEST_OBJECT_CONTENT, JSON_CONTENT_TYPE).expect(NO_CONTENT_204_HTTP_CODE);

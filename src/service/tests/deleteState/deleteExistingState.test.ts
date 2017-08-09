@@ -2,6 +2,7 @@ import * as assert from 'assert';
 import NoModel from 'jscommons/dist/errors/NoModel';
 import assertError from 'jscommons/dist/tests/utils/assertError';
 import * as stringToStream from 'string-to-stream';
+import createTextState from '../../../utils/createTextState';
 import {
   JSON_CONTENT_TYPE,
   TEST_ACTIVITY_ID,
@@ -11,7 +12,6 @@ import {
   TEST_REGISTRATION,
   TEST_STATE_ID,
 } from '../../../utils/testValues';
-import createTextState from '../utils/createTextState';
 import setup from '../utils/setup';
 import deleteState from './utils/deleteState';
 
@@ -65,5 +65,11 @@ describe('deleteState with existing state', () => {
       registration: undefined,
     });
     await assertDeleted();
+  });
+
+  it('should error when deleting existing model without a registration with one', async () => {
+    await createTextState({ registration: undefined });
+    const promise = deleteState();
+    await assertError(NoModel, promise);
   });
 });

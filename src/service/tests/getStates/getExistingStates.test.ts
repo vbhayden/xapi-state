@@ -1,6 +1,6 @@
 import * as assert from 'assert';
+import createTextState from '../../../utils/createTextState';
 import { TEST_STATE_ID } from '../../../utils/testValues';
-import createTextState from '../utils/createTextState';
 import setup from '../utils/setup';
 import getStates from './utils/getStates';
 
@@ -20,4 +20,12 @@ describe('getStates with existing model', () => {
     });
     assert.deepEqual(statesResult.stateIds, [TEST_STATE_ID]);
   });
+
+  it('should return no ids when getting existing model without a registration with one',
+    async () => {
+      await createTextState({ registration: undefined });
+      const statesResult = await getStates();
+      assert.deepEqual(statesResult.stateIds, []);
+    },
+  );
 });

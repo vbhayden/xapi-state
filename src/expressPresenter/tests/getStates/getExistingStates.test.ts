@@ -1,12 +1,7 @@
-import {
-  TEST_ACTIVITY_ID,
-  TEST_MBOX_AGENT,
-  TEST_STATE_ID,
-} from '../../../utils/testValues';
+import createTextState from '../../../utils/createTextState';
+import { TEST_STATE_ID } from '../../../utils/testValues';
 import { OK_200_HTTP_CODE } from '../../utils/httpCodes';
-import createTextState from '../utils/createTextState';
 import setup from '../utils/setup';
-import supertest from '../utils/supertest';
 import getStates from './utils/getStates';
 
 describe('expressPresenter.getStates with existing model', () => {
@@ -22,14 +17,10 @@ describe('expressPresenter.getStates with existing model', () => {
     await getStates({ registration: undefined }).expect(OK_200_HTTP_CODE, [TEST_STATE_ID]);
   });
 
-  it('should return state ids when not using registration', async () => {
-    await createTextState();
-    await supertest
-      .get('/xAPI/activities/state')
-      .query({
-        activityId: TEST_ACTIVITY_ID,
-        agent: JSON.stringify(TEST_MBOX_AGENT),
-      })
-      .expect(OK_200_HTTP_CODE, [TEST_STATE_ID]);
-  });
+  it('should return no ids when getting existing model without a registration with one',
+    async () => {
+      await createTextState({ registration: undefined });
+      await getStates().expect(OK_200_HTTP_CODE, []);
+    },
+  );
 });

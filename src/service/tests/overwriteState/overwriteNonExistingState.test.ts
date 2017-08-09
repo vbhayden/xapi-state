@@ -13,9 +13,13 @@ import overwriteState from './utils/overwriteState';
 describe('overwriteState with non-existing model', () => {
   setup();
 
-  it('should create when using valid activity id', async () => {
+  it('should create when using valid model', async () => {
     await overwriteState();
     await assertState(TEST_CONTENT);
+  });
+
+  it('should not throw warnings when not using registration', async () => {
+    await overwriteState({ registration: undefined });
   });
 
   it('should throw warnings when using an invalid activity id', async () => {

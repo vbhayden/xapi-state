@@ -17,6 +17,10 @@ describe('expressPresenter.putState with non-existing model', () => {
     await assertState(TEST_CONTENT);
   });
 
+  it('should not throw warnings when not using registration', async () => {
+    await overwriteState({ registration: undefined }).expect(NO_CONTENT_204_HTTP_CODE);
+  });
+
   it('should throw warnings when using an invalid activity id', async () => {
     await overwriteState({
       activityId: TEST_INVALID_ACTIVITY_ID,

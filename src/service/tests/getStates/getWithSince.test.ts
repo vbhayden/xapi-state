@@ -1,7 +1,7 @@
 import * as assert from 'assert';
 import { delay } from 'bluebird';
+import createTextState from '../../../utils/createTextState';
 import { TEST_STATE_ID } from '../../../utils/testValues';
-import createTextState from '../utils/createTextState';
 import setup from '../utils/setup';
 import getStates from './utils/getStates';
 
