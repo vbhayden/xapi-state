@@ -46,6 +46,7 @@ export const TEST_STATE_ID = 'dummy_state_id';
 export const TEST_INVALID_TIMESTAMP = '2';
 
 export const TEST_CONTENT = 'dummy_content';
+export const TEST_IMMUTABLE_CONTENT = 'immutable_content';
 export const TEST_JSON_CONTENT = '[]';
 export const TEST_OBJECT_CONTENT = '{"foo":1}';
 

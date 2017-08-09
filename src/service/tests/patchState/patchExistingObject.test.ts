@@ -1,6 +1,8 @@
 import assertError from 'jscommons/dist/tests/utils/assertError';
 import NonJsonObject from '../../../errors/NonJsonObject';
+import assertImmutableState from '../../../utils/assertImmutableState';
 import assertState from '../../../utils/assertState';
+import createImmutableState from '../../../utils/createImmutableState';
 import {
   JSON_CONTENT_TYPE,
   TEST_CONTENT,
@@ -42,5 +44,12 @@ describe('patchState with existing object content', () => {
     await createObjectContent();
     await patchState({ registration: undefined }, '{"bar": 2}');
     await assertState('{"foo":1,"bar":2}');
+  });
+
+  it('should not patch existing models when patching a non-existing model', async () => {
+    await patchState();
+    await createImmutableState();
+    await patchState();
+    await assertImmutableState();
   });
 });

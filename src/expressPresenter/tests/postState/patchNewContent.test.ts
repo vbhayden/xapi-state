@@ -10,7 +10,6 @@ import {
   TEXT_CONTENT_TYPE,
 } from '../../../utils/testValues';
 import { CLIENT_ERROR_400_HTTP_CODE, NO_CONTENT_204_HTTP_CODE } from '../../utils/httpCodes';
-import createImmutableState from '../utils/createImmutableState';
 import setup from '../utils/setup';
 import patchContent from './utils/patchContent';
 import patchState from './utils/patchState';
@@ -33,12 +32,6 @@ describe('expressPresenter.postState with new content', () => {
 
   it('should not throw warnings when patching without a registration', async () => {
     await patchState({ registration: undefined }).expect(NO_CONTENT_204_HTTP_CODE);
-  });
-
-  it('should not patch existing models when patching a non-existing model', async () => {
-    await createImmutableState();
-    await patchContent(TEST_OBJECT_CONTENT, JSON_CONTENT_TYPE).expect(NO_CONTENT_204_HTTP_CODE);
-    await assertState(TEST_OBJECT_CONTENT);
   });
 
   it('should throw warnings when using an invalid activity id', async () => {

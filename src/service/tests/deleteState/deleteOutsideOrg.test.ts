@@ -1,6 +1,6 @@
+import overwriteStateOutsideClient from '../../../utils/overwriteStateOutsideClient';
+import patchStateOutsideClient from '../../../utils/patchStateOutsideClient';
 import { TEST_CLIENT_OUTSIDE_ORG } from '../../../utils/testValues';
-import overwriteStateOutsideClient from '../utils/overwriteStateOutsideClient';
-import patchStateOutsideClient from '../utils/patchStateOutsideClient';
 import setup from '../utils/setup';
 import assertOutsideClient from './utils/assertOutsideClient';
 

@@ -1,22 +1,22 @@
 import * as stringToStream from 'string-to-stream';
-import ClientModel from '../../../models/ClientModel';
-import service from '../../../utils/testService';
+import ClientModel from '../models/ClientModel';
+import service from './testService';
 import {
-  JSON_CONTENT_TYPE,
   TEST_ACTIVITY_ID,
+  TEST_CONTENT,
   TEST_MBOX_AGENT,
-  TEST_OBJECT_CONTENT,
   TEST_REGISTRATION,
   TEST_STATE_ID,
-} from '../../../utils/testValues';
+  TEXT_CONTENT_TYPE,
+} from './testValues';
 
 export default async (client: ClientModel) => {
-  await service.patchState({
+  await service.overwriteState({
     activityId: TEST_ACTIVITY_ID,
     agent: TEST_MBOX_AGENT,
     client,
-    content: stringToStream(TEST_OBJECT_CONTENT),
-    contentType: JSON_CONTENT_TYPE,
+    content: stringToStream(TEST_CONTENT),
+    contentType: TEXT_CONTENT_TYPE,
     registration: TEST_REGISTRATION,
     stateId: TEST_STATE_ID,
   });

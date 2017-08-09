@@ -1,7 +1,8 @@
+import assertImmutableState from '../../../utils/assertImmutableState';
 import assertState from '../../../utils/assertState';
+import createImmutableState from '../../../utils/createImmutableState';
 import { TEST_CONTENT } from '../../../utils/testValues';
 import { NO_CONTENT_204_HTTP_CODE } from '../../utils/httpCodes';
-import createImmutableState from '../utils/createImmutableState';
 import setup from '../utils/setup';
 import overwriteState from './utils/overwriteState';
 
@@ -28,9 +29,10 @@ describe('expressPresenter.putState with existing model', () => {
     await assertState(TEST_CONTENT);
   });
 
-  it('should not overwrite existing models when using a non-existing model', async () => {
+  it('should not overwrite non-matched models', async () => {
+    await overwriteState();
     await createImmutableState();
-    await overwriteState().expect(NO_CONTENT_204_HTTP_CODE);
-    await assertState(TEST_CONTENT);
+    await overwriteState();
+    await assertImmutableState();
   });
 });

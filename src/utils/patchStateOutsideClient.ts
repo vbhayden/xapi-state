@@ -1,6 +1,6 @@
 import * as stringToStream from 'string-to-stream';
-import ClientModel from '../../../models/ClientModel';
-import service from '../../../utils/testService';
+import ClientModel from '../models/ClientModel';
+import service from './testService';
 import {
   JSON_CONTENT_TYPE,
   TEST_ACTIVITY_ID,
@@ -8,7 +8,7 @@ import {
   TEST_OBJECT_CONTENT,
   TEST_REGISTRATION,
   TEST_STATE_ID,
-} from '../../../utils/testValues';
+} from './testValues';
 
 export default async (client: ClientModel) => {
   await service.patchState({

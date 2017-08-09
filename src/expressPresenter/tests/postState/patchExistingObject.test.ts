@@ -1,4 +1,6 @@
+import assertImmutableState from '../../../utils/assertImmutableState';
 import assertState from '../../../utils/assertState';
+import createImmutableState from '../../../utils/createImmutableState';
 import {
   JSON_CONTENT_TYPE,
   TEST_CONTENT,
@@ -40,5 +42,12 @@ describe('expressPresenter.postState with existing object content', () => {
     await patchState({ registration: undefined }, '{"bar": 2}', JSON_CONTENT_TYPE)
       .expect(NO_CONTENT_204_HTTP_CODE);
     await assertState('{"foo":1,"bar":2}');
+  });
+
+  it('should not patch existing models when patching a non-existing model', async () => {
+    await patchState();
+    await createImmutableState();
+    await patchState();
+    await assertImmutableState();
   });
 });
