@@ -1,8 +1,8 @@
+import assertDeleted from '../../../utils/assertDeleted';
 import createJsonState from '../../../utils/createJsonState';
 import createTextState from '../../../utils/createTextState';
 import { NO_CONTENT_204_HTTP_CODE, NOT_FOUND_404_HTTP_CODE } from '../../utils/httpCodes';
 import setup from '../utils/setup';
-import assertDeleted from './utils/assertDeleted';
 import deleteState from './utils/deleteState';
 
 describe('expressPresenter.deleteState with existing state', () => {

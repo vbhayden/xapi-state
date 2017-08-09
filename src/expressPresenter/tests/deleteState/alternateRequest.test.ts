@@ -1,3 +1,4 @@
+import assertDeleted from '../../../utils/assertDeleted';
 import createTextState from '../../../utils/createTextState';
 import {
   ALTERNATE_CONTENT_TYPE,
@@ -8,7 +9,6 @@ import {
 } from '../../../utils/testValues';
 import { NO_CONTENT_204_HTTP_CODE } from '../../utils/httpCodes';
 import setup from '../utils/setup';
-import assertDeleted from './utils/assertDeleted';
 
 describe('expressPresenter.deleteState using the alternate request syntax', () => {
   const { supertest } = setup();
