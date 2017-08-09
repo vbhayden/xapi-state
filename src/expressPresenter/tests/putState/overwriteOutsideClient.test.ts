@@ -12,9 +12,8 @@ describe('expressPresenter.putState when outside client', () => {
   setup();
 
   const overwriteOutsideState = async (token: string) => {
-    await overwriteState()
+    await overwriteState({}, 'unused_content')
       .set('Authorization', token)
-      .send('unused_content')
       .expect(NO_CONTENT_204_HTTP_CODE);
   };
 

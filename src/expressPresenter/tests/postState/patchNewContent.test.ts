@@ -4,6 +4,8 @@ import {
   TEST_ACTIVITY_ID,
   TEST_CONTENT,
   TEST_INVALID_ACTIVITY_ID,
+  TEST_INVALID_AGENT,
+  TEST_INVALID_REGISTRATION,
   TEST_JSON_CONTENT,
   TEST_MBOX_AGENT,
   TEST_OBJECT_CONTENT,
@@ -15,6 +17,7 @@ import { CLIENT_ERROR_400_HTTP_CODE, NO_CONTENT_204_HTTP_CODE } from '../../util
 import createImmutableState from '../utils/createImmutableState';
 import setup from '../utils/setup';
 import patchContent from './utils/patchContent';
+import patchState from './utils/patchState';
 
 describe('expressPresenter.postState with new content', () => {
   const { supertest } = setup();
@@ -39,17 +42,21 @@ describe('expressPresenter.postState with new content', () => {
   });
 
   it('should throw warnings when using an invalid activity id', async () => {
-    await supertest
-      .post('/xAPI/activities/state')
-      .set('Content-Type', TEXT_CONTENT_TYPE)
-      .query({
-        activityId: TEST_INVALID_ACTIVITY_ID,
-        agent: JSON.stringify(TEST_MBOX_AGENT),
-        registration: TEST_REGISTRATION,
-        stateId: TEST_STATE_ID,
-      })
-      .send(TEST_CONTENT)
-      .expect(CLIENT_ERROR_400_HTTP_CODE);
+    await patchState({
+      activityId: TEST_INVALID_ACTIVITY_ID,
+    }).expect(CLIENT_ERROR_400_HTTP_CODE);
+  });
+
+  it('should throw warnings when using an invalid agent', async () => {
+    await patchState({
+      agent: JSON.stringify(TEST_INVALID_AGENT),
+    }).expect(CLIENT_ERROR_400_HTTP_CODE);
+  });
+
+  it('should throw warnings when using an invalid registration', async () => {
+    await patchState({
+      registration: TEST_INVALID_REGISTRATION,
+    }).expect(CLIENT_ERROR_400_HTTP_CODE);
   });
 
   it('should throw warnings when missing the activity id', async () => {
@@ -58,6 +65,19 @@ describe('expressPresenter.postState with new content', () => {
       .set('Content-Type', TEXT_CONTENT_TYPE)
       .query({
         agent: JSON.stringify(TEST_MBOX_AGENT),
+        registration: TEST_REGISTRATION,
+        stateId: TEST_STATE_ID,
+      })
+      .send(TEST_CONTENT)
+      .expect(CLIENT_ERROR_400_HTTP_CODE);
+  });
+
+  it('should throw warnings when missing the agent', async () => {
+    await supertest
+      .post('/xAPI/activities/state')
+      .set('Content-Type', TEXT_CONTENT_TYPE)
+      .query({
+        activityId: TEST_ACTIVITY_ID,
         registration: TEST_REGISTRATION,
         stateId: TEST_STATE_ID,
       })

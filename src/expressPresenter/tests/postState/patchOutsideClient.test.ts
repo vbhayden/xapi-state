@@ -1,33 +1,21 @@
 import assertState from '../../../utils/assertState';
 import {
   JSON_CONTENT_TYPE,
-  TEST_ACTIVITY_ID,
-  TEST_MBOX_AGENT,
   TEST_OBJECT_CONTENT,
   TEST_OUTSIDE_ORG_TOKEN,
   TEST_OUTSIDE_STORE_TOKEN,
-  TEST_REGISTRATION,
-  TEST_STATE_ID,
 } from '../../../utils/testValues';
 import { NO_CONTENT_204_HTTP_CODE } from '../../utils/httpCodes';
 import setup from '../utils/setup';
 import patchContent from './utils/patchContent';
+import patchState from './utils/patchState';
 
 describe('expressPresenter.postState when outside client', () => {
-  const { supertest } = setup();
+  setup();
 
   const patchOutsideState = async (token: string) => {
-    await supertest
-      .post('/xAPI/activities/state')
+    await patchState({}, '{"bar":2}')
       .set('Authorization', token)
-      .set('Content-Type', JSON_CONTENT_TYPE)
-      .query({
-        activityId: TEST_ACTIVITY_ID,
-        agent: JSON.stringify(TEST_MBOX_AGENT),
-        registration: TEST_REGISTRATION,
-        stateId: TEST_STATE_ID,
-      })
-      .send('{"bar":2}')
       .expect(NO_CONTENT_204_HTTP_CODE);
   };
 

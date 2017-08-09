@@ -1,26 +1,24 @@
 import assertError from 'jscommons/dist/tests/utils/assertError';
 import { Warnings } from 'rulr';
-import * as stringToStream from 'string-to-stream';
 import NonJsonObject from '../../../errors/NonJsonObject';
 import assertState from '../../../utils/assertState';
 import {
   JSON_CONTENT_TYPE,
-  TEST_CLIENT,
   TEST_CONTENT,
   TEST_INVALID_ACTIVITY_ID,
+  TEST_INVALID_AGENT,
+  TEST_INVALID_REGISTRATION,
   TEST_JSON_CONTENT,
-  TEST_MBOX_AGENT,
   TEST_OBJECT_CONTENT,
-  TEST_REGISTRATION,
-  TEST_STATE_ID,
   TEXT_CONTENT_TYPE,
 } from '../../../utils/testValues';
 import createImmutableState from '../utils/createImmutableState';
 import setup from '../utils/setup';
 import patchContent from './utils/patchContent';
+import patchState from './utils/patchState';
 
 describe('patchState with new content', () => {
-  const service = setup();
+  setup();
 
   it('should error when patching with text content', async () => {
     const promise = patchContent(TEST_CONTENT, TEXT_CONTENT_TYPE);
@@ -44,14 +42,22 @@ describe('patchState with new content', () => {
   });
 
   it('should throw warnings when using an invalid activity id', async () => {
-    const promise = service.patchState({
+    const promise = patchState({
       activityId: TEST_INVALID_ACTIVITY_ID,
-      agent: TEST_MBOX_AGENT,
-      client: TEST_CLIENT,
-      content: stringToStream(TEST_CONTENT),
-      contentType: TEXT_CONTENT_TYPE,
-      registration: TEST_REGISTRATION,
-      stateId: TEST_STATE_ID,
+    });
+    await assertError(Warnings, promise);
+  });
+
+  it('should throw warnings when using an invalid agent', async () => {
+    const promise = patchState({
+      agent: TEST_INVALID_AGENT,
+    });
+    await assertError(Warnings, promise);
+  });
+
+  it('should throw warnings when using an invalid registration', async () => {
+    const promise = patchState({
+      registration: TEST_INVALID_REGISTRATION,
     });
     await assertError(Warnings, promise);
   });

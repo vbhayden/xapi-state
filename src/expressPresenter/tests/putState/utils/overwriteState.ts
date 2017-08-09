@@ -8,14 +8,18 @@ import {
 } from '../../../../utils/testValues';
 import supertest from '../../utils/supertest';
 
-export default (optsOverrides: object = {}, content: string = TEST_CONTENT) => {
+export default (
+  optsOverrides: object = {},
+  content: string = TEST_CONTENT,
+  contentType: string = TEXT_CONTENT_TYPE,
+) => {
   const activityId = TEST_ACTIVITY_ID;
   const stateId = TEST_STATE_ID;
   const agent = JSON.stringify(TEST_MBOX_AGENT);
   const registration = TEST_REGISTRATION;
   return supertest
     .put('/xAPI/activities/state')
-    .set('Content-Type', TEXT_CONTENT_TYPE)
+    .set('Content-Type', contentType)
     .query({
       activityId,
       agent,
