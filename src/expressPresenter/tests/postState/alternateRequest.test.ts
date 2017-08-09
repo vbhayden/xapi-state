@@ -1,22 +1,21 @@
 import assertState from '../../../utils/assertState';
+import createObjectState from '../../../utils/createObjectState';
 import {
   ALTERNATE_CONTENT_TYPE,
   JSON_CONTENT_TYPE,
   TEST_ACTIVITY_ID,
   TEST_MBOX_AGENT,
-  TEST_OBJECT_CONTENT,
   TEST_REGISTRATION,
   TEST_STATE_ID,
 } from '../../../utils/testValues';
 import { NO_CONTENT_204_HTTP_CODE } from '../../utils/httpCodes';
 import setup from '../utils/setup';
-import createContent from './utils/createContent';
 
 describe('expressPresenter.postState using the alternate request syntax', () => {
   const { supertest } = setup();
 
   it('should merge when patching with object content ', async () => {
-    await createContent(TEST_OBJECT_CONTENT, JSON_CONTENT_TYPE);
+    await createObjectState();
     await supertest
       .post('/xAPI/activities/state')
       .set('Content-Type', ALTERNATE_CONTENT_TYPE)
