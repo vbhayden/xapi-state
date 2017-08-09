@@ -4,11 +4,15 @@ import Config from './Config';
 import checkStateWriteScopes from './utils/checkStateWriteScopes';
 import createEtag from './utils/createEtag';
 import validateActivityId from './utils/validateActivityId';
+import validateAgent from './utils/validateAgent';
+import validateRegistration from './utils/validateRegistration';
 
 export default (config: Config) => {
   return async (opts: OverwriteStateOptions) => {
     checkStateWriteScopes(opts.client.scopes);
     validateActivityId(opts.activityId);
+    validateAgent(opts.agent);
+    validateRegistration(opts.registration);
 
     // Update or create State.
     const etag = createEtag();

@@ -18,7 +18,7 @@ describe('expressPresenter.putState with existing model', () => {
   it('should overwrite model when overwriting an existing model', async () => {
     // Creates model with initial content.
     const initialContent = 'initial_dummy_content';
-    await overwriteState(TEST_ACTIVITY_ID, initialContent);
+    await overwriteState({}, initialContent);
 
     // Overwrites model with expected content.
     await supertest
@@ -37,7 +37,7 @@ describe('expressPresenter.putState with existing model', () => {
 
   it('should not overwrite existing models when using a non-existing model', async () => {
     await createImmutableState();
-    await overwriteState(TEST_ACTIVITY_ID, TEST_CONTENT).expect(NO_CONTENT_204_HTTP_CODE);
+    await overwriteState().expect(NO_CONTENT_204_HTTP_CODE);
     await assertState(TEST_CONTENT);
   });
 });

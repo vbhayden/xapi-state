@@ -9,3 +9,7 @@
 1. Build the code `npm run build`.
 1. Run migrations `npm run migrate`.
 1. Start the server `npm start`.
+
+### Swagger Documentation
+http://editor.swagger.io/#/
+https://raw.githubusercontent.com/TryxAPI/xapi-swagger/master/xapi-swagger.yaml
