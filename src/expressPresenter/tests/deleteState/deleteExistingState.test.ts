@@ -19,4 +19,12 @@ describe('expressPresenter.deleteState with existing state', () => {
     await deleteState().expect(NO_CONTENT_204_HTTP_CODE);
     await assertDeleted();
   });
+
+  it('should delete when not using registration', async () => {
+    await createTextState();
+    await deleteState({
+      registration: undefined,
+    }).expect(NO_CONTENT_204_HTTP_CODE);
+    await assertDeleted();
+  });
 });

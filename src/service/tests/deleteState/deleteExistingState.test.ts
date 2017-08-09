@@ -58,4 +58,12 @@ describe('deleteState with existing state', () => {
     await deleteState();
     await assertDeleted();
   });
+
+  it('should delete when deleting without registration', async () => {
+    await createTextState();
+    await deleteState({
+      registration: undefined,
+    });
+    await assertDeleted();
+  });
 });

@@ -4,7 +4,7 @@ import createImmutableState from '../utils/createImmutableState';
 import setup from '../utils/setup';
 import overwriteState from './utils/overwriteState';
 
-describe('overwriteState replacing states', () => {
+describe('overwriteState with existing model', () => {
   setup();
 
   it('should overwrite model when overwriting an existing model', async () => {
@@ -14,6 +14,16 @@ describe('overwriteState replacing states', () => {
 
     // Overwrites model with expected content.
     await overwriteState();
+    await assertState(TEST_CONTENT);
+  });
+
+  it('should overwrite model when overwriting without a registration', async () => {
+    // Creates model with initial content.
+    const initialContent = 'initial_dummy_content';
+    await overwriteState({}, initialContent);
+
+    // Overwrites model with expected content.
+    await overwriteState({ registration: undefined });
     await assertState(TEST_CONTENT);
   });
 

@@ -11,6 +11,7 @@ import {
 import setup from '../utils/setup';
 import createState from './utils/createState';
 import patchContent from './utils/patchContent';
+import patchState from './utils/patchState';
 
 describe('patchState with existing object content', () => {
   setup();
@@ -34,6 +35,12 @@ describe('patchState with existing object content', () => {
   it('should merge when patching with object content', async () => {
     await createObjectContent();
     await patchContent('{"bar": 2}', JSON_CONTENT_TYPE);
+    await assertState('{"foo":1,"bar":2}');
+  });
+
+  it('should merge when patching without registration', async () => {
+    await createObjectContent();
+    await patchState({ registration: undefined }, '{"bar": 2}');
     await assertState('{"foo":1,"bar":2}');
   });
 });

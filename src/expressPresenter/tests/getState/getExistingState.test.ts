@@ -13,6 +13,11 @@ describe('expressPresenter.getState with existing state', () => {
     await getState().expect(OK_200_HTTP_CODE, TEST_CONTENT);
   });
 
+  it('should get when not using registration', async () => {
+    await createTextState();
+    await getState({ registration: undefined }).expect(OK_200_HTTP_CODE, TEST_CONTENT);
+  });
+
   it('should get when getting json', async () => {
     await createJsonState();
     await getState().expect(OK_200_HTTP_CODE, JSON.parse(TEST_JSON_CONTENT));

@@ -1,16 +1,12 @@
 import assertState from '../../../utils/assertState';
 import {
   JSON_CONTENT_TYPE,
-  TEST_ACTIVITY_ID,
   TEST_CONTENT,
   TEST_INVALID_ACTIVITY_ID,
   TEST_INVALID_AGENT,
   TEST_INVALID_REGISTRATION,
   TEST_JSON_CONTENT,
-  TEST_MBOX_AGENT,
   TEST_OBJECT_CONTENT,
-  TEST_REGISTRATION,
-  TEST_STATE_ID,
   TEXT_CONTENT_TYPE,
 } from '../../../utils/testValues';
 import { CLIENT_ERROR_400_HTTP_CODE, NO_CONTENT_204_HTTP_CODE } from '../../utils/httpCodes';
@@ -20,7 +16,7 @@ import patchContent from './utils/patchContent';
 import patchState from './utils/patchState';
 
 describe('expressPresenter.postState with new content', () => {
-  const { supertest } = setup();
+  setup();
 
   it('should error when patching with text content', async () => {
     await patchContent(TEST_CONTENT, TEXT_CONTENT_TYPE).expect(CLIENT_ERROR_400_HTTP_CODE);
@@ -60,41 +56,14 @@ describe('expressPresenter.postState with new content', () => {
   });
 
   it('should throw warnings when missing the activity id', async () => {
-    await supertest
-      .post('/xAPI/activities/state')
-      .set('Content-Type', TEXT_CONTENT_TYPE)
-      .query({
-        agent: JSON.stringify(TEST_MBOX_AGENT),
-        registration: TEST_REGISTRATION,
-        stateId: TEST_STATE_ID,
-      })
-      .send(TEST_CONTENT)
-      .expect(CLIENT_ERROR_400_HTTP_CODE);
+    await patchState({ activityId: undefined }).expect(CLIENT_ERROR_400_HTTP_CODE);
   });
 
   it('should throw warnings when missing the agent', async () => {
-    await supertest
-      .post('/xAPI/activities/state')
-      .set('Content-Type', TEXT_CONTENT_TYPE)
-      .query({
-        activityId: TEST_ACTIVITY_ID,
-        registration: TEST_REGISTRATION,
-        stateId: TEST_STATE_ID,
-      })
-      .send(TEST_CONTENT)
-      .expect(CLIENT_ERROR_400_HTTP_CODE);
+    await patchState({ agent: undefined }).expect(CLIENT_ERROR_400_HTTP_CODE);
   });
 
   it('should throw warnings when missing the state id', async () => {
-    await supertest
-      .post('/xAPI/activities/state')
-      .set('Content-Type', TEXT_CONTENT_TYPE)
-      .query({
-        activityId: TEST_ACTIVITY_ID,
-        agent: JSON.stringify(TEST_MBOX_AGENT),
-        registration: TEST_REGISTRATION,
-      })
-      .send(TEST_CONTENT)
-      .expect(CLIENT_ERROR_400_HTTP_CODE);
+    await patchState({ stateId: undefined }).expect(CLIENT_ERROR_400_HTTP_CODE);
   });
 });

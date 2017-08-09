@@ -1,15 +1,11 @@
 import {
-  TEST_ACTIVITY_ID,
   TEST_INVALID_ACTIVITY_ID,
   TEST_INVALID_AGENT,
   TEST_INVALID_REGISTRATION,
   TEST_INVALID_TIMESTAMP,
-  TEST_MBOX_AGENT,
-  TEST_REGISTRATION,
 } from '../../../utils/testValues';
 import { CLIENT_ERROR_400_HTTP_CODE, OK_200_HTTP_CODE } from '../../utils/httpCodes';
 import setup from '../utils/setup';
-import supertest from '../utils/supertest';
 import getStates from './utils/getStates';
 
 describe('expressPresenter.getStates with non-existing agent', () => {
@@ -44,22 +40,10 @@ describe('expressPresenter.getStates with non-existing agent', () => {
   });
 
   it('should throw warnings when missing the activity id', async () => {
-    await supertest
-      .get('/xAPI/activities/state')
-      .query({
-        agent: JSON.stringify(TEST_MBOX_AGENT),
-        registration: TEST_REGISTRATION,
-      })
-      .expect(CLIENT_ERROR_400_HTTP_CODE);
+    await getStates({ activityId: undefined }).expect(CLIENT_ERROR_400_HTTP_CODE);
   });
 
   it('should throw warnings when missing the agent', async () => {
-    await supertest
-      .get('/xAPI/activities/state')
-      .query({
-        activityId: TEST_ACTIVITY_ID,
-        registration: TEST_REGISTRATION,
-      })
-      .expect(CLIENT_ERROR_400_HTTP_CODE);
+    await getStates({ agent: undefined }).expect(CLIENT_ERROR_400_HTTP_CODE);
   });
 });

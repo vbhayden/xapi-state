@@ -10,6 +10,7 @@ import { CLIENT_ERROR_400_HTTP_CODE, NO_CONTENT_204_HTTP_CODE } from '../../util
 import setup from '../utils/setup';
 import createContent from './utils/createContent';
 import patchContent from './utils/patchContent';
+import patchState from './utils/patchState';
 
 describe('expressPresenter.postState with existing object content', () => {
   setup();
@@ -31,6 +32,13 @@ describe('expressPresenter.postState with existing object content', () => {
   it('should merge when patching with object content', async () => {
     await createObjectContent();
     await patchContent('{"bar": 2}', JSON_CONTENT_TYPE).expect(NO_CONTENT_204_HTTP_CODE);
+    await assertState('{"foo":1,"bar":2}');
+  });
+
+  it('should merge when patching without registration', async () => {
+    await createObjectContent();
+    await patchState({ registration: undefined }, '{"bar": 2}', JSON_CONTENT_TYPE)
+      .expect(NO_CONTENT_204_HTTP_CODE);
     await assertState('{"foo":1,"bar":2}');
   });
 });

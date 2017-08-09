@@ -8,8 +8,8 @@ import {
   TEST_STATE_ID,
 } from '../../../../utils/testValues';
 
-export default async (optsOverrides: Partial<GetStateOptions> = {}) => {
-  await service.getState({
+export default (optsOverrides: Partial<GetStateOptions> = {}) => {
+  return service.getState({
     activityId: TEST_ACTIVITY_ID,
     agent: TEST_MBOX_AGENT,
     client: TEST_CLIENT,
