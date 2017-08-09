@@ -1,3 +1,4 @@
+import GetStatesOptions from '../serviceFactory/options/GetStatesOptions';
 import service from './testService';
 import {
   TEST_ACTIVITY_ID,
@@ -6,11 +7,12 @@ import {
   TEST_REGISTRATION,
 } from './testValues';
 
-export default () => {
+export default (optsOverrides: Partial<GetStatesOptions> = {}) => {
   return service.getStates({
     activityId: TEST_ACTIVITY_ID,
     agent: TEST_MBOX_AGENT,
     client: TEST_CLIENT,
     registration: TEST_REGISTRATION,
+    ...optsOverrides,
   });
 };

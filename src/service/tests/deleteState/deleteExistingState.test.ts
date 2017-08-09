@@ -3,6 +3,12 @@ import assertError from 'jscommons/dist/tests/utils/assertError';
 import assertDeleted from '../../../utils/assertDeleted';
 import createJsonState from '../../../utils/createJsonState';
 import createTextState from '../../../utils/createTextState';
+import {
+  TEST_ACCOUNT_AGENT,
+  TEST_MBOX_AGENT,
+  TEST_MBOXSHA1_AGENT,
+  TEST_OPENID_AGENT,
+} from '../../../utils/testValues';
 import setup from '../utils/setup';
 import deleteState from './utils/deleteState';
 
@@ -23,9 +29,7 @@ describe('deleteState with existing state', () => {
 
   it('should delete when deleting without registration', async () => {
     await createTextState();
-    await deleteState({
-      registration: undefined,
-    });
+    await deleteState({ registration: undefined });
     await assertDeleted();
   });
 
@@ -33,5 +37,29 @@ describe('deleteState with existing state', () => {
     await createTextState({ registration: undefined });
     const promise = deleteState();
     await assertError(NoModel, promise);
+  });
+
+  it('should delete when deleting with an mbox', async () => {
+    await createTextState({ agent: TEST_MBOX_AGENT });
+    await deleteState({ agent: TEST_MBOX_AGENT });
+    await assertDeleted({ agent: TEST_MBOX_AGENT });
+  });
+
+  it('should delete when deleting with an mbox_sha1sum', async () => {
+    await createTextState({ agent: TEST_MBOXSHA1_AGENT });
+    await deleteState({ agent: TEST_MBOXSHA1_AGENT });
+    await assertDeleted({ agent: TEST_MBOXSHA1_AGENT });
+  });
+
+  it('should delete when deleting with an openid', async () => {
+    await createTextState({ agent: TEST_OPENID_AGENT });
+    await deleteState({ agent: TEST_OPENID_AGENT });
+    await assertDeleted({ agent: TEST_OPENID_AGENT });
+  });
+
+  it('should delete when deleting with an account', async () => {
+    await createTextState({ agent: TEST_ACCOUNT_AGENT });
+    await deleteState({ agent: TEST_ACCOUNT_AGENT });
+    await assertDeleted({ agent: TEST_ACCOUNT_AGENT });
   });
 });
