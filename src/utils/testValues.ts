@@ -28,13 +28,13 @@ export const TEST_VALID_SCOPE_CLIENT: ClientModel = {
 };
 
 export const TEST_OUTSIDE_STORE_TOKEN = 'outside_store_client';
-export const TEST_CLIENT_OUTSIDE_STORE = {
+export const TEST_CLIENT_OUTSIDE_STORE: ClientModel = {
   ...TEST_CLIENT,
   lrs_id: '58fe13e34effd3c26a7fc4c7',
 };
 
 export const TEST_OUTSIDE_ORG_TOKEN = 'outside_org_client';
-export const TEST_CLIENT_OUTSIDE_ORG = {
+export const TEST_CLIENT_OUTSIDE_ORG: ClientModel = {
   ...TEST_CLIENT,
   organisation: '58fe13e34effd3c26a7fc4c6',
 };

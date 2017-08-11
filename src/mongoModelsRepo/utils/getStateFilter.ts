@@ -1,8 +1,9 @@
+import { ObjectID } from 'mongodb'; /* tslint:disable-line:no-unused-variable */
 import Agent from '../../models/Agent';
 import ClientModel from '../../models/ClientModel';
 import getStatesFilter from './getStatesFilter';
 
-interface Options {
+export interface Options {
   readonly activityId: string;
   readonly agent: Agent;
   readonly client: ClientModel;

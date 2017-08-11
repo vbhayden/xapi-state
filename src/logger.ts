@@ -1,4 +1,5 @@
 import commonWinston from 'jscommons/dist/winston';
+import * as winston from 'winston';
 import config from './config';
 
 export default commonWinston({
@@ -15,4 +16,4 @@ export default commonWinston({
   console: {
     level: config.winston.console.level,
   },
-});
+}) as winston.LoggerInstance;

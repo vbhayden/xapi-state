@@ -4,7 +4,7 @@ import ClientModel from '../../models/ClientModel';
 import getAgentFilter from './getAgentFilter';
 import getRegistrationFilter from './getRegistrationFilter';
 
-interface Options {
+export interface Options {
   readonly activityId: string;
   readonly agent: Agent;
   readonly client: ClientModel;

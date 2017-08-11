@@ -1,3 +1,4 @@
+import { Test } from 'supertest';
 import {
   TEST_ACTIVITY_ID,
   TEST_MBOX_AGENT,
@@ -13,7 +14,7 @@ const options = {
   stateId: TEST_STATE_ID,
 };
 
-export default (optsOverrides: object = {}) => {
+export default (optsOverrides: object = {}): Test => {
   return supertest
     .delete('/xAPI/activities/state')
     .query({

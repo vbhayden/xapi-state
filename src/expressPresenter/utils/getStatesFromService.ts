@@ -4,7 +4,7 @@ import ClientModel from '../../models/ClientModel';
 import Config from '../Config';
 import { OK_200_HTTP_CODE } from './httpCodes';
 
-interface Options {
+export interface Options {
   readonly activityId: string;
   readonly agent: Agent;
   readonly client: ClientModel;

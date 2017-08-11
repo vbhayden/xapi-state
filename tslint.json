@@ -3,6 +3,7 @@
     "./node_modules/jscommons/tslint.json"
   ],
   "rules": {
-    "match-default-export-name": false // We'd like this in future.
+    "match-default-export-name": false, // We'd like this in future.
+    "no-unused-variable": true
   }
 }

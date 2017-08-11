@@ -1,7 +1,7 @@
 import * as assert from 'assert';
-import getStates from './getStates';
+import getTestStates from '../../../../utils/getTestStates';
 
 export default async () => {
-  const statesResult = await getStates();
+  const statesResult = await getTestStates();
   assert.deepEqual(statesResult.stateIds, []);
 };

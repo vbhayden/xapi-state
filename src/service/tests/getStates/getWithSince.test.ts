@@ -1,9 +1,9 @@
 import * as assert from 'assert';
 import { delay } from 'bluebird';
 import createTextState from '../../../utils/createTextState';
+import getTestStates from '../../../utils/getTestStates';
 import { TEST_STATE_ID } from '../../../utils/testValues';
 import setup from '../utils/setup';
-import getStates from './utils/getStates';
 
 const TEST_DELAY_MS = 2;
 
@@ -14,7 +14,7 @@ describe('getStates with since', () => {
     await createTextState();
     await Promise.resolve(delay(TEST_DELAY_MS));
     const timestamp = new Date();
-    const getStatesResult = await getStates({ since: timestamp.toISOString() });
+    const getStatesResult = await getTestStates({ since: timestamp.toISOString() });
     assert.deepEqual(getStatesResult.stateIds, []);
   });
 
@@ -22,7 +22,7 @@ describe('getStates with since', () => {
     const timestamp = new Date();
     await Promise.resolve(delay(TEST_DELAY_MS));
     await createTextState();
-    const getStatesResult = await getStates({ since: timestamp.toISOString() });
+    const getStatesResult = await getTestStates({ since: timestamp.toISOString() });
     assert.deepEqual(getStatesResult.stateIds, [TEST_STATE_ID]);
   });
 });

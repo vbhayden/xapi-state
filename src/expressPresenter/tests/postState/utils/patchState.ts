@@ -1,3 +1,4 @@
+import { Test } from 'supertest';
 import {
   JSON_CONTENT_TYPE,
   TEST_ACTIVITY_ID,
@@ -12,7 +13,7 @@ export default (
   optsOverrides: object = {},
   content: string = TEST_OBJECT_CONTENT,
   contentType: string = JSON_CONTENT_TYPE,
-) => {
+): Test => {
   return supertest
     .post('/xAPI/activities/state')
     .set('Content-Type', contentType)

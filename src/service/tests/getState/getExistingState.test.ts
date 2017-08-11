@@ -5,6 +5,7 @@ import * as streamToString from 'stream-to-string';
 import GetStateResult from '../../../serviceFactory/results/GetStateResult';
 import createJsonState from '../../../utils/createJsonState';
 import createTextState from '../../../utils/createTextState';
+import getTestState from '../../../utils/getTestState';
 import {
   JSON_CONTENT_TYPE,
   TEST_ACCOUNT_AGENT,
@@ -16,7 +17,6 @@ import {
   TEXT_CONTENT_TYPE,
 } from '../../../utils/testValues';
 import setup from '../utils/setup';
-import getState from './utils/getState';
 
 describe('getState with existing state', () => {
   setup();
@@ -31,19 +31,19 @@ describe('getState with existing state', () => {
 
   it('should get when getting text', async () => {
     await createTextState();
-    const agentStateResult = await getState();
+    const agentStateResult = await getTestState();
     await assertGetState(agentStateResult, TEST_CONTENT, TEXT_CONTENT_TYPE);
   });
 
   it('should get when getting json', async () => {
     await createJsonState();
-    const agentStateResult = await getState();
+    const agentStateResult = await getTestState();
     await assertGetState(agentStateResult, TEST_JSON_CONTENT, JSON_CONTENT_TYPE);
   });
 
   it('should get when not using registration', async () => {
     await createTextState();
-    const agentStateResult = await getState({
+    const agentStateResult = await getTestState({
       registration: undefined,
     });
     await assertGetState(agentStateResult, TEST_CONTENT, TEXT_CONTENT_TYPE);
@@ -51,31 +51,31 @@ describe('getState with existing state', () => {
 
   it('should error when getting existing model without a registration with one', async () => {
     await createTextState({ registration: undefined });
-    const promise = getState();
+    const promise = getTestState();
     await assertError(NoModel, promise);
   });
 
   it('should get when using an mbox', async () => {
     await createTextState({ agent: TEST_MBOX_AGENT });
-    const agentStateResult = await getState({ agent: TEST_MBOX_AGENT });
+    const agentStateResult = await getTestState({ agent: TEST_MBOX_AGENT });
     await assertGetState(agentStateResult, TEST_CONTENT, TEXT_CONTENT_TYPE);
   });
 
   it('should get when using an mbox_sha1sum', async () => {
     await createTextState({ agent: TEST_MBOXSHA1_AGENT });
-    const agentStateResult = await getState({ agent: TEST_MBOXSHA1_AGENT });
+    const agentStateResult = await getTestState({ agent: TEST_MBOXSHA1_AGENT });
     await assertGetState(agentStateResult, TEST_CONTENT, TEXT_CONTENT_TYPE);
   });
 
   it('should get when using an openid', async () => {
     await createTextState({ agent: TEST_OPENID_AGENT });
-    const agentStateResult = await getState({ agent: TEST_OPENID_AGENT });
+    const agentStateResult = await getTestState({ agent: TEST_OPENID_AGENT });
     await assertGetState(agentStateResult, TEST_CONTENT, TEXT_CONTENT_TYPE);
   });
 
   it('should get when using an account', async () => {
     await createTextState({ agent: TEST_ACCOUNT_AGENT });
-    const agentStateResult = await getState({ agent: TEST_ACCOUNT_AGENT });
+    const agentStateResult = await getTestState({ agent: TEST_ACCOUNT_AGENT });
     await assertGetState(agentStateResult, TEST_CONTENT, TEXT_CONTENT_TYPE);
   });
 });

@@ -1,7 +1,7 @@
 /* tslint:disable:readonly-keyword */
 import State from '../models/State';
 
-interface RepoState {
+export interface RepoState {
   states: State[];
 }
 

@@ -1,3 +1,4 @@
+import { Test } from 'supertest';
 import {
   TEST_ACTIVITY_ID,
   TEST_CONTENT,
@@ -12,7 +13,7 @@ export default (
   optsOverrides: object = {},
   content: string = TEST_CONTENT,
   contentType: string = TEXT_CONTENT_TYPE,
-) => {
+): Test => {
   const activityId = TEST_ACTIVITY_ID;
   const stateId = TEST_STATE_ID;
   const agent = JSON.stringify(TEST_MBOX_AGENT);

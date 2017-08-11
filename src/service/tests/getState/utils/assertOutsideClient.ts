@@ -1,8 +1,8 @@
 import NoModel from 'jscommons/dist/errors/NoModel';
 import assertError from 'jscommons/dist/tests/utils/assertError';
-import getState from './getState';
+import getTestStates from '../../../../utils/getTestStates';
 
 export default async () => {
-  const promise = getState();
+  const promise = getTestStates();
   await assertError(NoModel, promise);
 };

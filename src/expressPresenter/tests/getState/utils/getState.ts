@@ -1,3 +1,4 @@
+import { Test } from 'supertest';
 import {
   TEST_ACTIVITY_ID,
   TEST_MBOX_AGENT,
@@ -6,7 +7,7 @@ import {
 } from '../../../../utils/testValues';
 import supertest from '../../utils/supertest';
 
-export default (optsOverrides: object = {}) => {
+export default (optsOverrides: object = {}): Test => {
   const activityId = TEST_ACTIVITY_ID;
   const agent = JSON.stringify(TEST_MBOX_AGENT);
   const registration = TEST_REGISTRATION;

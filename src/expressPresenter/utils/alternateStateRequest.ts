@@ -11,7 +11,7 @@ import getStateFromService from './getStateFromService';
 import getStateId from './getStateId';
 import getStatesFromService from './getStatesFromService';
 
-interface Options {
+export interface Options {
   readonly config: Config;
   readonly method: string;
   readonly req: Request;

@@ -4,7 +4,7 @@ import State from '../../models/State';
 import isMatchingAgent from './isMatchingAgent';
 import isMatchingRegistration from './isMatchingRegistration';
 
-interface Options {
+export interface Options {
   readonly activityId: string;
   readonly agent: Agent;
   readonly client: ClientModel;

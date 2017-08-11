@@ -1,4 +1,5 @@
 import GetStateOptions from '../serviceFactory/options/GetStateOptions';
+import GetStateResult from '../serviceFactory/results/GetStateResult';
 import service from './testService';
 import {
   TEST_ACTIVITY_ID,
@@ -8,7 +9,7 @@ import {
   TEST_STATE_ID,
 } from './testValues';
 
-export default (optsOverrides: Partial<GetStateOptions> = {}) => {
+export default (optsOverrides: Partial<GetStateOptions> = {}): Promise<GetStateResult> => {
   return service.getState({
     activityId: TEST_ACTIVITY_ID,
     agent: TEST_MBOX_AGENT,

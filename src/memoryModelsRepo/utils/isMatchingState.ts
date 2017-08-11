@@ -3,7 +3,7 @@ import ClientModel from '../../models/ClientModel';
 import State from '../../models/State';
 import isMatchingStates from './isMatchingStates';
 
-interface Options {
+export interface Options {
   readonly activityId: string;
   readonly agent: Agent;
   readonly client: ClientModel;
