@@ -12,6 +12,7 @@ exports.default = winston_1.default({
         enabled: config_1.default.winston.cloudWatch.enabled,
         level: config_1.default.winston.cloudWatch.level,
         logGroupName: config_1.default.winston.cloudWatch.logGroupName,
+        logStreamName: config_1.default.winston.cloudWatch.logStreamName,
     },
     console: {
         level: config_1.default.winston.console.level,

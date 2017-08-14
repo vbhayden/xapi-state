@@ -38,7 +38,7 @@ declare const _default: {
             enabled: boolean;
             level: string;
             logGroupName: string;
-            logStreamName: string | undefined;
+            logStreamName: string;
         };
         console: {
             level: string;

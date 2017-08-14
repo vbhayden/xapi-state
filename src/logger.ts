@@ -12,6 +12,7 @@ export default commonWinston({
     enabled: config.winston.cloudWatch.enabled,
     level: config.winston.cloudWatch.level,
     logGroupName: config.winston.cloudWatch.logGroupName,
+    logStreamName: config.winston.cloudWatch.logStreamName,
   },
   console: {
     level: config.winston.console.level,

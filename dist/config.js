@@ -2,64 +2,66 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var dotenv_1 = require("dotenv");
 dotenv_1.config();
-var boolean = require("boolean");
-var lodash_1 = require("lodash");
+var getBooleanOption_1 = require("jscommons/dist/config/getBooleanOption");
+var getNumberOption_1 = require("jscommons/dist/config/getNumberOption");
+var getStringOption_1 = require("jscommons/dist/config/getStringOption");
+var os = require("os");
 var DEFAULT_EXPRESS_PORT = 80;
 var DEFAULT_TIMEOUT_MS = 300000; // 5 minutes.
 var storageDir = process.cwd() + "/storage";
-var expressPort = lodash_1.defaultTo(Number(process.env.EXPRESS_PORT), DEFAULT_EXPRESS_PORT);
+var expressPort = getNumberOption_1.default(process.env.EXPRESS_PORT, DEFAULT_EXPRESS_PORT);
 var demoAuth = "http://localhost:" + expressPort + "/auth";
 var accessLogsDir = storageDir + "/accessLogs";
 exports.default = {
-    defaultTimeout: lodash_1.defaultTo(Number(process.env.DEFAULT_TIMEOUT_MS), DEFAULT_TIMEOUT_MS),
+    defaultTimeout: getNumberOption_1.default(process.env.DEFAULT_TIMEOUT_MS, DEFAULT_TIMEOUT_MS),
     express: {
-        bodyParserLimit: lodash_1.defaultTo(process.env.EXPRESS_BODY_PARSER_LIMIT, '5mb'),
-        customRoute: lodash_1.defaultTo(process.env.EXPRESS_CUSTOM_ROUTE, 'status'),
-        customRouteText: lodash_1.defaultTo(process.env.EXPRESS_CUSTOM_ROUTE_TEXT, 'ok'),
-        morganDirectory: lodash_1.defaultTo(process.env.EXPRESS_MORGAN_DIRECTORY, accessLogsDir),
+        bodyParserLimit: getStringOption_1.default(process.env.EXPRESS_BODY_PARSER_LIMIT, '5mb'),
+        customRoute: getStringOption_1.default(process.env.EXPRESS_CUSTOM_ROUTE, 'status'),
+        customRouteText: getStringOption_1.default(process.env.EXPRESS_CUSTOM_ROUTE_TEXT, 'ok'),
+        morganDirectory: getStringOption_1.default(process.env.EXPRESS_MORGAN_DIRECTORY, accessLogsDir),
         port: expressPort,
     },
     fetchAuthRepo: {
-        llClientInfoEndpoint: lodash_1.defaultTo(process.env.LL_CLIENT_INFO_ENDPOINT, demoAuth),
+        llClientInfoEndpoint: getStringOption_1.default(process.env.LL_CLIENT_INFO_ENDPOINT, demoAuth),
     },
-    lang: lodash_1.defaultTo(process.env.LANG, 'en'),
+    lang: getStringOption_1.default(process.env.LANG, 'en'),
     localStorageRepo: {
-        storageDir: lodash_1.defaultTo(process.env.FS_LOCAL_STORAGE_DIR, storageDir),
+        storageDir: getStringOption_1.default(process.env.FS_LOCAL_STORAGE_DIR, storageDir),
     },
     mongoModelsRepo: {
-        url: lodash_1.defaultTo(process.env.MONGO_URL, 'mongodb://localhost:27017/xapistate'),
+        url: getStringOption_1.default(process.env.MONGO_URL, 'mongodb://localhost:27017/xapistate'),
     },
     repoFactory: {
-        authRepoName: lodash_1.defaultTo(process.env.AUTH_REPO, 'fetch'),
-        modelsRepoName: lodash_1.defaultTo(process.env.MODELS_REPO, 'memory'),
-        storageRepoName: lodash_1.defaultTo(process.env.STORAGE_REPO, 'local'),
+        authRepoName: getStringOption_1.default(process.env.AUTH_REPO, 'fetch'),
+        modelsRepoName: getStringOption_1.default(process.env.MODELS_REPO, 'memory'),
+        storageRepoName: getStringOption_1.default(process.env.STORAGE_REPO, 'local'),
     },
     s3StorageRepo: {
         awsConfig: {
-            accessKeyId: lodash_1.defaultTo(String(process.env.FS_S3_ACCESS_KEY_ID), ''),
+            accessKeyId: getStringOption_1.default(process.env.FS_S3_ACCESS_KEY_ID, ''),
             apiVersion: '2006-03-01',
-            region: lodash_1.defaultTo(String(process.env.FS_S3_REGION), ''),
-            secretAccessKey: lodash_1.defaultTo(String(process.env.FS_S3_SECRET_ACCESS_KEY), ''),
+            region: getStringOption_1.default(process.env.FS_S3_REGION, ''),
+            secretAccessKey: getStringOption_1.default(process.env.FS_S3_SECRET_ACCESS_KEY, ''),
             signatureVersion: 'v4',
             sslEnabled: true,
         },
-        bucketName: lodash_1.defaultTo(process.env.FS_S3_BUCKET, 'xapi-state'),
-        subFolder: lodash_1.defaultTo(process.env.FS_S3_BUCKET_SUBFOLDER, '/storage'),
+        bucketName: getStringOption_1.default(process.env.FS_S3_BUCKET, 'xapi-state'),
+        subFolder: getStringOption_1.default(process.env.FS_S3_BUCKET_SUBFOLDER, '/storage'),
     },
     winston: {
         cloudWatch: {
             awsConfig: {
-                accessKeyId: lodash_1.defaultTo(process.env.WINSTON_CLOUDWATCH_ACCESS_KEY_ID, ''),
-                region: lodash_1.defaultTo(process.env.WINSTON_CLOUDWATCH_REGION, ''),
-                secretAccessKey: lodash_1.defaultTo(process.env.WINSTON_CLOUDWATCH_SECRET_ACCESS_KEY, ''),
+                accessKeyId: getStringOption_1.default(process.env.WINSTON_CLOUDWATCH_ACCESS_KEY_ID, ''),
+                region: getStringOption_1.default(process.env.WINSTON_CLOUDWATCH_REGION, ''),
+                secretAccessKey: getStringOption_1.default(process.env.WINSTON_CLOUDWATCH_SECRET_ACCESS_KEY, ''),
             },
-            enabled: lodash_1.defaultTo(boolean(process.env.WINSTON_CLOUDWATCH_ENABLED), false),
-            level: lodash_1.defaultTo(process.env.WINSTON_CLOUDWATCH_LEVEL, 'info'),
-            logGroupName: lodash_1.defaultTo(process.env.WINSTON_CLOUDWATCH_LOG_GROUP_NAME, 'xapi-state'),
-            logStreamName: process.env.WINSTON_CLOUDWATCH_LOG_STREAM_NAME,
+            enabled: getBooleanOption_1.default(process.env.WINSTON_CLOUDWATCH_ENABLED, false),
+            level: getStringOption_1.default(process.env.WINSTON_CLOUDWATCH_LEVEL, 'info'),
+            logGroupName: getStringOption_1.default(process.env.WINSTON_CLOUDWATCH_LOG_GROUP_NAME, 'xapi-state'),
+            logStreamName: getStringOption_1.default(process.env.WINSTON_CLOUDWATCH_LOG_STREAM_NAME, os.hostname()),
         },
         console: {
-            level: lodash_1.defaultTo(process.env.WINSTON_CONSOLE_LEVEL, 'info'),
+            level: getStringOption_1.default(process.env.WINSTON_CONSOLE_LEVEL, 'info'),
         },
     },
 };
