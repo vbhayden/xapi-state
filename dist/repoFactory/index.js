@@ -44,32 +44,20 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 var _this = this;
 Object.defineProperty(exports, "__esModule", { value: true });
+var aws_sdk_1 = require("aws-sdk");
 var mongodb_1 = require("mongodb");
 var config_1 = require("../config");
 var fetchAuthRepo_1 = require("../fetchAuthRepo");
 var localStorageRepo_1 = require("../localStorageRepo");
 var memoryModelsRepo_1 = require("../memoryModelsRepo");
 var mongoModelsRepo_1 = require("../mongoModelsRepo");
+var s3StorageRepo_1 = require("../s3StorageRepo");
 var testAuthRepo_1 = require("../testAuthRepo");
-var scopes_1 = require("../utils/scopes");
 /* istanbul ignore next */
 var getAuthRepo = function () {
     switch (config_1.default.repoFactory.authRepoName) {
         case 'test':
-            return testAuthRepo_1.default({
-                client: {
-                    _id: 'dummy_id',
-                    authority: {
-                        mbox: 'mailto:dummy@example.com',
-                        objectType: 'Agent',
-                    },
-                    isTrusted: true,
-                    lrs_id: 'dummy_lrs_id',
-                    organisation: 'dummy_organisation',
-                    scopes: [scopes_1.ALL],
-                    title: 'dummy_title',
-                },
-            });
+            return testAuthRepo_1.default({});
         default:
         case 'fetch':
             return fetchAuthRepo_1.default({
@@ -96,6 +84,12 @@ var getModelsRepo = function () {
 /* istanbul ignore next */
 var getStorageRepo = function () {
     switch (config_1.default.repoFactory.storageRepoName) {
+        case 's3':
+            return s3StorageRepo_1.default({
+                bucketName: config_1.default.s3StorageRepo.bucketName,
+                client: new aws_sdk_1.S3(config_1.default.s3StorageRepo.awsConfig),
+                subFolder: config_1.default.s3StorageRepo.subFolder,
+            });
         default:
         case 'local':
             return localStorageRepo_1.default(config_1.default.localStorageRepo);

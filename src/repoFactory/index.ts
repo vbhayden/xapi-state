@@ -1,3 +1,4 @@
+import { S3 } from 'aws-sdk';
 import { MongoClient } from 'mongodb';
 import config from '../config';
 import fetchAuthRepo from '../fetchAuthRepo';
@@ -5,8 +6,8 @@ import localStorageRepo from '../localStorageRepo';
 import memoryModelsRepo from '../memoryModelsRepo';
 import State from '../models/State';
 import mongoModelsRepo from '../mongoModelsRepo';
+import s3StorageRepo from '../s3StorageRepo';
 import testAuthRepo from '../testAuthRepo';
-import { ALL } from '../utils/scopes';
 import AuthRepo from './AuthRepo';
 import ModelsRepo from './ModelsRepo';
 import Repo from './Repo';
@@ -16,20 +17,7 @@ import StorageRepo from './StorageRepo';
 const getAuthRepo = (): AuthRepo => {
   switch (config.repoFactory.authRepoName) {
     case 'test':
-      return testAuthRepo({
-        client: {
-          _id: 'dummy_id',
-          authority: {
-            mbox: 'mailto:dummy@example.com',
-            objectType: 'Agent',
-          },
-          isTrusted: true,
-          lrs_id: 'dummy_lrs_id',
-          organisation: 'dummy_organisation',
-          scopes: [ALL],
-          title: 'dummy_title',
-        },
-      });
+      return testAuthRepo({});
     default: case 'fetch':
       return fetchAuthRepo({
         llClientInfoEndpoint: config.fetchAuthRepo.llClientInfoEndpoint,
@@ -56,6 +44,12 @@ const getModelsRepo = (): ModelsRepo => {
 /* istanbul ignore next */
 const getStorageRepo = (): StorageRepo => {
   switch (config.repoFactory.storageRepoName) {
+    case 's3':
+      return s3StorageRepo({
+        bucketName: config.s3StorageRepo.bucketName,
+        client: new S3(config.s3StorageRepo.awsConfig),
+        subFolder: config.s3StorageRepo.subFolder,
+      });
     default:
     case 'local':
       return localStorageRepo(config.localStorageRepo);
