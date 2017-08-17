@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import { xapiHeaderVersion } from '../utils/constants';
 import Config from './Config';
 import catchErrors from './utils/catchErrors';
 import getActivityId from './utils/getActivityId';
@@ -6,7 +7,6 @@ import getAgent from './utils/getAgent';
 import getClient from './utils/getClient';
 import getStateId from './utils/getStateId';
 import { NO_CONTENT_204_HTTP_CODE } from './utils/httpCodes';
-import { xapiHeaderVersion } from '../utils/constants';
 
 export default (config: Config) => {
   return catchErrors(config, async (req: Request, res: Response): Promise<void> => {

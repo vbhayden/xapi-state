@@ -50,34 +50,33 @@ var createState_1 = require("./utils/createState");
 var isMatchingState_1 = require("./utils/isMatchingState");
 exports.default = function (config) {
     return function (opts) { return __awaiter(_this, void 0, void 0, function () {
-        var storedStates, matchingStates, update_1, updatedStates;
+        var storedStates, matchingStates, update, updatedStates;
         return __generator(this, function (_a) {
             storedStates = config.state.states;
             matchingStates = storedStates.filter(function (state) {
                 return isMatchingState_1.default(state, opts);
             });
             // Patches the state if it does exist, otherwise it creates the state.
-            if (matchingStates.length > 0) {
-                update_1 = {
-                    contentType: opts.contentType,
-                    etag: opts.etag,
-                    updatedAt: new Date(),
-                };
-                updatedStates = storedStates.map(function (state) {
-                    if (!isMatchingState_1.default(state, opts)) {
-                        return state;
-                    }
-                    if (state.contentType !== 'application/json' || !lodash_1.isPlainObject(state.content)) {
-                        throw new NonJsonObject_1.default();
-                    }
-                    var content = __assign({}, state.content, opts.content);
-                    return __assign({}, state, update_1, { content: content });
-                });
-                config.state.states = updatedStates;
-            }
-            else {
+            if (matchingStates.length === 0) {
                 createState_1.default(config, opts);
+                return [2 /*return*/];
             }
+            update = {
+                contentType: opts.contentType,
+                etag: opts.etag,
+                updatedAt: new Date(),
+            };
+            updatedStates = storedStates.map(function (state) {
+                if (!isMatchingState_1.default(state, opts)) {
+                    return state;
+                }
+                if (state.contentType !== 'application/json' || !lodash_1.isPlainObject(state.content)) {
+                    throw new NonJsonObject_1.default();
+                }
+                var content = __assign({}, state.content, opts.content);
+                return __assign({}, state, update, { content: content });
+            });
+            config.state.states = updatedStates;
             return [2 /*return*/];
         });
     }); };

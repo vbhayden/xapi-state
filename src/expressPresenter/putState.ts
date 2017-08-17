@@ -1,9 +1,9 @@
 import { Request, Response } from 'express';
+import { xapiHeaderVersion } from '../utils/constants';
 import Config from './Config';
 import catchErrors from './utils/catchErrors';
 import getStateWriteOpts from './utils/getStateWriteOpts';
 import { NO_CONTENT_204_HTTP_CODE } from './utils/httpCodes';
-import { xapiHeaderVersion } from '../utils/constants';
 
 export default (config: Config) => {
   return catchErrors(config, async (req: Request, res: Response): Promise<void> => {

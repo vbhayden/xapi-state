@@ -60,14 +60,15 @@ exports.default = function (config) {
                         })];
                 case 1:
                     deleteResult = _a.sent();
-                    if (!(deleteResult.contentType !== 'application/json')) return [3 /*break*/, 3];
+                    if (deleteResult.contentType === 'application/json') {
+                        return [2 /*return*/];
+                    }
                     return [4 /*yield*/, config.repo.deleteStateContent({
                             key: deleteResult.id,
                         })];
                 case 2:
                     _a.sent();
-                    _a.label = 3;
-                case 3: return [2 /*return*/];
+                    return [2 /*return*/];
             }
         });
     }); };
