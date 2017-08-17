@@ -4,6 +4,7 @@
   ],
   "rules": {
     "match-default-export-name": false, // We'd like this in future.
-    "no-unused-variable": true
+    "no-unused-variable": true,
+    "linebreak-style": [false, "LF"]
   }
 }
