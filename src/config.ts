@@ -2,11 +2,9 @@ import { config } from 'dotenv';
 config();
 
 import { S3 } from 'aws-sdk';
-import * as boolean from 'boolean';
 import getBooleanOption from 'jscommons/dist/config/getBooleanOption';
 import getNumberOption from 'jscommons/dist/config/getNumberOption';
 import getStringOption from 'jscommons/dist/config/getStringOption';
-import { defaultTo } from 'lodash';
 import * as os from 'os';
 
 const DEFAULT_EXPRESS_PORT = 80;
