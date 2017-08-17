@@ -1,3 +1,4 @@
+import { pick } from 'lodash';
 import * as rulr from 'rulr';
 import * as xapi from 'xapi-validation/dist/factory';
 import IfiCountWarning from 'xapi-validation/dist/warnings/IfiCountWarning';
@@ -8,10 +9,13 @@ const rule = rulr.maybe(rulr.composeRules([
     account: rulr.optional(xapi.account),
     mbox: rulr.optional(xapi.mailto),
     mbox_sha1sum: rulr.optional(xapi.sha1),
+    name: rulr.optional(xapi.stringValue),
+    objectType: rulr.optional(xapi.stringValue),
     openid: rulr.optional(xapi.iri),
   }),
   (data, path) => {
-    const keys = Object.keys(data);
+    const trimmedAgent = pick(data, ['account', 'mbox', 'mbox_sha1sum', 'openid']);
+    const keys = Object.keys(trimmedAgent);
     if (keys.length > 1) {
       return [new IfiCountWarning(data, path, keys)];
     }

@@ -46,6 +46,7 @@ var __rest = (this && this.__rest) || function (s, e) {
 var _this = this;
 Object.defineProperty(exports, "__esModule", { value: true });
 var httpCodes_1 = require("./httpCodes");
+var constants_1 = require("../../utils/constants");
 exports.default = function (_a) { return __awaiter(_this, void 0, void 0, function () {
     var config = _a.config, res = _a.res, opts = __rest(_a, ["config", "res"]);
     var getStatesResult;
@@ -55,7 +56,7 @@ exports.default = function (_a) { return __awaiter(_this, void 0, void 0, functi
             case 1:
                 getStatesResult = _a.sent();
                 res.status(httpCodes_1.OK_200_HTTP_CODE);
-                res.setHeader('X-Experience-API-Version', '1.0.0');
+                res.setHeader('X-Experience-API-Version', constants_1.xapiHeaderVersion);
                 res.json(getStatesResult.stateIds);
                 return [2 /*return*/];
         }

@@ -10,16 +10,10 @@ var __assign = (this && this.__assign) || Object.assign || function(t) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var scopes_1 = require("./scopes");
 exports.TEST_CLIENT = {
-    _id: '58fe13e34effd3c26a7fc4b8',
-    authority: {
-        mbox: 'mailto:test_authority@example.org',
-        objectType: 'Agent',
-    },
     isTrusted: true,
     lrs_id: '58fe13e34effd3c26a7fc4b7',
     organisation: '58fe13e34effd3c26a7fc4b6',
     scopes: [scopes_1.ALL],
-    title: 'dummy_title',
 };
 exports.TEST_INVALID_SCOPE_TOKEN = 'invalid_scope_client';
 exports.TEST_INVALID_SCOPE_CLIENT = __assign({}, exports.TEST_CLIENT, { scopes: ['invalid_scope'] });

@@ -3,16 +3,10 @@ import ClientModel from '../models/ClientModel';
 import { ALL, XAPI_STATE_ALL } from './scopes';
 
 export const TEST_CLIENT: ClientModel = {
-  _id: '58fe13e34effd3c26a7fc4b8',
-  authority: {
-    mbox: 'mailto:test_authority@example.org',
-    objectType: 'Agent',
-  },
   isTrusted: true,
   lrs_id: '58fe13e34effd3c26a7fc4b7',
   organisation: '58fe13e34effd3c26a7fc4b6',
   scopes: [ALL],
-  title: 'dummy_title',
 };
 
 export const TEST_INVALID_SCOPE_TOKEN = 'invalid_scope_client';

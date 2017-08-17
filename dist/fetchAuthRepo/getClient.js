@@ -54,13 +54,10 @@ exports.default = function (config) {
                 case 1:
                     json = _a.sent();
                     client = {
-                        _id: json._id,
-                        authority: json.authority,
                         isTrusted: json.isTrusted,
                         lrs_id: json.lrs_id,
                         organisation: json.organisation,
                         scopes: json.scopes,
-                        title: json.title,
                     };
                     return [2 /*return*/, { client: client }];
                 case 2:

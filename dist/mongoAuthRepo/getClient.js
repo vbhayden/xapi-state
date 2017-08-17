@@ -34,35 +34,42 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-var __rest = (this && this.__rest) || function (s, e) {
-    var t = {};
-    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
-        t[p] = s[p];
-    if (s != null && typeof Object.getOwnPropertySymbols === "function")
-        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) if (e.indexOf(p[i]) < 0)
-            t[p[i]] = s[p[i]];
-    return t;
-};
 var _this = this;
 Object.defineProperty(exports, "__esModule", { value: true });
-var httpCodes_1 = require("./httpCodes");
-var constants_1 = require("../../utils/constants");
-exports.default = function (_a) { return __awaiter(_this, void 0, void 0, function () {
-    var config = _a.config, res = _a.res, opts = __rest(_a, ["config", "res"]);
-    var getStateResult;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0: return [4 /*yield*/, config.service.getState(opts)];
-            case 1:
-                getStateResult = _a.sent();
-                res.status(httpCodes_1.OK_200_HTTP_CODE);
-                res.setHeader('ETag', "\"" + getStateResult.etag + "\"");
-                res.setHeader('Last-Modified', getStateResult.updatedAt.toISOString());
-                res.setHeader('X-Experience-API-Version', constants_1.xapiHeaderVersion);
-                res.setHeader('Content-Type', getStateResult.contentType);
-                getStateResult.content.pipe(res);
-                return [2 /*return*/];
-        }
-    });
-}); };
-//# sourceMappingURL=getStateFromService.js.map
+var atob = require("atob");
+var NoModel_1 = require("jscommons/dist/errors/NoModel");
+exports.default = function (config) {
+    return function (_a) {
+        var authToken = _a.authToken;
+        return __awaiter(_this, void 0, void 0, function () {
+            var strippedAuthToken, decodedAuthToken, splitAuthToken, key, secret, document, client;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        strippedAuthToken = authToken.replace('Basic ', '');
+                        decodedAuthToken = atob(strippedAuthToken);
+                        splitAuthToken = decodedAuthToken.split(':');
+                        key = splitAuthToken[0], secret = splitAuthToken[1];
+                        return [4 /*yield*/, config.db];
+                    case 1: return [4 /*yield*/, (_a.sent()).collection('client').findOne({
+                            'api.basic_key': key,
+                            'api.basic_secret': secret,
+                        })];
+                    case 2:
+                        document = _a.sent();
+                        if (document === null || document === undefined) {
+                            throw new NoModel_1.default('Client');
+                        }
+                        client = {
+                            isTrusted: document.isTrusted,
+                            lrs_id: document.lrs_id.toString(),
+                            organisation: document.organisation.toString(),
+                            scopes: document.scopes,
+                        };
+                        return [2 /*return*/, { client: client }];
+                }
+            });
+        });
+    };
+};
+//# sourceMappingURL=getClient.js.map

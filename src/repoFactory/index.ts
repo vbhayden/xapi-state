@@ -5,6 +5,7 @@ import fetchAuthRepo from '../fetchAuthRepo';
 import localStorageRepo from '../localStorageRepo';
 import memoryModelsRepo from '../memoryModelsRepo';
 import State from '../models/State';
+import mongoAuthRepo from '../mongoAuthRepo';
 import mongoModelsRepo from '../mongoModelsRepo';
 import s3StorageRepo from '../s3StorageRepo';
 import testAuthRepo from '../testAuthRepo';
@@ -18,13 +19,16 @@ const getAuthRepo = (): AuthRepo => {
   switch (config.repoFactory.authRepoName) {
     case 'test':
       return testAuthRepo({});
-    default: case 'fetch':
+    case 'fetch':
       return fetchAuthRepo({
         llClientInfoEndpoint: config.fetchAuthRepo.llClientInfoEndpoint,
       });
+    default: case 'mongo':
+      return mongoAuthRepo({
+        db: MongoClient.connect(config.mongoModelsRepo.url),
+      });
   }
 };
-
 /* istanbul ignore next */
 const getModelsRepo = (): ModelsRepo => {
   switch (config.repoFactory.modelsRepoName) {

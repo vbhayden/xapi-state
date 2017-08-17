@@ -50,6 +50,7 @@ var config_1 = require("../config");
 var fetchAuthRepo_1 = require("../fetchAuthRepo");
 var localStorageRepo_1 = require("../localStorageRepo");
 var memoryModelsRepo_1 = require("../memoryModelsRepo");
+var mongoAuthRepo_1 = require("../mongoAuthRepo");
 var mongoModelsRepo_1 = require("../mongoModelsRepo");
 var s3StorageRepo_1 = require("../s3StorageRepo");
 var testAuthRepo_1 = require("../testAuthRepo");
@@ -58,10 +59,14 @@ var getAuthRepo = function () {
     switch (config_1.default.repoFactory.authRepoName) {
         case 'test':
             return testAuthRepo_1.default({});
-        default:
         case 'fetch':
             return fetchAuthRepo_1.default({
                 llClientInfoEndpoint: config_1.default.fetchAuthRepo.llClientInfoEndpoint,
+            });
+        default:
+        case 'mongo':
+            return mongoAuthRepo_1.default({
+                db: mongodb_1.MongoClient.connect(config_1.default.mongoModelsRepo.url),
             });
     }
 };

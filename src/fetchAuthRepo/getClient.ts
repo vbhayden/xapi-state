@@ -17,13 +17,10 @@ export default (config: Config) => {
       });
 
       const client: ClientModel = {
-        _id: json._id as string,
-        authority: json.authority as Actor,
         isTrusted: json.isTrusted as boolean,
         lrs_id: json.lrs_id as string,
         organisation: json.organisation as string,
         scopes: json.scopes as string[],
-        title: json.title as string,
       };
       return { client };
     } catch (err) {
