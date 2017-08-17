@@ -37,7 +37,7 @@ export default {
     url: getStringOption(process.env.MONGO_URL, 'mongodb://localhost:27017/xapistate'),
   },
   repoFactory: {
-    authRepoName: getStringOption(process.env.AUTH_REPO, 'fetch'),
+    authRepoName: getStringOption(process.env.AUTH_REPO, 'mongo'),
     modelsRepoName: getStringOption(process.env.MODELS_REPO, 'memory'),
     storageRepoName: getStringOption(process.env.STORAGE_REPO, 'local'),
   },

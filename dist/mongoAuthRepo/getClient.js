@@ -36,36 +36,40 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 var _this = this;
 Object.defineProperty(exports, "__esModule", { value: true });
-var Unauthorised_1 = require("jscommons/dist/errors/Unauthorised");
+var atob = require("atob");
+var NoModel_1 = require("jscommons/dist/errors/NoModel");
 exports.default = function (config) {
-    return function (opts) { return __awaiter(_this, void 0, void 0, function () {
-        var json, client, err_1;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0:
-                    _a.trys.push([0, 2, , 3]);
-                    return [4 /*yield*/, fetch(config.llClientInfoEndpoint, {
-                            headers: {
-                                Authorization: opts.authToken,
-                            },
-                        }).then(function (res) {
-                            return res.json();
+    return function (_a) {
+        var authToken = _a.authToken;
+        return __awaiter(_this, void 0, void 0, function () {
+            var strippedAuthToken, decodedAuthToken, splitAuthToken, key, secret, document, client;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        strippedAuthToken = authToken.replace('Basic ', '');
+                        decodedAuthToken = atob(strippedAuthToken);
+                        splitAuthToken = decodedAuthToken.split(':');
+                        key = splitAuthToken[0], secret = splitAuthToken[1];
+                        return [4 /*yield*/, config.db];
+                    case 1: return [4 /*yield*/, (_a.sent()).collection('client').findOne({
+                            'api.basic_key': key,
+                            'api.basic_secret': secret,
                         })];
-                case 1:
-                    json = _a.sent();
-                    client = {
-                        isTrusted: json.isTrusted,
-                        lrs_id: json.lrs_id,
-                        organisation: json.organisation,
-                        scopes: json.scopes,
-                    };
-                    return [2 /*return*/, { client: client }];
-                case 2:
-                    err_1 = _a.sent();
-                    throw new Unauthorised_1.default();
-                case 3: return [2 /*return*/];
-            }
+                    case 2:
+                        document = _a.sent();
+                        if (document === null || document === undefined) {
+                            throw new NoModel_1.default('Client');
+                        }
+                        client = {
+                            isTrusted: document.isTrusted,
+                            lrs_id: document.lrs_id.toString(),
+                            organisation: document.organisation.toString(),
+                            scopes: document.scopes,
+                        };
+                        return [2 /*return*/, { client: client }];
+                }
+            });
         });
-    }); };
+    };
 };
 //# sourceMappingURL=getClient.js.map

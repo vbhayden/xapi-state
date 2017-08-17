@@ -30,6 +30,7 @@
     "npm": "^5.0.0"
   },
   "dependencies": {
+    "atob": "^2.0.3",
     "aws-sdk": "^2.74.0",
     "bluebird": "^3.5.0",
     "boolean": "^0.1.2",
