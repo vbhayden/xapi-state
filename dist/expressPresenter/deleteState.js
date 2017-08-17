@@ -42,6 +42,7 @@ var getAgent_1 = require("./utils/getAgent");
 var getClient_1 = require("./utils/getClient");
 var getStateId_1 = require("./utils/getStateId");
 var httpCodes_1 = require("./utils/httpCodes");
+var constants_1 = require("../utils/constants");
 exports.default = function (config) {
     return catchErrors_1.default(config, function (req, res) { return __awaiter(_this, void 0, void 0, function () {
         var client, stateId, activityId, agent, registration;
@@ -58,7 +59,7 @@ exports.default = function (config) {
                 case 2:
                     _a.sent();
                     res.status(httpCodes_1.NO_CONTENT_204_HTTP_CODE);
-                    res.setHeader('X-Experience-API-Version', '1.0.0');
+                    res.setHeader('X-Experience-API-Version', constants_1.xapiHeaderVersion);
                     res.send();
                     return [2 /*return*/];
             }
