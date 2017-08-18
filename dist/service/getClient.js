@@ -53,6 +53,7 @@ exports.default = function (config) {
                     if (lodash_1.isObject(err_1) && err_1.constructor === NoModel_1.default) {
                         throw new Unauthorised_1.default();
                     }
+                    /* istanbul ignore next */
                     throw err_1;
                 case 3: return [2 /*return*/];
             }

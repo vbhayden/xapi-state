@@ -13,6 +13,7 @@ export default (config: Config) => {
       if (isObject(err) && err.constructor === NoModel) {
         throw new Unauthorised();
       }
+      /* istanbul ignore next */
       throw err;
     }
   };

@@ -46,38 +46,53 @@ var _this = this;
 Object.defineProperty(exports, "__esModule", { value: true });
 var assert = require("assert");
 var btoa = require("btoa");
+var NoModel_1 = require("jscommons/dist/errors/NoModel");
+var assertError_1 = require("jscommons/dist/tests/utils/assertError");
 var mongodb_1 = require("mongodb");
 var config_1 = require("../../config");
 var mongoAuthRepo_1 = require("../../mongoAuthRepo");
 var testValues_1 = require("../../utils/testValues");
+var TEST_BASIC_KEY = '123';
+var TEST_BASIC_SECRET = 'abc';
+var TEST_TOKEN = "Basic " + btoa(TEST_BASIC_KEY + ":" + TEST_BASIC_SECRET);
 describe('getClient from mongo client', function () {
     var authConfig = {
         db: mongodb_1.MongoClient.connect(config_1.default.mongoModelsRepo.url),
     };
     var authRepo = mongoAuthRepo_1.default(authConfig);
-    it('should return a client from the db', function () { return __awaiter(_this, void 0, void 0, function () {
-        var basicKey, basicSecret, b64, authToken, result;
+    it('should get the client when it exists in the DB', function () { return __awaiter(_this, void 0, void 0, function () {
+        var testDocument, result;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    basicKey = '123';
-                    basicSecret = 'abc';
+                    testDocument = __assign({}, testValues_1.TEST_CLIENT, { api: {
+                            basic_key: TEST_BASIC_KEY,
+                            basic_secret: TEST_BASIC_SECRET,
+                        } });
                     return [4 /*yield*/, authConfig.db];
-                case 1: return [4 /*yield*/, (_a.sent()).collection('client').insertOne(__assign({}, testValues_1.TEST_CLIENT, { api: {
-                            basic_key: basicKey,
-                            basic_secret: basicSecret,
-                        } }))];
+                case 1: return [4 /*yield*/, (_a.sent()).collection('client').insertOne(testDocument)];
                 case 2:
                     _a.sent();
-                    b64 = btoa(basicKey + ":" + basicSecret);
-                    authToken = "Basic " + b64;
-                    return [4 /*yield*/, authRepo.getClient({ authToken: authToken })];
+                    return [4 /*yield*/, authRepo.getClient({ authToken: TEST_TOKEN })];
                 case 3:
                     result = _a.sent();
                     assert.equal(result.client.isTrusted, testValues_1.TEST_CLIENT.isTrusted);
                     assert.equal(result.client.lrs_id, testValues_1.TEST_CLIENT.lrs_id);
                     assert.equal(result.client.organisation, testValues_1.TEST_CLIENT.organisation);
                     assert.deepEqual(result.client.scopes, testValues_1.TEST_CLIENT.scopes);
+                    return [2 /*return*/];
+            }
+        });
+    }); });
+    it('should error when getting without any clients in the DB', function () { return __awaiter(_this, void 0, void 0, function () {
+        var promise;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    promise = authRepo.getClient({ authToken: TEST_TOKEN });
+                    return [4 /*yield*/, assertError_1.default(NoModel_1.default, promise)];
+                case 1:
+                    _a.sent();
                     return [2 /*return*/];
             }
         });
