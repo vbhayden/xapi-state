@@ -56,9 +56,8 @@ var TEST_BASIC_KEY = '123';
 var TEST_BASIC_SECRET = 'abc';
 var TEST_TOKEN = "Basic " + btoa(TEST_BASIC_KEY + ":" + TEST_BASIC_SECRET);
 describe('getClient from mongo client', function () {
-    var authConfig = {
-        db: mongodb_1.MongoClient.connect(config_1.default.mongoModelsRepo.url),
-    };
+    var db = mongodb_1.MongoClient.connect(config_1.default.mongoModelsRepo.url);
+    var authConfig = { db: db };
     var authRepo = mongoAuthRepo_1.default(authConfig);
     it('should get the client when it exists in the DB', function () { return __awaiter(_this, void 0, void 0, function () {
         var testDocument, result;
@@ -69,7 +68,7 @@ describe('getClient from mongo client', function () {
                             basic_key: TEST_BASIC_KEY,
                             basic_secret: TEST_BASIC_SECRET,
                         } });
-                    return [4 /*yield*/, authConfig.db];
+                    return [4 /*yield*/, db];
                 case 1: return [4 /*yield*/, (_a.sent()).collection('client').insertOne(testDocument)];
                 case 2:
                     _a.sent();
@@ -100,7 +99,7 @@ describe('getClient from mongo client', function () {
     afterEach(function () { return __awaiter(_this, void 0, void 0, function () {
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, authConfig.db];
+                case 0: return [4 /*yield*/, db];
                 case 1: return [4 /*yield*/, (_a.sent()).collection('client').deleteMany({})];
                 case 2:
                     _a.sent();

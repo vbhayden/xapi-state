@@ -12,9 +12,8 @@ const TEST_BASIC_SECRET = 'abc';
 const TEST_TOKEN = `Basic ${btoa(`${TEST_BASIC_KEY}:${TEST_BASIC_SECRET}`)}`;
 
 describe('getClient from mongo client', () => {
-  const authConfig = {
-    db: MongoClient.connect(config.mongoModelsRepo.url),
-  };
+  const db = MongoClient.connect(config.mongoModelsRepo.url);
+  const authConfig = { db };
   const authRepo = mongoAuthRepo(authConfig);
 
   it('should get the client when it exists in the DB', async () => {
@@ -25,7 +24,7 @@ describe('getClient from mongo client', () => {
         basic_secret: TEST_BASIC_SECRET,
       },
     };
-    await (await authConfig.db).collection('client').insertOne(testDocument);
+    await (await db).collection('client').insertOne(testDocument);
 
     const result = await authRepo.getClient({ authToken: TEST_TOKEN });
     assert.equal(result.client.isTrusted, TEST_CLIENT.isTrusted);
@@ -40,6 +39,6 @@ describe('getClient from mongo client', () => {
   });
 
   afterEach( async () => {
-    await (await authConfig.db).collection('client').deleteMany({});
+    await (await db).collection('client').deleteMany({});
   });
 });
