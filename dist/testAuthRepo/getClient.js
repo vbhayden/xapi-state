@@ -36,6 +36,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 var _this = this;
 Object.defineProperty(exports, "__esModule", { value: true });
+var NoModel_1 = require("jscommons/dist/errors/NoModel");
 var testValues_1 = require("../utils/testValues");
 exports.default = function (_config) {
     return function (opts) { return __awaiter(_this, void 0, void 0, function () {
@@ -49,6 +50,8 @@ exports.default = function (_config) {
                     return [2 /*return*/, { client: testValues_1.TEST_CLIENT_OUTSIDE_ORG }];
                 case testValues_1.TEST_OUTSIDE_STORE_TOKEN:
                     return [2 /*return*/, { client: testValues_1.TEST_CLIENT_OUTSIDE_STORE }];
+                case testValues_1.TEST_MISSING_TOKEN:
+                    throw new NoModel_1.default('Client');
                 default:
                     return [2 /*return*/, { client: testValues_1.TEST_CLIENT }];
             }

@@ -36,39 +36,24 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 var _this = this;
 Object.defineProperty(exports, "__esModule", { value: true });
-var NoModel_1 = require("jscommons/dist/errors/NoModel");
-var node_fetch_1 = require("node-fetch");
-var OK_HTTP_CODE = 200;
-var NO_MODEL_HTTP_CODE = 404;
-exports.default = function (config) {
-    return function (opts) { return __awaiter(_this, void 0, void 0, function () {
-        var json, client;
+var Unauthorised_1 = require("jscommons/dist/errors/Unauthorised");
+var assertError_1 = require("jscommons/dist/tests/utils/assertError");
+var testValues_1 = require("../../../utils/testValues");
+var setup_1 = require("../utils/setup");
+describe('getClient using non-existing model', function () {
+    var service = setup_1.default();
+    it('should error when getting without clients', function () { return __awaiter(_this, void 0, void 0, function () {
+        var promise;
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, node_fetch_1.default(config.llClientInfoEndpoint, {
-                        headers: {
-                            Authorization: opts.authToken,
-                        },
-                    }).then(function (res) {
-                        if (res.status === NO_MODEL_HTTP_CODE) {
-                            throw new NoModel_1.default('ClientModel');
-                        }
-                        if (res.status !== OK_HTTP_CODE) {
-                            throw new Error("Getting client failed with error code " + res.status);
-                        }
-                        return res.json();
-                    })];
+                case 0:
+                    promise = service.getClient({ authToken: testValues_1.TEST_MISSING_TOKEN });
+                    return [4 /*yield*/, assertError_1.default(Unauthorised_1.default, promise)];
                 case 1:
-                    json = _a.sent();
-                    client = {
-                        isTrusted: json.isTrusted,
-                        lrs_id: json.lrs_id,
-                        organisation: json.organisation,
-                        scopes: json.scopes,
-                    };
-                    return [2 /*return*/, { client: client }];
+                    _a.sent();
+                    return [2 /*return*/];
             }
         });
-    }); };
-};
-//# sourceMappingURL=getClient.js.map
+    }); });
+});
+//# sourceMappingURL=getNonExistingClient.test.js.map
