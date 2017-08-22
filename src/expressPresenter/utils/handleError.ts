@@ -6,6 +6,7 @@ import { isNull, isUndefined } from 'lodash';
 import { Warnings } from 'rulr';
 import InvalidContentType from '../../errors/InvalidContentType';
 import InvalidMethod from '../../errors/InvalidMethod';
+import JsonSyntaxError from '../../errors/JsonSyntaxError';
 import NonJsonObject from '../../errors/NonJsonObject';
 import Translator from '../../translatorFactory/Translator';
 import { xapiHeaderVersion } from '../../utils/constants';
@@ -29,7 +30,11 @@ export default ({ translator, errorId, res, err }: Options): Response => {
   }
 
   switch (err.constructor) {
-    case InvalidContentType: {
+    case JsonSyntaxError: {
+      const code = CLIENT_ERROR_400_HTTP_CODE;
+      const message = translator.jsonSyntaxError(err as JsonSyntaxError);
+      return sendMessage({ res, code, errorId, message });
+    } case InvalidContentType: {
       const code = CLIENT_ERROR_400_HTTP_CODE;
       const message = translator.invalidContentTypeError(err as InvalidContentType);
       return sendMessage({ res, code, errorId, message });

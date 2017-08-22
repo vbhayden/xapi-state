@@ -29,6 +29,12 @@ describe('expressPresenter.getState with non-existing model', () => {
     }).expect(CLIENT_ERROR_400_HTTP_CODE);
   });
 
+  it('should throw warnings when using invalid JSON for agent', async () => {
+    await getState({
+      agent: "{mbox'mailto:james@ht2.co.uk'}",
+    }).expect(CLIENT_ERROR_400_HTTP_CODE);
+  });
+
   it('should throw warnings when using an invalid registration', async () => {
     await getState({
       registration: TEST_INVALID_REGISTRATION,
