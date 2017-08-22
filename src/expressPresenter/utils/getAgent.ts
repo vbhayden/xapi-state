@@ -1,5 +1,6 @@
 import { createRequiredWarning, Warnings } from 'rulr';
 import Agent from '../../models/Agent';
+import parseJSON from '../../utils/parseJSON';
 
 export default (agentParam: string|undefined): Agent => {
   if (agentParam === undefined) {
@@ -7,5 +8,5 @@ export default (agentParam: string|undefined): Agent => {
     throw new Warnings({}, ['query'], warnings);
   }
 
-  return JSON.parse(agentParam) as Agent;
+  return parseJSON(agentParam, ['query', 'agent']) as Agent;
 };

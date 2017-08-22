@@ -10,12 +10,13 @@ var __assign = (this && this.__assign) || Object.assign || function(t) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var service_1 = require("jscommons/dist/service");
 var deleteState_1 = require("./deleteState");
+var deleteStates_1 = require("./deleteStates");
 var getClient_1 = require("./getClient");
 var getState_1 = require("./getState");
 var getStates_1 = require("./getStates");
 var overwriteState_1 = require("./overwriteState");
 var patchState_1 = require("./patchState");
 exports.default = function (config) {
-    return __assign({ deleteState: deleteState_1.default(config), getClient: getClient_1.default(config), getState: getState_1.default(config), getStates: getStates_1.default(config), overwriteState: overwriteState_1.default(config), patchState: patchState_1.default(config) }, service_1.default(config));
+    return __assign({ deleteState: deleteState_1.default(config), deleteStates: deleteStates_1.default(config), getClient: getClient_1.default(config), getState: getState_1.default(config), getStates: getStates_1.default(config), overwriteState: overwriteState_1.default(config), patchState: patchState_1.default(config) }, service_1.default(config));
 };
 //# sourceMappingURL=index.js.map

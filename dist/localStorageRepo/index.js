@@ -10,9 +10,10 @@ var __assign = (this && this.__assign) || Object.assign || function(t) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var fsRepo_1 = require("jscommons/dist/fsRepo");
 var deleteStateContent_1 = require("./deleteStateContent");
+var deleteStatesContent_1 = require("./deleteStatesContent");
 var getStateContent_1 = require("./getStateContent");
 var storeStateContent_1 = require("./storeStateContent");
 exports.default = function (config) {
-    return __assign({ deleteStateContent: deleteStateContent_1.default(config), getStateContent: getStateContent_1.default(config), storeStateContent: storeStateContent_1.default(config) }, fsRepo_1.default(config));
+    return __assign({ deleteStateContent: deleteStateContent_1.default(config), deleteStatesContent: deleteStatesContent_1.default(config), getStateContent: getStateContent_1.default(config), storeStateContent: storeStateContent_1.default(config) }, fsRepo_1.default(config));
 };
 //# sourceMappingURL=index.js.map

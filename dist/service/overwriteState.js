@@ -37,6 +37,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 var _this = this;
 Object.defineProperty(exports, "__esModule", { value: true });
 var streamToString = require("stream-to-string");
+var parseJSON_1 = require("../utils/parseJSON");
 var checkStateWriteScopes_1 = require("./utils/checkStateWriteScopes");
 var createEtag_1 = require("./utils/createEtag");
 var validateActivityId_1 = require("./utils/validateActivityId");
@@ -44,9 +45,9 @@ var validateAgent_1 = require("./utils/validateAgent");
 var validateRegistration_1 = require("./utils/validateRegistration");
 exports.default = function (config) {
     return function (opts) { return __awaiter(_this, void 0, void 0, function () {
-        var etag, jsonContent, _a, _b, _c, overwriteStateResult;
-        return __generator(this, function (_d) {
-            switch (_d.label) {
+        var etag, jsonContent, _a, _b, overwriteStateResult;
+        return __generator(this, function (_c) {
+            switch (_c.label) {
                 case 0:
                     checkStateWriteScopes_1.default(opts.client.scopes);
                     validateActivityId_1.default(opts.activityId);
@@ -54,14 +55,14 @@ exports.default = function (config) {
                     validateRegistration_1.default(opts.registration);
                     etag = createEtag_1.default();
                     if (!(opts.contentType === 'application/json')) return [3 /*break*/, 2];
-                    _c = (_b = JSON).parse;
+                    _b = parseJSON_1.default;
                     return [4 /*yield*/, streamToString(opts.content)];
                 case 1:
-                    _a = _c.apply(_b, [_d.sent()]);
+                    _a = _b.apply(void 0, [_c.sent(), ['body']]);
                     return [3 /*break*/, 3];
                 case 2:
                     _a = undefined;
-                    _d.label = 3;
+                    _c.label = 3;
                 case 3:
                     jsonContent = (_a);
                     return [4 /*yield*/, config.repo.overwriteState({
@@ -75,15 +76,15 @@ exports.default = function (config) {
                             stateId: opts.stateId,
                         })];
                 case 4:
-                    overwriteStateResult = _d.sent();
+                    overwriteStateResult = _c.sent();
                     if (!(opts.contentType !== 'application/json')) return [3 /*break*/, 6];
                     return [4 /*yield*/, config.repo.storeStateContent({
                             content: opts.content,
                             key: overwriteStateResult.id,
                         })];
                 case 5:
-                    _d.sent();
-                    _d.label = 6;
+                    _c.sent();
+                    _c.label = 6;
                 case 6: return [2 /*return*/];
             }
         });

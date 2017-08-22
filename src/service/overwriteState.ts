@@ -1,5 +1,6 @@
 import * as streamToString from 'stream-to-string';
 import OverwriteStateOptions from '../serviceFactory/options/OverwriteStateOptions';
+import parseJSON from '../utils/parseJSON';
 import Config from './Config';
 import checkStateWriteScopes from './utils/checkStateWriteScopes';
 import createEtag from './utils/createEtag';
@@ -18,7 +19,7 @@ export default (config: Config) => {
     const etag = createEtag();
     const jsonContent = (
       opts.contentType === 'application/json'
-      ? JSON.parse(await streamToString(opts.content))
+      ? parseJSON(await streamToString(opts.content), ['body'])
       : undefined
     );
     const overwriteStateResult = await config.repo.overwriteState({

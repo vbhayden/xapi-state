@@ -10,7 +10,10 @@ var __assign = (this && this.__assign) || Object.assign || function(t) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var en_1 = require("jscommons/dist/translatorFactory/en");
 var stringPath_1 = require("jscommons/dist/translatorFactory/utils/stringPath");
-var translator = __assign({ invalidContentTypeError: function (err) { return ("Content type (" + err.contentType + ") is invalid for alternate request syntax"); }, invalidMethodError: function (err) { return ("Method (" + err.method + ") is invalid for alternate request syntax"); }, nonJsonObjectError: function () { return ('Expected a JSON object to be provided and stored (if it exists)'); }, xapiTypeWarning: function (warning) {
+var translator = __assign({ invalidContentTypeError: function (err) { return ("Content type (" + err.contentType + ") is invalid for alternate request syntax"); }, invalidMethodError: function (err) { return ("Method (" + err.method + ") is invalid for alternate request syntax"); }, jsonSyntaxError: function (err) {
+        var path = stringPath_1.default(err.path);
+        return "Expected valid JSON in " + path;
+    }, nonJsonObjectError: function () { return ('Expected a JSON object to be provided and stored (if it exists)'); }, xapiTypeWarning: function (warning) {
         var path = stringPath_1.default(warning.path);
         return "Expected " + warning.typeName + " in " + path;
     } }, en_1.default);

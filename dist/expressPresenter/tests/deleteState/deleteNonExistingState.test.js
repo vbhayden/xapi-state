@@ -98,16 +98,6 @@ describe('expressPresenter.deleteState with non-existing state', function () {
             }
         });
     }); });
-    it('should throw warnings when missing the state id', function () { return __awaiter(_this, void 0, void 0, function () {
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0: return [4 /*yield*/, deleteState_1.default({ stateId: undefined }).expect(httpCodes_1.CLIENT_ERROR_400_HTTP_CODE)];
-                case 1:
-                    _a.sent();
-                    return [2 /*return*/];
-            }
-        });
-    }); });
     it('should throw warnings when missing the agent', function () { return __awaiter(_this, void 0, void 0, function () {
         return __generator(this, function (_a) {
             switch (_a.label) {

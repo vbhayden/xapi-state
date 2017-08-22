@@ -1,4 +1,12 @@
 "use strict";
+var __assign = (this && this.__assign) || Object.assign || function(t) {
+    for (var s, i = 1, n = arguments.length; i < n; i++) {
+        s = arguments[i];
+        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+            t[p] = s[p];
+    }
+    return t;
+};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     return new (P || (P = Promise))(function (resolve, reject) {
         function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
@@ -40,40 +48,33 @@ var assert = require("assert");
 var streamToString = require("stream-to-string");
 var testService_1 = require("./testService");
 var testValues_1 = require("./testValues");
-exports.default = function () { return __awaiter(_this, void 0, void 0, function () {
-    var expectedStateIds, statesResult, actualStateIds, agentStateResult, actualContent;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0:
-                expectedStateIds = [testValues_1.TEST_STATE_ID];
-                return [4 /*yield*/, testService_1.default.getStates({
-                        activityId: testValues_1.TEST_IMMUTABLE_ACTIVITY_ID,
-                        agent: testValues_1.TEST_MBOX_AGENT,
-                        client: testValues_1.TEST_CLIENT,
-                        registration: testValues_1.TEST_REGISTRATION,
-                    })];
-            case 1:
-                statesResult = _a.sent();
-                actualStateIds = statesResult.stateIds;
-                assert.deepEqual(actualStateIds, expectedStateIds);
-                return [4 /*yield*/, testService_1.default.getState({
-                        activityId: testValues_1.TEST_IMMUTABLE_ACTIVITY_ID,
-                        agent: testValues_1.TEST_MBOX_AGENT,
-                        client: testValues_1.TEST_CLIENT,
-                        registration: testValues_1.TEST_REGISTRATION,
-                        stateId: testValues_1.TEST_STATE_ID,
-                    })];
-            case 2:
-                agentStateResult = _a.sent();
-                return [4 /*yield*/, streamToString(agentStateResult.content)];
-            case 3:
-                actualContent = _a.sent();
-                assert.equal(actualContent, testValues_1.TEST_IMMUTABLE_CONTENT);
-                assert.equal(agentStateResult.contentType.constructor, String);
-                assert.equal(agentStateResult.updatedAt.constructor, Date);
-                assert.equal(agentStateResult.etag.constructor, String);
-                return [2 /*return*/];
-        }
+exports.default = function (statesOptsOverrides, stateOptsOverrides) {
+    if (statesOptsOverrides === void 0) { statesOptsOverrides = {}; }
+    if (stateOptsOverrides === void 0) { stateOptsOverrides = {}; }
+    return __awaiter(_this, void 0, void 0, function () {
+        var expectedStateIds, statesResult, actualStateIds, agentStateResult, actualContent;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    expectedStateIds = [testValues_1.TEST_STATE_ID];
+                    return [4 /*yield*/, testService_1.default.getStates(__assign({ activityId: testValues_1.TEST_IMMUTABLE_ACTIVITY_ID, agent: testValues_1.TEST_MBOX_AGENT, client: testValues_1.TEST_CLIENT, registration: testValues_1.TEST_REGISTRATION }, statesOptsOverrides))];
+                case 1:
+                    statesResult = _a.sent();
+                    actualStateIds = statesResult.stateIds;
+                    assert.deepEqual(actualStateIds, expectedStateIds);
+                    return [4 /*yield*/, testService_1.default.getState(__assign({ activityId: testValues_1.TEST_IMMUTABLE_ACTIVITY_ID, agent: testValues_1.TEST_MBOX_AGENT, client: testValues_1.TEST_CLIENT, registration: testValues_1.TEST_REGISTRATION, stateId: testValues_1.TEST_STATE_ID }, stateOptsOverrides))];
+                case 2:
+                    agentStateResult = _a.sent();
+                    return [4 /*yield*/, streamToString(agentStateResult.content)];
+                case 3:
+                    actualContent = _a.sent();
+                    assert.equal(actualContent, testValues_1.TEST_IMMUTABLE_CONTENT);
+                    assert.equal(agentStateResult.contentType.constructor, String);
+                    assert.equal(agentStateResult.updatedAt.constructor, Date);
+                    assert.equal(agentStateResult.etag.constructor, String);
+                    return [2 /*return*/];
+            }
+        });
     });
-}); };
+};
 //# sourceMappingURL=assertImmutableState.js.map

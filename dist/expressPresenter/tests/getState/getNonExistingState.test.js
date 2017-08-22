@@ -76,6 +76,18 @@ describe('expressPresenter.getState with non-existing model', function () {
             }
         });
     }); });
+    it('should throw warnings when using invalid JSON for agent', function () { return __awaiter(_this, void 0, void 0, function () {
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, getState_1.default({
+                        agent: "{mbox'mailto:james@ht2.co.uk'}",
+                    }).expect(httpCodes_1.CLIENT_ERROR_400_HTTP_CODE)];
+                case 1:
+                    _a.sent();
+                    return [2 /*return*/];
+            }
+        });
+    }); });
     it('should throw warnings when using an invalid registration', function () { return __awaiter(_this, void 0, void 0, function () {
         return __generator(this, function (_a) {
             switch (_a.label) {

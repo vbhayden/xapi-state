@@ -39,6 +39,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var lodash_1 = require("lodash");
 var streamToString = require("stream-to-string");
 var NonJsonObject_1 = require("../errors/NonJsonObject");
+var parseJSON_1 = require("../utils/parseJSON");
 var checkStateWriteScopes_1 = require("./utils/checkStateWriteScopes");
 var createEtag_1 = require("./utils/createEtag");
 var validateActivityId_1 = require("./utils/validateActivityId");
@@ -46,9 +47,9 @@ var validateAgent_1 = require("./utils/validateAgent");
 var validateRegistration_1 = require("./utils/validateRegistration");
 exports.default = function (config) {
     return function (opts) { return __awaiter(_this, void 0, void 0, function () {
-        var client, content, _a, _b, etag;
-        return __generator(this, function (_c) {
-            switch (_c.label) {
+        var client, content, _a, etag;
+        return __generator(this, function (_b) {
+            switch (_b.label) {
                 case 0:
                     client = opts.client;
                     checkStateWriteScopes_1.default(client.scopes);
@@ -58,10 +59,10 @@ exports.default = function (config) {
                     if (opts.contentType !== 'application/json') {
                         throw new NonJsonObject_1.default();
                     }
-                    _b = (_a = JSON).parse;
+                    _a = parseJSON_1.default;
                     return [4 /*yield*/, streamToString(opts.content)];
                 case 1:
-                    content = _b.apply(_a, [_c.sent()]);
+                    content = _a.apply(void 0, [_b.sent(), ['body']]);
                     if (!lodash_1.isPlainObject(content)) {
                         throw new NonJsonObject_1.default();
                     }
@@ -77,7 +78,7 @@ exports.default = function (config) {
                             stateId: opts.stateId,
                         })];
                 case 2:
-                    _c.sent();
+                    _b.sent();
                     return [2 /*return*/];
             }
         });

@@ -2,13 +2,13 @@
 import { Request, Response } from 'express';
 import InvalidContentType from '../../errors/InvalidContentType';
 import InvalidMethod from '../../errors/InvalidMethod';
+import { xapiHeaderVersion } from '../../utils/constants';
 import Config from '../Config';
 import getActivityId from './getActivityId';
 import getAgent from './getAgent';
 import getAlternateStateWriteOpts from './getAlternateStateWriteOpts';
 import getClient from './getClient';
 import getStateFromService from './getStateFromService';
-import getStateId from './getStateId';
 import getStatesFromService from './getStatesFromService';
 import validateVersionHeader from './validateVersionHeader';
 
@@ -29,7 +29,8 @@ export default async ({ config, method, req, res }: Options) => {
       const opts = await getAlternateStateWriteOpts(config, req);
       validateVersionHeader(req.header('X-Experience-API-Version'));
       await config.service.patchState(opts);
-      res.status(204).send();
+      res.status(204).setHeader('X-Experience-API-Version', xapiHeaderVersion);
+      res.send();
       return;
     }
     case 'GET': {
@@ -60,18 +61,24 @@ export default async ({ config, method, req, res }: Options) => {
       const opts = await getAlternateStateWriteOpts(config, req);
       validateVersionHeader(req.header('X-Experience-API-Version'));
       await config.service.overwriteState(opts);
-      res.status(204).send();
+      res.status(204).setHeader('X-Experience-API-Version', xapiHeaderVersion);
+      res.send();
       return;
     }
     case 'DELETE': {
       const client = await getClient(config, req.body.Authorization);
       validateVersionHeader(req.header('X-Experience-API-Version'));
       const agent = getAgent(req.body.agent);
-      const stateId = getStateId(req.body.stateId);
+      const stateId = req.body.stateId;
       const activityId = getActivityId(req.body.activityId);
 
-      await config.service.deleteState({ activityId, agent, client, stateId });
-      res.status(204).send();
+      if (stateId === undefined) {
+        await config.service.deleteStates({ activityId, agent, client });
+      } else {
+        await config.service.deleteState({ activityId, agent, client, stateId });
+      }
+      res.status(204).setHeader('X-Experience-API-Version', xapiHeaderVersion);
+      res.send();
       return;
     }
     default: {
