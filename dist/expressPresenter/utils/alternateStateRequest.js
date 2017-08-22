@@ -1,4 +1,12 @@
 "use strict";
+var __assign = (this && this.__assign) || Object.assign || function(t) {
+    for (var s, i = 1, n = arguments.length; i < n; i++) {
+        s = arguments[i];
+        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+            t[p] = s[p];
+    }
+    return t;
+};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     return new (P || (P = Promise))(function (resolve, reject) {
         function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
@@ -36,6 +44,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 var _this = this;
 Object.defineProperty(exports, "__esModule", { value: true });
+var lodash_1 = require("lodash");
 var InvalidContentType_1 = require("../../errors/InvalidContentType");
 var InvalidMethod_1 = require("../../errors/InvalidMethod");
 var constants_1 = require("../../utils/constants");
@@ -46,10 +55,13 @@ var getClient_1 = require("./getClient");
 var getStateFromService_1 = require("./getStateFromService");
 var getStatesFromService_1 = require("./getStatesFromService");
 var validateVersionHeader_1 = require("./validateVersionHeader");
+var getHeader = function (req, name) {
+    return lodash_1.defaultTo(req.body[name], lodash_1.defaultTo(req.header(name), ''));
+};
 exports.default = function (_a) {
     var config = _a.config, method = _a.method, req = _a.req, res = _a.res;
     return __awaiter(_this, void 0, void 0, function () {
-        var _a, opts, client, agent, activityId, registration, stateId, opts, client, agent, stateId, activityId;
+        var _a, client, opts, client, agent, activityId, registration, stateId, client, opts, client, agent, stateId, activityId;
         return __generator(this, function (_b) {
             switch (_b.label) {
                 case 0:
@@ -59,34 +71,37 @@ exports.default = function (_a) {
                     _a = method;
                     switch (_a) {
                         case 'POST': return [3 /*break*/, 1];
-                        case 'GET': return [3 /*break*/, 4];
-                        case 'PUT': return [3 /*break*/, 9];
-                        case 'DELETE': return [3 /*break*/, 12];
+                        case 'GET': return [3 /*break*/, 5];
+                        case 'PUT': return [3 /*break*/, 10];
+                        case 'DELETE': return [3 /*break*/, 14];
                     }
-                    return [3 /*break*/, 18];
-                case 1: return [4 /*yield*/, getAlternateStateWriteOpts_1.default(config, req)];
+                    return [3 /*break*/, 20];
+                case 1: return [4 /*yield*/, getClient_1.default(config, getHeader(req, 'Authorization'))];
                 case 2:
-                    opts = _b.sent();
-                    validateVersionHeader_1.default(req.header('X-Experience-API-Version'));
-                    return [4 /*yield*/, config.service.patchState(opts)];
+                    client = _b.sent();
+                    return [4 /*yield*/, getAlternateStateWriteOpts_1.default(req)];
                 case 3:
+                    opts = _b.sent();
+                    validateVersionHeader_1.default(getHeader(req, 'X-Experience-API-Version'));
+                    return [4 /*yield*/, config.service.patchState(__assign({ client: client }, opts))];
+                case 4:
                     _b.sent();
                     res.status(204).setHeader('X-Experience-API-Version', constants_1.xapiHeaderVersion);
                     res.send();
                     return [2 /*return*/];
-                case 4: return [4 /*yield*/, getClient_1.default(config, req.body.Authorization)];
-                case 5:
+                case 5: return [4 /*yield*/, getClient_1.default(config, getHeader(req, 'Authorization'))];
+                case 6:
                     client = _b.sent();
-                    validateVersionHeader_1.default(req.header('X-Experience-API-Version'));
+                    validateVersionHeader_1.default(getHeader(req, 'X-Experience-API-Version'));
                     agent = getAgent_1.default(req.body.agent);
                     activityId = getActivityId_1.default(req.body.activityId);
                     registration = req.body.registration;
-                    if (!(req.body.stateId === undefined)) return [3 /*break*/, 7];
+                    if (!(req.body.stateId === undefined)) return [3 /*break*/, 8];
                     return [4 /*yield*/, getStatesFromService_1.default({ config: config, res: res, activityId: activityId, agent: agent, client: client, registration: registration })];
-                case 6:
+                case 7:
                     _b.sent();
                     return [2 /*return*/];
-                case 7:
+                case 8:
                     stateId = req.body.stateId;
                     return [4 /*yield*/, getStateFromService_1.default({
                             activityId: activityId,
@@ -97,45 +112,48 @@ exports.default = function (_a) {
                             res: res,
                             stateId: stateId,
                         })];
-                case 8:
+                case 9:
                     _b.sent();
                     return [2 /*return*/];
-                case 9: return [4 /*yield*/, getAlternateStateWriteOpts_1.default(config, req)];
-                case 10:
-                    opts = _b.sent();
-                    validateVersionHeader_1.default(req.header('X-Experience-API-Version'));
-                    return [4 /*yield*/, config.service.overwriteState(opts)];
+                case 10: return [4 /*yield*/, getClient_1.default(config, getHeader(req, 'Authorization'))];
                 case 11:
+                    client = _b.sent();
+                    return [4 /*yield*/, getAlternateStateWriteOpts_1.default(req)];
+                case 12:
+                    opts = _b.sent();
+                    validateVersionHeader_1.default(getHeader(req, 'X-Experience-API-Version'));
+                    return [4 /*yield*/, config.service.overwriteState(__assign({ client: client }, opts))];
+                case 13:
                     _b.sent();
                     res.status(204).setHeader('X-Experience-API-Version', constants_1.xapiHeaderVersion);
                     res.send();
                     return [2 /*return*/];
-                case 12: return [4 /*yield*/, getClient_1.default(config, req.body.Authorization)];
-                case 13:
+                case 14: return [4 /*yield*/, getClient_1.default(config, getHeader(req, 'Authorization'))];
+                case 15:
                     client = _b.sent();
-                    validateVersionHeader_1.default(req.header('X-Experience-API-Version'));
+                    validateVersionHeader_1.default(getHeader(req, 'X-Experience-API-Version'));
                     agent = getAgent_1.default(req.body.agent);
                     stateId = req.body.stateId;
                     activityId = getActivityId_1.default(req.body.activityId);
-                    if (!(stateId === undefined)) return [3 /*break*/, 15];
+                    if (!(stateId === undefined)) return [3 /*break*/, 17];
                     return [4 /*yield*/, config.service.deleteStates({ activityId: activityId, agent: agent, client: client })];
-                case 14:
-                    _b.sent();
-                    return [3 /*break*/, 17];
-                case 15: return [4 /*yield*/, config.service.deleteState({ activityId: activityId, agent: agent, client: client, stateId: stateId })];
                 case 16:
                     _b.sent();
-                    _b.label = 17;
-                case 17:
+                    return [3 /*break*/, 19];
+                case 17: return [4 /*yield*/, config.service.deleteState({ activityId: activityId, agent: agent, client: client, stateId: stateId })];
+                case 18:
+                    _b.sent();
+                    _b.label = 19;
+                case 19:
                     res.status(204).setHeader('X-Experience-API-Version', constants_1.xapiHeaderVersion);
                     res.send();
                     return [2 /*return*/];
-                case 18:
+                case 20:
                     {
                         throw new InvalidMethod_1.default(method);
                     }
-                    _b.label = 19;
-                case 19: return [2 /*return*/];
+                    _b.label = 21;
+                case 21: return [2 /*return*/];
             }
         });
     });
