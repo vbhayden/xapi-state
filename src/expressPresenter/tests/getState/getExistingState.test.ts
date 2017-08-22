@@ -8,12 +8,21 @@ import {
   TEST_MBOXSHA1_AGENT,
   TEST_OPENID_AGENT,
 } from '../../../utils/testValues';
-import { NOT_FOUND_404_HTTP_CODE, OK_200_HTTP_CODE } from '../../utils/httpCodes';
+import {
+  CLIENT_ERROR_400_HTTP_CODE,
+  NOT_FOUND_404_HTTP_CODE,
+  OK_200_HTTP_CODE,
+} from '../../utils/httpCodes';
 import setup from '../utils/setup';
 import getState from './utils/getState';
 
 describe('expressPresenter.getState with existing state', () => {
   setup();
+
+  it('should 400 without version header', async () => {
+    await createTextState();
+    await getState({}, false).expect(CLIENT_ERROR_400_HTTP_CODE);
+  });
 
   it('should get when getting text', async () => {
     await createTextState();

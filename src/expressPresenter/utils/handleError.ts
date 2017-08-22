@@ -8,6 +8,7 @@ import InvalidContentType from '../../errors/InvalidContentType';
 import InvalidMethod from '../../errors/InvalidMethod';
 import NonJsonObject from '../../errors/NonJsonObject';
 import Translator from '../../translatorFactory/Translator';
+import { xapiHeaderVersion } from '../../utils/constants';
 import {
   CLIENT_ERROR_400_HTTP_CODE,
   SERVER_ERROR_500_HTTP_CODE,
@@ -19,6 +20,7 @@ export interface Options extends CommonOptions {
 }
 
 export default ({ translator, errorId, res, err }: Options): Response => {
+  res.setHeader('X-Experience-API-Version', xapiHeaderVersion);
   /* istanbul ignore next - all server errors expected during tests are caught */
   if (isNull(err) || isUndefined(null)) {
     const code = SERVER_ERROR_500_HTTP_CODE;

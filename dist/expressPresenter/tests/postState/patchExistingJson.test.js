@@ -43,6 +43,19 @@ var setup_1 = require("../utils/setup");
 var patchContent_1 = require("./utils/patchContent");
 describe('expressPresenter.postState with existing JSON content', function () {
     setup_1.default();
+    it('should 400 without version header', function () { return __awaiter(_this, void 0, void 0, function () {
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, createJsonState_1.default()];
+                case 1:
+                    _a.sent();
+                    return [4 /*yield*/, patchContent_1.default(testValues_1.TEST_CONTENT, testValues_1.TEXT_CONTENT_TYPE, false).expect(httpCodes_1.CLIENT_ERROR_400_HTTP_CODE)];
+                case 2:
+                    _a.sent();
+                    return [2 /*return*/];
+            }
+        });
+    }); });
     it('should error when patching with text content', function () { return __awaiter(_this, void 0, void 0, function () {
         return __generator(this, function (_a) {
             switch (_a.label) {

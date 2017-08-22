@@ -6,12 +6,17 @@ import {
   TEST_OPENID_AGENT,
   TEST_STATE_ID,
 } from '../../../utils/testValues';
-import { OK_200_HTTP_CODE } from '../../utils/httpCodes';
+import { CLIENT_ERROR_400_HTTP_CODE, OK_200_HTTP_CODE } from '../../utils/httpCodes';
 import setup from '../utils/setup';
 import getStates from './utils/getStates';
 
 describe('expressPresenter.getStates with existing model', () => {
   setup();
+
+  it('should 400 without version header', async () => {
+    await createTextState();
+    await getStates({}, false).expect(CLIENT_ERROR_400_HTTP_CODE);
+  });
 
   it('should return state ids when getting a existing model', async () => {
     await createTextState();

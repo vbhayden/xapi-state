@@ -10,6 +10,7 @@ import getClient from './getClient';
 import getStateFromService from './getStateFromService';
 import getStateId from './getStateId';
 import getStatesFromService from './getStatesFromService';
+import validateVersionHeader from './validateVersionHeader';
 
 export interface Options {
   readonly config: Config;
@@ -26,12 +27,14 @@ export default async ({ config, method, req, res }: Options) => {
   switch (method) {
     case 'POST': {
       const opts = await getAlternateStateWriteOpts(config, req);
+      validateVersionHeader(req.header('X-Experience-API-Version'));
       await config.service.patchState(opts);
       res.status(204).send();
       return;
     }
     case 'GET': {
       const client = await getClient(config, req.body.Authorization);
+      validateVersionHeader(req.header('X-Experience-API-Version'));
       const agent = getAgent(req.body.agent);
       const activityId = getActivityId(req.body.activityId);
       const registration = req.body.registration;
@@ -55,12 +58,14 @@ export default async ({ config, method, req, res }: Options) => {
     }
     case 'PUT': {
       const opts = await getAlternateStateWriteOpts(config, req);
+      validateVersionHeader(req.header('X-Experience-API-Version'));
       await config.service.overwriteState(opts);
       res.status(204).send();
       return;
     }
     case 'DELETE': {
       const client = await getClient(config, req.body.Authorization);
+      validateVersionHeader(req.header('X-Experience-API-Version'));
       const agent = getAgent(req.body.agent);
       const stateId = getStateId(req.body.stateId);
       const activityId = getActivityId(req.body.activityId);

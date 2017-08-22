@@ -1,4 +1,4 @@
 /// <reference types="supertest" />
 import { Test } from 'supertest';
-declare const _default: (content: string, contentType: string) => Test;
+declare const _default: (content: string, contentType: string, sendVersion?: boolean) => Test;
 export default _default;

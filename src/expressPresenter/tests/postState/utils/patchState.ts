@@ -1,4 +1,5 @@
 import { Test } from 'supertest';
+import { xapiHeaderVersion } from '../../../../utils/constants';
 import {
   JSON_CONTENT_TYPE,
   TEST_ACTIVITY_ID,
@@ -13,11 +14,15 @@ export default (
   optsOverrides: object = {},
   content: string = TEST_OBJECT_CONTENT,
   contentType: string = JSON_CONTENT_TYPE,
+  sendVersion = true,
 ): Test => {
-  return supertest
+  const req = supertest
     .post('/xAPI/activities/state')
-    .set('Content-Type', contentType)
-    .query({
+    .set('Content-Type', contentType);
+  if (sendVersion) {
+    req.set('X-Experience-API-Version', xapiHeaderVersion);
+  }
+  return req.query({
       activityId: TEST_ACTIVITY_ID,
       agent: JSON.stringify(TEST_MBOX_AGENT),
       registration: TEST_REGISTRATION,

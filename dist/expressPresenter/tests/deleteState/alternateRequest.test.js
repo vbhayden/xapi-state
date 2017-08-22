@@ -37,6 +37,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 var _this = this;
 Object.defineProperty(exports, "__esModule", { value: true });
 var assertDeleted_1 = require("../../../utils/assertDeleted");
+var constants_1 = require("../../../utils/constants");
 var createTextState_1 = require("../../../utils/createTextState");
 var testValues_1 = require("../../../utils/testValues");
 var httpCodes_1 = require("../../utils/httpCodes");
@@ -52,6 +53,7 @@ describe('expressPresenter.deleteState using the alternate request syntax', func
                     return [4 /*yield*/, supertest
                             .post('/xAPI/activities/state')
                             .set('Content-Type', testValues_1.ALTERNATE_CONTENT_TYPE)
+                            .set('X-Experience-API-Version', constants_1.xapiHeaderVersion)
                             .query({ method: 'DELETE' })
                             .send({
                             activityId: testValues_1.TEST_ACTIVITY_ID,

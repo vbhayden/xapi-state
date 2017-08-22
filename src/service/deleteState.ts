@@ -24,7 +24,6 @@ export default (config: Config) => {
     if (deleteResult.contentType === 'application/json') {
       return;
     }
-
     await config.repo.deleteStateContent({
       key: deleteResult.id,
     });

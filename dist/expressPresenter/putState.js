@@ -40,6 +40,7 @@ var constants_1 = require("../utils/constants");
 var catchErrors_1 = require("./utils/catchErrors");
 var getStateWriteOpts_1 = require("./utils/getStateWriteOpts");
 var httpCodes_1 = require("./utils/httpCodes");
+var validateVersionHeader_1 = require("./utils/validateVersionHeader");
 exports.default = function (config) {
     return catchErrors_1.default(config, function (req, res) { return __awaiter(_this, void 0, void 0, function () {
         var opts;
@@ -48,6 +49,7 @@ exports.default = function (config) {
                 case 0: return [4 /*yield*/, getStateWriteOpts_1.default(config, req)];
                 case 1:
                     opts = _a.sent();
+                    validateVersionHeader_1.default(req.header('X-Experience-API-Version'));
                     return [4 /*yield*/, config.service.overwriteState(opts)];
                 case 2:
                     _a.sent();
