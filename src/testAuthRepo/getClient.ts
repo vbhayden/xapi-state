@@ -1,3 +1,4 @@
+import NoModel from 'jscommons/dist/errors/NoModel';
 import GetClientOptions from '../repoFactory/options/GetClientOptions';
 import GetClientResult from '../repoFactory/results/GetClientResult';
 import {
@@ -6,6 +7,7 @@ import {
   TEST_CLIENT_OUTSIDE_STORE,
   TEST_INVALID_SCOPE_CLIENT,
   TEST_INVALID_SCOPE_TOKEN,
+  TEST_MISSING_TOKEN,
   TEST_OUTSIDE_ORG_TOKEN,
   TEST_OUTSIDE_STORE_TOKEN,
   TEST_VALID_SCOPE_CLIENT,
@@ -24,6 +26,8 @@ export default (_config: Config) => {
         return { client: TEST_CLIENT_OUTSIDE_ORG };
       case TEST_OUTSIDE_STORE_TOKEN:
         return { client: TEST_CLIENT_OUTSIDE_STORE };
+      case TEST_MISSING_TOKEN:
+        throw new NoModel('Client');
       default:
         return { client: TEST_CLIENT };
     }

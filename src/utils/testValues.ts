@@ -33,6 +33,8 @@ export const TEST_CLIENT_OUTSIDE_ORG: ClientModel = {
   organisation: '58fe13e34effd3c26a7fc4c6',
 };
 
+export const TEST_MISSING_TOKEN = 'Basic missing_token';
+
 export const TEST_ACTIVITY_ID = 'http://www.example.com';
 export const TEST_IMMUTABLE_ACTIVITY_ID = 'http://www.example.org';
 export const TEST_INVALID_ACTIVITY_ID = 'http';

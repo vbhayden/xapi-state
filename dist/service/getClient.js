@@ -36,10 +36,27 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 var _this = this;
 Object.defineProperty(exports, "__esModule", { value: true });
+var NoModel_1 = require("jscommons/dist/errors/NoModel");
+var Unauthorised_1 = require("jscommons/dist/errors/Unauthorised");
+var lodash_1 = require("lodash");
 exports.default = function (config) {
     return function (opts) { return __awaiter(_this, void 0, void 0, function () {
+        var err_1;
         return __generator(this, function (_a) {
-            return [2 /*return*/, config.repo.getClient(opts)];
+            switch (_a.label) {
+                case 0:
+                    _a.trys.push([0, 2, , 3]);
+                    return [4 /*yield*/, config.repo.getClient(opts)];
+                case 1: return [2 /*return*/, _a.sent()];
+                case 2:
+                    err_1 = _a.sent();
+                    if (lodash_1.isObject(err_1) && err_1.constructor === NoModel_1.default) {
+                        throw new Unauthorised_1.default();
+                    }
+                    /* istanbul ignore next */
+                    throw err_1;
+                case 3: return [2 /*return*/];
+            }
         });
     }); };
 };

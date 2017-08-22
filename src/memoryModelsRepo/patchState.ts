@@ -13,28 +13,29 @@ export default (config: Config) => {
     });
 
     // Patches the state if it does exist, otherwise it creates the state.
-    if (matchingStates.length > 0) {
-      const update = {
-        contentType: opts.contentType,
-        etag: opts.etag,
-        updatedAt: new Date(),
-      };
-      const updatedStates = storedStates.map((state) => {
-        if (!isMatchingState(state, opts)) {
-          return state;
-        }
-        if (state.contentType !== 'application/json' || !isPlainObject(state.content)) {
-          throw new NonJsonObject();
-        }
-        const content = {
-          ...state.content,
-          ...opts.content,
-        };
-        return { ...state, ...update, content };
-      });
-      config.state.states = updatedStates;
+    if (matchingStates.length === 0) {
+      createState(config, opts);
+      return;
     }
-    createState(config, opts);
-    return;
+
+    const update = {
+      contentType: opts.contentType,
+      etag: opts.etag,
+      updatedAt: new Date(),
+    };
+    const updatedStates = storedStates.map((state) => {
+      if (!isMatchingState(state, opts)) {
+        return state;
+      }
+      if (state.contentType !== 'application/json' || !isPlainObject(state.content)) {
+        throw new NonJsonObject();
+      }
+      const content = {
+        ...state.content,
+        ...opts.content,
+      };
+      return { ...state, ...update, content };
+    });
+    config.state.states = updatedStates;
   };
 };

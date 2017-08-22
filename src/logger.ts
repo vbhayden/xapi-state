@@ -1,8 +1,8 @@
 import commonWinston from 'jscommons/dist/winston';
-import * as winston from 'winston';
+import { LoggerInstance } from 'winston';
 import config from './config';
 
-const logger: winston.LoggerInstance = commonWinston({
+const logger: LoggerInstance = commonWinston({
   cloudWatch: {
     awsConfig: {
       accessKeyId: config.winston.cloudWatch.awsConfig.accessKeyId,
