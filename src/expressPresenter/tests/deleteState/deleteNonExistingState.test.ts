@@ -36,10 +36,6 @@ describe('expressPresenter.deleteState with non-existing state', () => {
     await deleteState({ activityId: undefined }).expect(CLIENT_ERROR_400_HTTP_CODE);
   });
 
-  it('should throw warnings when missing the state id', async () => {
-    await deleteState({ stateId: undefined }).expect(CLIENT_ERROR_400_HTTP_CODE);
-  });
-
   it('should throw warnings when missing the agent', async () => {
     await deleteState({ agent: undefined }).expect(CLIENT_ERROR_400_HTTP_CODE);
   });

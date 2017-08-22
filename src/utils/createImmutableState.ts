@@ -1,4 +1,5 @@
 import * as stringToStream from 'string-to-stream';
+import OverwriteStateOptions from '../serviceFactory/options/OverwriteStateOptions';
 import service from './testService';
 import {
   TEST_CLIENT,
@@ -10,7 +11,7 @@ import {
   TEXT_CONTENT_TYPE,
 } from './testValues';
 
-export default async () => {
+export default async (optsOverrides: Partial<OverwriteStateOptions> = {}) => {
   await service.overwriteState({
     activityId: TEST_IMMUTABLE_ACTIVITY_ID,
     agent: TEST_MBOX_AGENT,
@@ -19,5 +20,6 @@ export default async () => {
     contentType: TEXT_CONTENT_TYPE,
     registration: TEST_REGISTRATION,
     stateId: TEST_STATE_ID,
+    ...optsOverrides,
   });
 };

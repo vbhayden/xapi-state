@@ -41,7 +41,6 @@ var catchErrors_1 = require("./utils/catchErrors");
 var getActivityId_1 = require("./utils/getActivityId");
 var getAgent_1 = require("./utils/getAgent");
 var getClient_1 = require("./utils/getClient");
-var getStateId_1 = require("./utils/getStateId");
 var httpCodes_1 = require("./utils/httpCodes");
 var validateVersionHeader_1 = require("./utils/validateVersionHeader");
 exports.default = function (config) {
@@ -53,13 +52,20 @@ exports.default = function (config) {
                 case 1:
                     client = _a.sent();
                     validateVersionHeader_1.default(req.header('X-Experience-API-Version'));
-                    stateId = getStateId_1.default(req.query.stateId);
+                    stateId = req.query.stateId;
                     activityId = getActivityId_1.default(req.query.activityId);
                     agent = getAgent_1.default(req.query.agent);
                     registration = req.query.registration;
-                    return [4 /*yield*/, config.service.deleteState({ activityId: activityId, agent: agent, client: client, registration: registration, stateId: stateId })];
+                    if (!(stateId === undefined)) return [3 /*break*/, 3];
+                    return [4 /*yield*/, config.service.deleteStates({ activityId: activityId, agent: agent, client: client, registration: registration })];
                 case 2:
                     _a.sent();
+                    return [3 /*break*/, 5];
+                case 3: return [4 /*yield*/, config.service.deleteState({ activityId: activityId, agent: agent, client: client, registration: registration, stateId: stateId })];
+                case 4:
+                    _a.sent();
+                    _a.label = 5;
+                case 5:
                     res.status(httpCodes_1.NO_CONTENT_204_HTTP_CODE);
                     res.setHeader('X-Experience-API-Version', constants_1.xapiHeaderVersion);
                     res.send();

@@ -1,5 +1,7 @@
 import * as assert from 'assert';
 import * as streamToString from 'stream-to-string';
+import GetStateOptions from '../serviceFactory/options/GetStateOptions';
+import GetStatesOptions from '../serviceFactory/options/GetStatesOptions';
 import service from './testService';
 import {
   TEST_CLIENT,
@@ -10,7 +12,10 @@ import {
   TEST_STATE_ID,
 } from './testValues';
 
-export default async () => {
+export default async (
+  statesOptsOverrides: Partial<GetStatesOptions> = {},
+  stateOptsOverrides: Partial<GetStateOptions> = {},
+) => {
   const expectedStateIds = [TEST_STATE_ID];
 
   // Checks the stateIds.
@@ -19,6 +24,7 @@ export default async () => {
     agent: TEST_MBOX_AGENT,
     client: TEST_CLIENT,
     registration: TEST_REGISTRATION,
+    ...statesOptsOverrides,
   });
   const actualStateIds = statesResult.stateIds;
   assert.deepEqual(actualStateIds, expectedStateIds);
@@ -30,6 +36,7 @@ export default async () => {
     client: TEST_CLIENT,
     registration: TEST_REGISTRATION,
     stateId: TEST_STATE_ID,
+    ...stateOptsOverrides,
   });
   const actualContent = await streamToString(agentStateResult.content);
   assert.equal(actualContent, TEST_IMMUTABLE_CONTENT);

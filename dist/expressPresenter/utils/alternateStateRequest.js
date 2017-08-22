@@ -38,12 +38,12 @@ var _this = this;
 Object.defineProperty(exports, "__esModule", { value: true });
 var InvalidContentType_1 = require("../../errors/InvalidContentType");
 var InvalidMethod_1 = require("../../errors/InvalidMethod");
+var constants_1 = require("../../utils/constants");
 var getActivityId_1 = require("./getActivityId");
 var getAgent_1 = require("./getAgent");
 var getAlternateStateWriteOpts_1 = require("./getAlternateStateWriteOpts");
 var getClient_1 = require("./getClient");
 var getStateFromService_1 = require("./getStateFromService");
-var getStateId_1 = require("./getStateId");
 var getStatesFromService_1 = require("./getStatesFromService");
 var validateVersionHeader_1 = require("./validateVersionHeader");
 exports.default = function (_a) {
@@ -63,7 +63,7 @@ exports.default = function (_a) {
                         case 'PUT': return [3 /*break*/, 9];
                         case 'DELETE': return [3 /*break*/, 12];
                     }
-                    return [3 /*break*/, 15];
+                    return [3 /*break*/, 18];
                 case 1: return [4 /*yield*/, getAlternateStateWriteOpts_1.default(config, req)];
                 case 2:
                     opts = _b.sent();
@@ -71,7 +71,8 @@ exports.default = function (_a) {
                     return [4 /*yield*/, config.service.patchState(opts)];
                 case 3:
                     _b.sent();
-                    res.status(204).send();
+                    res.status(204).setHeader('X-Experience-API-Version', constants_1.xapiHeaderVersion);
+                    res.send();
                     return [2 /*return*/];
                 case 4: return [4 /*yield*/, getClient_1.default(config, req.body.Authorization)];
                 case 5:
@@ -106,26 +107,35 @@ exports.default = function (_a) {
                     return [4 /*yield*/, config.service.overwriteState(opts)];
                 case 11:
                     _b.sent();
-                    res.status(204).send();
+                    res.status(204).setHeader('X-Experience-API-Version', constants_1.xapiHeaderVersion);
+                    res.send();
                     return [2 /*return*/];
                 case 12: return [4 /*yield*/, getClient_1.default(config, req.body.Authorization)];
                 case 13:
                     client = _b.sent();
                     validateVersionHeader_1.default(req.header('X-Experience-API-Version'));
                     agent = getAgent_1.default(req.body.agent);
-                    stateId = getStateId_1.default(req.body.stateId);
+                    stateId = req.body.stateId;
                     activityId = getActivityId_1.default(req.body.activityId);
-                    return [4 /*yield*/, config.service.deleteState({ activityId: activityId, agent: agent, client: client, stateId: stateId })];
+                    if (!(stateId === undefined)) return [3 /*break*/, 15];
+                    return [4 /*yield*/, config.service.deleteStates({ activityId: activityId, agent: agent, client: client })];
                 case 14:
                     _b.sent();
-                    res.status(204).send();
+                    return [3 /*break*/, 17];
+                case 15: return [4 /*yield*/, config.service.deleteState({ activityId: activityId, agent: agent, client: client, stateId: stateId })];
+                case 16:
+                    _b.sent();
+                    _b.label = 17;
+                case 17:
+                    res.status(204).setHeader('X-Experience-API-Version', constants_1.xapiHeaderVersion);
+                    res.send();
                     return [2 /*return*/];
-                case 15:
+                case 18:
                     {
                         throw new InvalidMethod_1.default(method);
                     }
-                    _b.label = 16;
-                case 16: return [2 /*return*/];
+                    _b.label = 19;
+                case 19: return [2 /*return*/];
             }
         });
     });
