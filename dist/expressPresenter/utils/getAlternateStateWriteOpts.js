@@ -39,32 +39,25 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var stringToStream = require("string-to-stream");
 var getActivityId_1 = require("./getActivityId");
 var getAgent_1 = require("./getAgent");
-var getClient_1 = require("./getClient");
 var getContentType_1 = require("./getContentType");
 var getStateId_1 = require("./getStateId");
-exports.default = function (config, req) { return __awaiter(_this, void 0, void 0, function () {
-    var client, contentType, agent, stateId, activityId, registration, content;
+exports.default = function (req) { return __awaiter(_this, void 0, void 0, function () {
+    var contentType, agent, stateId, activityId, registration, content;
     return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0: return [4 /*yield*/, getClient_1.default(config, req.body.Authorization)];
-            case 1:
-                client = _a.sent();
-                contentType = getContentType_1.default(req.body['Content-Type']);
-                agent = getAgent_1.default(req.body.agent);
-                stateId = getStateId_1.default(req.body.stateId);
-                activityId = getActivityId_1.default(req.body.activityId);
-                registration = req.body.registration;
-                content = stringToStream(req.body.content);
-                return [2 /*return*/, {
-                        activityId: activityId,
-                        agent: agent,
-                        client: client,
-                        content: content,
-                        contentType: contentType,
-                        registration: registration,
-                        stateId: stateId,
-                    }];
-        }
+        contentType = getContentType_1.default(req.body['Content-Type']);
+        agent = getAgent_1.default(req.body.agent);
+        stateId = getStateId_1.default(req.body.stateId);
+        activityId = getActivityId_1.default(req.body.activityId);
+        registration = req.body.registration;
+        content = stringToStream(req.body.content);
+        return [2 /*return*/, {
+                activityId: activityId,
+                agent: agent,
+                content: content,
+                contentType: contentType,
+                registration: registration,
+                stateId: stateId,
+            }];
     });
 }); };
 //# sourceMappingURL=getAlternateStateWriteOpts.js.map

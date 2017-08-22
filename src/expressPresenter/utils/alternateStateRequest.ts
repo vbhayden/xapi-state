@@ -1,5 +1,6 @@
 /* tslint:disable:no-magic-numbers */
 import { Request, Response } from 'express';
+import { defaultTo } from 'lodash';
 import InvalidContentType from '../../errors/InvalidContentType';
 import InvalidMethod from '../../errors/InvalidMethod';
 import { xapiHeaderVersion } from '../../utils/constants';
@@ -19,6 +20,10 @@ export interface Options {
   readonly res: Response;
 }
 
+const getHeader = (req: Request, name: string): string => {
+  return defaultTo(req.body[name], defaultTo<string>(req.header(name), ''));
+};
+
 export default async ({ config, method, req, res }: Options) => {
   if (req.header('Content-Type') !== 'application/x-www-form-urlencoded') {
     throw new InvalidContentType(req.header('Content-Type'));
@@ -26,16 +31,17 @@ export default async ({ config, method, req, res }: Options) => {
 
   switch (method) {
     case 'POST': {
-      const opts = await getAlternateStateWriteOpts(config, req);
-      validateVersionHeader(req.header('X-Experience-API-Version'));
-      await config.service.patchState(opts);
+      const client = await getClient(config, getHeader(req, 'Authorization'));
+      const opts = await getAlternateStateWriteOpts(req);
+      validateVersionHeader(getHeader(req, 'X-Experience-API-Version'));
+      await config.service.patchState({ client, ...opts });
       res.status(204).setHeader('X-Experience-API-Version', xapiHeaderVersion);
       res.send();
       return;
     }
     case 'GET': {
-      const client = await getClient(config, req.body.Authorization);
-      validateVersionHeader(req.header('X-Experience-API-Version'));
+      const client = await getClient(config, getHeader(req, 'Authorization'));
+      validateVersionHeader(getHeader(req, 'X-Experience-API-Version'));
       const agent = getAgent(req.body.agent);
       const activityId = getActivityId(req.body.activityId);
       const registration = req.body.registration;
@@ -58,16 +64,17 @@ export default async ({ config, method, req, res }: Options) => {
       }
     }
     case 'PUT': {
-      const opts = await getAlternateStateWriteOpts(config, req);
-      validateVersionHeader(req.header('X-Experience-API-Version'));
-      await config.service.overwriteState(opts);
+      const client = await getClient(config, getHeader(req, 'Authorization'));
+      const opts = await getAlternateStateWriteOpts(req);
+      validateVersionHeader(getHeader(req, 'X-Experience-API-Version'));
+      await config.service.overwriteState({ client, ...opts });
       res.status(204).setHeader('X-Experience-API-Version', xapiHeaderVersion);
       res.send();
       return;
     }
     case 'DELETE': {
-      const client = await getClient(config, req.body.Authorization);
-      validateVersionHeader(req.header('X-Experience-API-Version'));
+      const client = await getClient(config, getHeader(req, 'Authorization'));
+      validateVersionHeader(getHeader(req, 'X-Experience-API-Version'));
       const agent = getAgent(req.body.agent);
       const stateId = req.body.stateId;
       const activityId = getActivityId(req.body.activityId);
