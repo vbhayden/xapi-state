@@ -13,6 +13,11 @@ import patchContent from './utils/patchContent';
 describe('expressPresenter.postState with existing JSON content', () => {
   setup();
 
+  it('should 400 without version header', async () => {
+    await createJsonState();
+    await patchContent(TEST_CONTENT, TEXT_CONTENT_TYPE, false).expect(CLIENT_ERROR_400_HTTP_CODE);
+  });
+
   it('should error when patching with text content', async () => {
     await createJsonState();
     await patchContent(TEST_CONTENT, TEXT_CONTENT_TYPE).expect(CLIENT_ERROR_400_HTTP_CODE);

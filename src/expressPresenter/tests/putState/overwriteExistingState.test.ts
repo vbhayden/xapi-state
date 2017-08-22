@@ -9,12 +9,17 @@ import {
   TEST_MBOXSHA1_AGENT,
   TEST_OPENID_AGENT,
  } from '../../../utils/testValues';
-import { NO_CONTENT_204_HTTP_CODE } from '../../utils/httpCodes';
+import { CLIENT_ERROR_400_HTTP_CODE, NO_CONTENT_204_HTTP_CODE } from '../../utils/httpCodes';
 import setup from '../utils/setup';
 import overwriteState from './utils/overwriteState';
 
 describe('expressPresenter.putState with existing model', () => {
   setup();
+
+  it('should 400 without version header', async () => {
+    await createTextState();
+    await overwriteState({}, TEST_IMMUTABLE_CONTENT, '', false).expect(CLIENT_ERROR_400_HTTP_CODE);
+  });
 
   it('should overwrite model when overwriting an existing model', async () => {
     await createTextState();

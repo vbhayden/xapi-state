@@ -1,4 +1,5 @@
 import { Test } from 'supertest';
+import { xapiHeaderVersion } from '../../../../utils/constants';
 import {
   TEST_ACTIVITY_ID,
   TEST_MBOX_AGENT,
@@ -17,6 +18,7 @@ const options = {
 export default (optsOverrides: object = {}): Test => {
   return supertest
     .delete('/xAPI/activities/state')
+    .set('X-Experience-API-Version', xapiHeaderVersion)
     .query({
       ...options,
       ...optsOverrides,

@@ -75,9 +75,7 @@ exports.default = function (config) {
                 });
                 config.state.states = updatedStates;
             }
-            else {
-                createState_1.default(config, opts);
-            }
+            createState_1.default(config, opts);
             return [2 /*return*/];
         });
     }); };

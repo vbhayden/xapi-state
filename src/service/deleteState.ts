@@ -21,10 +21,11 @@ export default (config: Config) => {
       stateId: opts.stateId,
     });
 
-    if (deleteResult.contentType !== 'application/json') {
-      await config.repo.deleteStateContent({
-        key: deleteResult.id,
-      });
+    if (deleteResult.contentType === 'application/json') {
+      return;
     }
+    await config.repo.deleteStateContent({
+      key: deleteResult.id,
+    });
   };
 };

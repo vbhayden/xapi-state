@@ -37,12 +37,40 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 var _this = this;
 Object.defineProperty(exports, "__esModule", { value: true });
 var assertState_1 = require("../../../utils/assertState");
+var constants_1 = require("../../../utils/constants");
 var createObjectState_1 = require("../../../utils/createObjectState");
 var testValues_1 = require("../../../utils/testValues");
 var httpCodes_1 = require("../../utils/httpCodes");
 var setup_1 = require("../utils/setup");
 describe('expressPresenter.postState using the alternate request syntax', function () {
     var supertest = setup_1.default().supertest;
+    it('should 400 without version header', function () { return __awaiter(_this, void 0, void 0, function () {
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, createObjectState_1.default()];
+                case 1:
+                    _a.sent();
+                    return [4 /*yield*/, supertest
+                            .post('/xAPI/activities/state')
+                            .set('Content-Type', testValues_1.ALTERNATE_CONTENT_TYPE)
+                            .query({
+                            method: 'POST',
+                        })
+                            .send({
+                            'Content-Type': testValues_1.JSON_CONTENT_TYPE,
+                            activityId: testValues_1.TEST_ACTIVITY_ID,
+                            agent: JSON.stringify(testValues_1.TEST_MBOX_AGENT),
+                            content: '{"bar": 2}',
+                            registration: testValues_1.TEST_REGISTRATION,
+                            stateId: testValues_1.TEST_STATE_ID,
+                        })
+                            .expect(httpCodes_1.CLIENT_ERROR_400_HTTP_CODE)];
+                case 2:
+                    _a.sent();
+                    return [2 /*return*/];
+            }
+        });
+    }); });
     it('should merge when patching with object content ', function () { return __awaiter(_this, void 0, void 0, function () {
         return __generator(this, function (_a) {
             switch (_a.label) {
@@ -52,6 +80,7 @@ describe('expressPresenter.postState using the alternate request syntax', functi
                     return [4 /*yield*/, supertest
                             .post('/xAPI/activities/state')
                             .set('Content-Type', testValues_1.ALTERNATE_CONTENT_TYPE)
+                            .set('X-Experience-API-Version', constants_1.xapiHeaderVersion)
                             .query({
                             method: 'POST',
                         })

@@ -46,6 +46,19 @@ var setup_1 = require("../utils/setup");
 var overwriteState_1 = require("./utils/overwriteState");
 describe('expressPresenter.putState with existing model', function () {
     setup_1.default();
+    it('should 400 without version header', function () { return __awaiter(_this, void 0, void 0, function () {
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, createTextState_1.default()];
+                case 1:
+                    _a.sent();
+                    return [4 /*yield*/, overwriteState_1.default({}, testValues_1.TEST_IMMUTABLE_CONTENT, '', false).expect(httpCodes_1.CLIENT_ERROR_400_HTTP_CODE)];
+                case 2:
+                    _a.sent();
+                    return [2 /*return*/];
+            }
+        });
+    }); });
     it('should overwrite model when overwriting an existing model', function () { return __awaiter(_this, void 0, void 0, function () {
         return __generator(this, function (_a) {
             switch (_a.label) {

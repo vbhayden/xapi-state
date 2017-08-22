@@ -45,6 +45,7 @@ var getClient_1 = require("./getClient");
 var getStateFromService_1 = require("./getStateFromService");
 var getStateId_1 = require("./getStateId");
 var getStatesFromService_1 = require("./getStatesFromService");
+var validateVersionHeader_1 = require("./validateVersionHeader");
 exports.default = function (_a) {
     var config = _a.config, method = _a.method, req = _a.req, res = _a.res;
     return __awaiter(_this, void 0, void 0, function () {
@@ -66,6 +67,7 @@ exports.default = function (_a) {
                 case 1: return [4 /*yield*/, getAlternateStateWriteOpts_1.default(config, req)];
                 case 2:
                     opts = _b.sent();
+                    validateVersionHeader_1.default(req.header('X-Experience-API-Version'));
                     return [4 /*yield*/, config.service.patchState(opts)];
                 case 3:
                     _b.sent();
@@ -74,6 +76,7 @@ exports.default = function (_a) {
                 case 4: return [4 /*yield*/, getClient_1.default(config, req.body.Authorization)];
                 case 5:
                     client = _b.sent();
+                    validateVersionHeader_1.default(req.header('X-Experience-API-Version'));
                     agent = getAgent_1.default(req.body.agent);
                     activityId = getActivityId_1.default(req.body.activityId);
                     registration = req.body.registration;
@@ -99,6 +102,7 @@ exports.default = function (_a) {
                 case 9: return [4 /*yield*/, getAlternateStateWriteOpts_1.default(config, req)];
                 case 10:
                     opts = _b.sent();
+                    validateVersionHeader_1.default(req.header('X-Experience-API-Version'));
                     return [4 /*yield*/, config.service.overwriteState(opts)];
                 case 11:
                     _b.sent();
@@ -107,6 +111,7 @@ exports.default = function (_a) {
                 case 12: return [4 /*yield*/, getClient_1.default(config, req.body.Authorization)];
                 case 13:
                     client = _b.sent();
+                    validateVersionHeader_1.default(req.header('X-Experience-API-Version'));
                     agent = getAgent_1.default(req.body.agent);
                     stateId = getStateId_1.default(req.body.stateId);
                     activityId = getActivityId_1.default(req.body.activityId);

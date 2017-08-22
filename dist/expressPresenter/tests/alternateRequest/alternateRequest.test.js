@@ -36,6 +36,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 var _this = this;
 Object.defineProperty(exports, "__esModule", { value: true });
+var constants_1 = require("../../../utils/constants");
 var testValues_1 = require("../../../utils/testValues");
 var httpCodes_1 = require("../../utils/httpCodes");
 var setup_1 = require("../utils/setup");
@@ -47,6 +48,7 @@ describe('expressPresenter using the alternate request syntax', function () {
                 case 0: return [4 /*yield*/, supertest
                         .post('/xAPI/activities/state')
                         .set('Content-Type', testValues_1.ALTERNATE_CONTENT_TYPE)
+                        .set('X-Experience-API-Version', constants_1.xapiHeaderVersion)
                         .query({ method: 'invalid_method' })
                         .expect(httpCodes_1.CLIENT_ERROR_400_HTTP_CODE)];
                 case 1:
@@ -61,6 +63,7 @@ describe('expressPresenter using the alternate request syntax', function () {
                 case 0: return [4 /*yield*/, supertest
                         .post('/xAPI/activities/state')
                         .set('Content-Type', 'invalid_content_type')
+                        .set('X-Experience-API-Version', constants_1.xapiHeaderVersion)
                         .query({ method: 'GET' })
                         .expect(httpCodes_1.CLIENT_ERROR_400_HTTP_CODE)];
                 case 1:

@@ -33,8 +33,8 @@ export default (config: Config) => {
         return { ...state, ...update, content };
       });
       config.state.states = updatedStates;
-    } else {
-      createState(config, opts);
     }
+    createState(config, opts);
+    return;
   };
 };

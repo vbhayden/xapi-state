@@ -45,8 +45,8 @@ var __rest = (this && this.__rest) || function (s, e) {
 };
 var _this = this;
 Object.defineProperty(exports, "__esModule", { value: true });
-var httpCodes_1 = require("./httpCodes");
 var constants_1 = require("../../utils/constants");
+var httpCodes_1 = require("./httpCodes");
 exports.default = function (_a) { return __awaiter(_this, void 0, void 0, function () {
     var config = _a.config, res = _a.res, opts = __rest(_a, ["config", "res"]);
     var getStateResult;

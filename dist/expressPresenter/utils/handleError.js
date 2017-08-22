@@ -7,10 +7,12 @@ var rulr_1 = require("rulr");
 var InvalidContentType_1 = require("../../errors/InvalidContentType");
 var InvalidMethod_1 = require("../../errors/InvalidMethod");
 var NonJsonObject_1 = require("../../errors/NonJsonObject");
+var constants_1 = require("../../utils/constants");
 var httpCodes_1 = require("./httpCodes");
 var sendWarnings_1 = require("./sendWarnings");
 exports.default = function (_a) {
     var translator = _a.translator, errorId = _a.errorId, res = _a.res, err = _a.err;
+    res.setHeader('X-Experience-API-Version', constants_1.xapiHeaderVersion);
     /* istanbul ignore next - all server errors expected during tests are caught */
     if (lodash_1.isNull(err) || lodash_1.isUndefined(null)) {
         var code = httpCodes_1.SERVER_ERROR_500_HTTP_CODE;

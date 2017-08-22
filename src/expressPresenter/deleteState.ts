@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import { xapiHeaderVersion } from '../utils/constants';
 import Config from './Config';
 import catchErrors from './utils/catchErrors';
 import getActivityId from './utils/getActivityId';
@@ -6,11 +7,12 @@ import getAgent from './utils/getAgent';
 import getClient from './utils/getClient';
 import getStateId from './utils/getStateId';
 import { NO_CONTENT_204_HTTP_CODE } from './utils/httpCodes';
-import { xapiHeaderVersion } from '../utils/constants';
+import validateVersionHeader from './utils/validateVersionHeader';
 
 export default (config: Config) => {
   return catchErrors(config, async (req: Request, res: Response): Promise<void> => {
     const client = await getClient(config, req.header('Authorization'));
+    validateVersionHeader(req.header('X-Experience-API-Version'));
     const stateId = getStateId(req.query.stateId);
     const activityId = getActivityId(req.query.activityId);
     const agent = getAgent(req.query.agent);

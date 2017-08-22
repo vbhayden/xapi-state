@@ -36,13 +36,14 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 var _this = this;
 Object.defineProperty(exports, "__esModule", { value: true });
+var constants_1 = require("../utils/constants");
 var catchErrors_1 = require("./utils/catchErrors");
 var getActivityId_1 = require("./utils/getActivityId");
 var getAgent_1 = require("./utils/getAgent");
 var getClient_1 = require("./utils/getClient");
 var getStateId_1 = require("./utils/getStateId");
 var httpCodes_1 = require("./utils/httpCodes");
-var constants_1 = require("../utils/constants");
+var validateVersionHeader_1 = require("./utils/validateVersionHeader");
 exports.default = function (config) {
     return catchErrors_1.default(config, function (req, res) { return __awaiter(_this, void 0, void 0, function () {
         var client, stateId, activityId, agent, registration;
@@ -51,6 +52,7 @@ exports.default = function (config) {
                 case 0: return [4 /*yield*/, getClient_1.default(config, req.header('Authorization'))];
                 case 1:
                     client = _a.sent();
+                    validateVersionHeader_1.default(req.header('X-Experience-API-Version'));
                     stateId = getStateId_1.default(req.query.stateId);
                     activityId = getActivityId_1.default(req.query.activityId);
                     agent = getAgent_1.default(req.query.agent);

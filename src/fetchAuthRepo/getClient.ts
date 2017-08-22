@@ -1,5 +1,4 @@
 import Unauthorised from 'jscommons/dist/errors/Unauthorised';
-import Actor from '../models/Actor';
 import ClientModel from '../models/ClientModel';
 import GetClientOptions from '../repoFactory/options/GetClientOptions';
 import GetClientResult from '../repoFactory/results/GetClientResult';

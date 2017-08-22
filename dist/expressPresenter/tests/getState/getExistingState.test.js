@@ -44,6 +44,19 @@ var setup_1 = require("../utils/setup");
 var getState_1 = require("./utils/getState");
 describe('expressPresenter.getState with existing state', function () {
     setup_1.default();
+    it('should 400 without version header', function () { return __awaiter(_this, void 0, void 0, function () {
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, createTextState_1.default()];
+                case 1:
+                    _a.sent();
+                    return [4 /*yield*/, getState_1.default({}, false).expect(httpCodes_1.CLIENT_ERROR_400_HTTP_CODE)];
+                case 2:
+                    _a.sent();
+                    return [2 /*return*/];
+            }
+        });
+    }); });
     it('should get when getting text', function () { return __awaiter(_this, void 0, void 0, function () {
         return __generator(this, function (_a) {
             switch (_a.label) {

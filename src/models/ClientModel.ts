@@ -1,5 +1,3 @@
-import Actor from './Actor';
-
 interface Model {
   readonly organisation: string;
   readonly lrs_id: string;

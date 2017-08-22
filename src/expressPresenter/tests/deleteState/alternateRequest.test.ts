@@ -1,4 +1,5 @@
 import assertDeleted from '../../../utils/assertDeleted';
+import { xapiHeaderVersion } from '../../../utils/constants';
 import createTextState from '../../../utils/createTextState';
 import {
   ALTERNATE_CONTENT_TYPE,
@@ -18,6 +19,7 @@ describe('expressPresenter.deleteState using the alternate request syntax', () =
     await supertest
       .post('/xAPI/activities/state')
       .set('Content-Type', ALTERNATE_CONTENT_TYPE)
+      .set('X-Experience-API-Version', xapiHeaderVersion)
       .query({ method: 'DELETE' })
       .send({
         activityId: TEST_ACTIVITY_ID,
