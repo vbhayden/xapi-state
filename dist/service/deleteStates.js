@@ -64,7 +64,7 @@ exports.default = function (config) {
                     }).map(function (state) { return state.id + "." + state.extension; });
                     return [4 /*yield*/, config.repo.deleteStatesContent({
                             keys: keysToDelete,
-                            lrs_id: client.lrs_id
+                            lrs_id: client.lrs_id,
                         })];
                 case 2:
                     _a.sent();
