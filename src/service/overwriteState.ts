@@ -1,5 +1,6 @@
 import * as streamToString from 'stream-to-string';
 import OverwriteStateOptions from '../serviceFactory/options/OverwriteStateOptions';
+import getFileExtension from '../utils/getFileExtension';
 import parseJSON from '../utils/parseJSON';
 import Config from './Config';
 import checkStateWriteScopes from './utils/checkStateWriteScopes';
@@ -19,9 +20,12 @@ export default (config: Config) => {
     const etag = createEtag();
     const jsonContent = (
       opts.contentType === 'application/json'
-      ? parseJSON(await streamToString(opts.content), ['body'])
-      : undefined
+        ? parseJSON(await streamToString(opts.content), ['body'])
+        : undefined
     );
+
+    const extension = getFileExtension(opts.contentType);
+
     const overwriteStateResult = await config.repo.overwriteState({
       activityId: opts.activityId,
       agent: opts.agent,
@@ -29,6 +33,7 @@ export default (config: Config) => {
       content: jsonContent,
       contentType: opts.contentType,
       etag,
+      extension,
       registration: opts.registration,
       stateId: opts.stateId,
     });
@@ -36,7 +41,9 @@ export default (config: Config) => {
     if (opts.contentType !== 'application/json') {
       await config.repo.storeStateContent({
         content: opts.content,
-        key: overwriteStateResult.id,
+        contentType: opts.contentType,
+        key: `${overwriteStateResult.id}.${extension}`,
+        lrs_id: opts.client.lrs_id,
       });
     }
 

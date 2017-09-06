@@ -22,10 +22,11 @@ export default (config: Config) => {
 
     const keysToDelete = deleteResult.states.filter((state) => {
       return state.contentType !== 'application/json';
-    }).map((state) => { return state.id; });
+    }).map((state) => { return `${state.id}.${state.extension}`; });
 
     await config.repo.deleteStatesContent({
       keys: keysToDelete,
+      lrs_id: client.lrs_id
     });
   };
 };

@@ -14,6 +14,7 @@ export default (config: Config) => {
       content: opts.content,
       contentType: opts.contentType,
       etag: opts.etag,
+      extension: opts.extension,
       isObjectContent: isPlainObject(opts.content),
       updatedAt: new Date(),
     };
@@ -21,14 +22,19 @@ export default (config: Config) => {
     // Creates the state if it doesn't already exist.
     // Docs: http://mongodb.github.io/node-mongodb-native/2.2/api/Collection.html#findOneAndUpdate
     // Docs: http://bit.ly/findAndModifyWriteOpResult
-    const createOpResult = await collection.findOneAndUpdate(stateFilter, {
-      $setOnInsert: update,
-    }, {
-      returnOriginal: false, // Ensures the updated document is returned.
-      upsert: true, // Creates the state when it's not found.
-    });
+    const createOpResult = await collection.findOneAndUpdate(
+      stateFilter,
+      {
+        $setOnInsert: update,
+      },
+      {
+        returnOriginal: false, // Ensures the updated document is returned.
+        upsert: true, // Creates the state when it's not found.
+      },
+    );
 
     return {
+      extension: createOpResult.value.extension,
       id: createOpResult.value._id.toString(),
     };
   };

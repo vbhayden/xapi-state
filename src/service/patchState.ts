@@ -2,6 +2,7 @@ import { isPlainObject } from 'lodash';
 import * as streamToString from 'stream-to-string';
 import NonJsonObject from '../errors/NonJsonObject';
 import PatchStateOptions from '../serviceFactory/options/PatchStateOptions';
+import getFileExtension from '../utils/getFileExtension';
 import parseJSON from '../utils/parseJSON';
 import Config from './Config';
 import checkStateWriteScopes from './utils/checkStateWriteScopes';
@@ -27,6 +28,8 @@ export default (config: Config) => {
       throw new NonJsonObject();
     }
 
+    const extension = getFileExtension(opts.contentType);
+
     const etag = createEtag();
     await config.repo.patchState({
       activityId: opts.activityId,
@@ -35,6 +38,7 @@ export default (config: Config) => {
       content,
       contentType: opts.contentType,
       etag,
+      extension,
       registration: opts.registration,
       stateId: opts.stateId,
     });

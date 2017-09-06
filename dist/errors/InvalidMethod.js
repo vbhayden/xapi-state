@@ -12,7 +12,7 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 /* tslint:disable:no-class */
 var BaseError_1 = require("jscommons/dist/errors/BaseError");
-var default_1 = (function (_super) {
+var default_1 = /** @class */ (function (_super) {
     __extends(default_1, _super);
     function default_1(method) {
         var _this = _super.call(this) || this;

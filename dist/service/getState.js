@@ -60,7 +60,7 @@ exports.default = function (config) {
                         })];
                 case 1:
                     state = _a.sent();
-                    if (state.content !== undefined) {
+                    if (state.contentType === 'application/json') {
                         return [2 /*return*/, {
                                 content: stringToStream(JSON.stringify(state.content)),
                                 contentType: state.contentType,
@@ -69,7 +69,8 @@ exports.default = function (config) {
                             }];
                     }
                     return [4 /*yield*/, config.repo.getStateContent({
-                            key: state.id,
+                            key: state.id + "." + state.extension,
+                            lrs_id: opts.client.lrs_id,
                         })];
                 case 2:
                     stateContentResult = _a.sent();

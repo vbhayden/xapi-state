@@ -52,6 +52,7 @@ exports.default = function (config) {
                         content: opts.content,
                         contentType: opts.contentType,
                         etag: opts.etag,
+                        extension: opts.extension,
                         isObjectContent: lodash_1.isPlainObject(opts.content),
                         updatedAt: new Date(),
                     };
@@ -64,6 +65,7 @@ exports.default = function (config) {
                 case 2:
                     createOpResult = _a.sent();
                     return [2 /*return*/, {
+                            extension: createOpResult.value.extension,
                             id: createOpResult.value._id.toString(),
                         }];
             }

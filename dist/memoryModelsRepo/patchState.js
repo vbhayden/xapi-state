@@ -62,8 +62,9 @@ exports.default = function (config) {
                 return [2 /*return*/];
             }
             update = {
-                contentType: opts.contentType,
+                contentType: 'application/json',
                 etag: opts.etag,
+                extension: 'json',
                 updatedAt: new Date(),
             };
             updatedStates = storedStates.map(function (state) {

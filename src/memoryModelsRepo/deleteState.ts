@@ -17,7 +17,11 @@ export default (config: Config) => {
     if (matchingStates.length > 0) {
       const existingState = matchingStates[0];
       config.state.states = remainingStates;
-      return { id: existingState.id, contentType: existingState.contentType };
+      return {
+        contentType: existingState.contentType,
+        extension: existingState.extension,
+        id: existingState.id,
+      };
     }
 
     throw new NoModel('State');

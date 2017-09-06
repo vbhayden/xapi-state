@@ -26,6 +26,7 @@ export default (config: Config) => {
       // Overwrites the content and contentType.
       contentType: 'application/json',
       etag: opts.etag,
+      extension: 'json',
       isObjectContent: true,
 
       // Updates updatedAt time.
@@ -39,14 +40,14 @@ export default (config: Config) => {
       ...jsonObjectFilter,
       ...stateFilter,
     }, {
-      $set: {
-        ...contentPatch,
-        ...update,
-      },
-    }, {
-      returnOriginal: false, // Ensures the updated document is returned.
-      upsert: false, // Does not create the state when it doesn't exist.
-    });
+        $set: {
+          ...contentPatch,
+          ...update,
+        },
+      }, {
+        returnOriginal: false, // Ensures the updated document is returned.
+        upsert: false, // Does not create the state when it doesn't exist.
+      });
 
     // Determines if the State was updated.
     // Docs: https://docs.mongodb.com/manual/reference/command/getLastError/#getLastError.n
@@ -64,9 +65,9 @@ export default (config: Config) => {
         ...update,
       },
     }, {
-      returnOriginal: false, // Ensures the updated document is returned.
-      upsert: true, // Creates the state when it's not found.
-    });
+        returnOriginal: false, // Ensures the updated document is returned.
+        upsert: true, // Creates the state when it's not found.
+      });
 
     // Determines if the State was created or found.
     // Docs: https://docs.mongodb.com/manual/reference/command/getLastError/#getLastError.n

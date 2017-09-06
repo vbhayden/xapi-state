@@ -19,8 +19,9 @@ export default (config: Config) => {
     }
 
     const update = {
-      contentType: opts.contentType,
+      contentType: 'application/json',
       etag: opts.etag,
+      extension: 'json',
       updatedAt: new Date(),
     };
     const updatedStates = storedStates.map((state) => {

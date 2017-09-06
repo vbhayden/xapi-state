@@ -7,6 +7,7 @@ exports.default = function (config, opts) {
         agent: opts.agent,
         content: opts.content,
         contentType: opts.contentType,
+        extension: opts.extension,
         etag: opts.etag,
         id: uuid_1.v4(),
         lrs: opts.client.lrs_id,

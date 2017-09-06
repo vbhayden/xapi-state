@@ -22,6 +22,7 @@ export default (config: Config) => {
       content: defaultTo<any>(document.content, undefined),
       contentType: document.contentType,
       etag: document.etag,
+      extension: document.extension,
       id: document._id.toString(),
       updatedAt: document.updatedAt,
     };

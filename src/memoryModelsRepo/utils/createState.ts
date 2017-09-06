@@ -10,6 +10,7 @@ export interface Options {
   readonly client: ClientModel;
   readonly content: any;
   readonly contentType: string;
+  readonly extension: string;
   readonly etag: string;
   readonly registration?: string;
   readonly stateId: string;
@@ -21,6 +22,7 @@ export default (config: Config, opts: Options): State => {
     agent: opts.agent,
     content: opts.content,
     contentType: opts.contentType,
+    extension: opts.extension,
     etag: opts.etag,
     id: uuid(),
     lrs: opts.client.lrs_id,

@@ -61,9 +61,10 @@ exports.default = function (config) {
                     deleteResult = _a.sent();
                     keysToDelete = deleteResult.states.filter(function (state) {
                         return state.contentType !== 'application/json';
-                    }).map(function (state) { return state.id; });
+                    }).map(function (state) { return state.id + "." + state.extension; });
                     return [4 /*yield*/, config.repo.deleteStatesContent({
                             keys: keysToDelete,
+                            lrs_id: client.lrs_id
                         })];
                 case 2:
                     _a.sent();

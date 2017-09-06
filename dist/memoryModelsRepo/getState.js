@@ -40,7 +40,7 @@ var NoModel_1 = require("jscommons/dist/errors/NoModel");
 var isMatchingState_1 = require("./utils/isMatchingState");
 exports.default = function (config) {
     return function (opts) { return __awaiter(_this, void 0, void 0, function () {
-        var matchingStates, isExistingIfi, _a, id, content, contentType, updatedAt, etag;
+        var matchingStates, isExistingIfi, _a, id, content, contentType, updatedAt, etag, extension;
         return __generator(this, function (_b) {
             matchingStates = config.state.states.filter(function (state) {
                 return isMatchingState_1.default(state, opts);
@@ -49,8 +49,8 @@ exports.default = function (config) {
             if (!isExistingIfi) {
                 throw new NoModel_1.default('State');
             }
-            _a = matchingStates[0], id = _a.id, content = _a.content, contentType = _a.contentType, updatedAt = _a.updatedAt, etag = _a.etag;
-            return [2 /*return*/, { id: id, content: content, contentType: contentType, updatedAt: updatedAt, etag: etag }];
+            _a = matchingStates[0], id = _a.id, content = _a.content, contentType = _a.contentType, updatedAt = _a.updatedAt, etag = _a.etag, extension = _a.extension;
+            return [2 /*return*/, { id: id, content: content, contentType: contentType, updatedAt: updatedAt, etag: etag, extension: extension }];
         });
     }); };
 };

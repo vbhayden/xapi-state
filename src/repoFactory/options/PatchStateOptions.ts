@@ -6,6 +6,7 @@ interface Options {
   readonly client: ClientModel;
   readonly content: any;
   readonly contentType: string;
+  readonly extension: string;
   readonly etag: string;
   readonly stateId: string;
   readonly registration?: string;

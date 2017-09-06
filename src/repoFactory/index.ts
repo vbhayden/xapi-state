@@ -1,4 +1,4 @@
-import { S3 } from 'aws-sdk';
+import * as S3 from 'aws-sdk/clients/s3';
 import { MongoClient } from 'mongodb';
 import config from '../config';
 import fetchAuthRepo from '../fetchAuthRepo';

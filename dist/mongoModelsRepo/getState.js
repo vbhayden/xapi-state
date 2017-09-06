@@ -59,6 +59,7 @@ exports.default = function (config) {
                             content: lodash_1.defaultTo(document.content, undefined),
                             contentType: document.contentType,
                             etag: document.etag,
+                            extension: document.extension,
                             id: document._id.toString(),
                             updatedAt: document.updatedAt,
                         }];

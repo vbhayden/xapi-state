@@ -17,6 +17,7 @@ export default (config: Config) => {
         content: opts.content,
         contentType: opts.contentType,
         etag: opts.etag,
+        extension: opts.extension,
         updatedAt: new Date(),
       };
       const updatedStates = storedStates.map((state) => {
@@ -26,10 +27,10 @@ export default (config: Config) => {
         return { ...state, ...update };
       });
       config.state.states = updatedStates;
-      return { id: matchingStates[0].id };
+      return { id: matchingStates[0].id, extension: matchingStates[0].extension };
     } else {
       const createdState = createState(config, opts);
-      return { id: createdState.id };
+      return { id: createdState.id, extension: createdState.extension };
     }
   };
 };
