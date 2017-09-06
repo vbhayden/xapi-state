@@ -6,7 +6,6 @@ exports.default = function (contentType) {
         return 'json';
     }
     var ext = mime_types_1.extension(contentType);
-    console.log('ext', ext);
     if (ext === false) {
         return 'bin';
     }

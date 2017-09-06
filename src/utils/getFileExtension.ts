@@ -5,7 +5,6 @@ export default (contentType: string) => {
     return 'json';
   }
   const ext = extension(contentType);
-  console.log('ext', ext);
   if (ext === false) {
     return 'bin';
   }

@@ -1,7 +1,6 @@
 import * as stringToStream from 'string-to-stream';
 import GetStateOptions from '../serviceFactory/options/GetStateOptions';
 import GetStateResult from '../serviceFactory/results/GetStateResult';
-import getFileExtension from '../utils/getFileExtension';
 import Config from './Config';
 import checkStateReadScopes from './utils/checkStateReadScopes';
 import validateActivityId from './utils/validateActivityId';

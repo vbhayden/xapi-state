@@ -26,7 +26,7 @@ export default (config: Config) => {
 
     await config.repo.deleteStatesContent({
       keys: keysToDelete,
-      lrs_id: client.lrs_id
+      lrs_id: client.lrs_id,
     });
   };
 };
