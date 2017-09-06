@@ -15,7 +15,7 @@ export default (config: Config) => {
       throw new NoModel('State');
     }
 
-    const { id, content, contentType, updatedAt, etag } = matchingStates[0];
-    return { id, content, contentType, updatedAt, etag };
+    const { id, content, contentType, updatedAt, etag, extension } = matchingStates[0];
+    return { id, content, contentType, updatedAt, etag, extension };
   };
 };

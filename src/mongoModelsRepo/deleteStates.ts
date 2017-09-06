@@ -11,18 +11,19 @@ export default (config: Config) => {
     const stateFilter = getStatesFilter(opts);
 
     const stateDocuments = await collection.find(stateFilter)
-      .project({_id: 1, contentType: 1})
+      .project({ _id: 1, contentType: 1, extension: 1 })
       .toArray();
 
     const ids = stateDocuments.map((state: any) => {
       return state._id;
     });
 
-    await collection.deleteMany({_id: {$in: ids}}, {});
+    await collection.deleteMany({ _id: { $in: ids } }, {});
 
     const deletedStates = stateDocuments.map((state: any) => {
       return {
         contentType: state.contentType,
+        extension: state.extension,
         id: state._id.toString(),
       };
     });

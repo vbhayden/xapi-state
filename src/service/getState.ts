@@ -22,7 +22,7 @@ export default (config: Config) => {
       stateId: opts.stateId,
     });
 
-    if (state.content !== undefined) {
+    if (state.contentType === 'application/json') {
       return {
         content: stringToStream(JSON.stringify(state.content)),
         contentType: state.contentType,
@@ -32,7 +32,8 @@ export default (config: Config) => {
     }
 
     const stateContentResult = await config.repo.getStateContent({
-      key: state.id,
+      key: `${state.id}.${state.extension}`,
+      lrs_id: opts.client.lrs_id,
     });
     return {
       content: stateContentResult.content,

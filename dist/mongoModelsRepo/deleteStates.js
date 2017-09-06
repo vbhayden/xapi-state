@@ -47,7 +47,7 @@ exports.default = function (config) {
                     collection = (_a.sent()).collection('states');
                     stateFilter = getStatesFilter_1.default(opts);
                     return [4 /*yield*/, collection.find(stateFilter)
-                            .project({ _id: 1, contentType: 1 })
+                            .project({ _id: 1, contentType: 1, extension: 1 })
                             .toArray()];
                 case 2:
                     stateDocuments = _a.sent();
@@ -60,6 +60,7 @@ exports.default = function (config) {
                     deletedStates = stateDocuments.map(function (state) {
                         return {
                             contentType: state.contentType,
+                            extension: state.extension,
                             id: state._id.toString(),
                         };
                     });

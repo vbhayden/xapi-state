@@ -16,6 +16,7 @@ export default (config: Config) => {
     const deletedStates = matchingStates.map((state) => {
       return {
         contentType: state.contentType,
+        extension: state.extension,
         id: state.id,
       };
     });

@@ -37,12 +37,13 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 var _this = this;
 Object.defineProperty(exports, "__esModule", { value: true });
 var fs = require("fs-extra");
+var getStorageDir_1 = require("../utils/getStorageDir");
 exports.default = function (config) {
     return function (opts) { return __awaiter(_this, void 0, void 0, function () {
-        var stateDir, filePath, content;
+        var dir, filePath, content;
         return __generator(this, function (_a) {
-            stateDir = config.storageDir + "/states";
-            filePath = stateDir + "/" + opts.key;
+            dir = getStorageDir_1.default({ subfolder: config.storageDir, lrs_id: opts.lrs_id });
+            filePath = dir + "/" + opts.key;
             content = fs.createReadStream(filePath);
             return [2 /*return*/, { content: content }];
         });

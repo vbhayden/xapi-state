@@ -4,6 +4,7 @@ interface Result {
   readonly contentType: string;
   readonly updatedAt: Date;
   readonly etag: string;
+  readonly extension: string;
 }
 
 export default Result;

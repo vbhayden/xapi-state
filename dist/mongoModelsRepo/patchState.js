@@ -68,6 +68,7 @@ exports.default = function (config) {
                         // Overwrites the content and contentType.
                         contentType: 'application/json',
                         etag: opts.etag,
+                        extension: 'json',
                         isObjectContent: true,
                         // Updates updatedAt time.
                         updatedAt: new Date(),
