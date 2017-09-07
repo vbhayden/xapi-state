@@ -36,12 +36,13 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 var _this = this;
 Object.defineProperty(exports, "__esModule", { value: true });
+var getStorageDir_1 = require("../utils/getStorageDir");
 exports.default = function (config) {
     return function (opts) { return __awaiter(_this, void 0, void 0, function () {
-        var profileDir, filePath, content;
+        var dir, filePath, content;
         return __generator(this, function (_a) {
-            profileDir = config.subFolder + "/state";
-            filePath = profileDir + "/" + opts.key;
+            dir = getStorageDir_1.default({ subfolder: config.subFolder, lrs_id: opts.lrs_id });
+            filePath = dir + "/" + opts.key;
             content = config.client.getObject({
                 Bucket: config.bucketName,
                 Key: filePath,

@@ -2,11 +2,12 @@ import NoModel from 'jscommons/dist/errors/NoModel';
 import DeleteStateOptions from '../repoFactory/options/DeleteStateOptions';
 import DeleteStateResult from '../repoFactory/results/DeleteStateResult';
 import Config from './Config';
+import { COLLECTION_NAME } from './utils/constants';
 import getStateFilter from './utils/getStateFilter';
 
 export default (config: Config) => {
   return async (opts: DeleteStateOptions): Promise<DeleteStateResult> => {
-    const collection = (await config.db).collection('states');
+    const collection = (await config.db).collection(COLLECTION_NAME);
 
     const stateFilter = getStateFilter(opts);
 
