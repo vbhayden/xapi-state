@@ -3,11 +3,12 @@ import { isPlainObject } from 'lodash';
 import OverwriteStateOptions from '../repoFactory/options/OverwriteStateOptions';
 import OverwriteStateResult from '../repoFactory/results/OverwriteStateResult';
 import Config from './Config';
+import { COLLECTION_NAME } from './utils/constants';
 import getStateFilter from './utils/getStateFilter';
 
 export default (config: Config) => {
   return async (opts: OverwriteStateOptions): Promise<OverwriteStateResult> => {
-    const collection = (await config.db).collection('states');
+    const collection = (await config.db).collection(COLLECTION_NAME);
     const stateFilter = getStateFilter(opts);
 
     const update = {

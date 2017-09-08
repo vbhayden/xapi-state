@@ -36,18 +36,19 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 var _this = this;
 Object.defineProperty(exports, "__esModule", { value: true });
+var getStorageDir_1 = require("../utils/getStorageDir");
 exports.default = function (config) {
     return function (opts) { return __awaiter(_this, void 0, void 0, function () {
-        var profileDir, identifierList;
+        var dir, identifierList;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    profileDir = config.subFolder + "/state";
+                    dir = getStorageDir_1.default({ subfolder: config.subFolder, lrs_id: opts.lrs_id });
                     if (opts.keys.length === 0) {
                         return [2 /*return*/];
                     }
                     identifierList = opts.keys.map(function (key) {
-                        return { Key: profileDir + "/" + key };
+                        return { Key: dir + "/" + key };
                     });
                     return [4 /*yield*/, config.client.deleteObjects({
                             Bucket: config.bucketName,

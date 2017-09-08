@@ -3,11 +3,12 @@ import { mapKeys } from 'lodash';
 import NonJsonObject from '../errors/NonJsonObject';
 import PatchStateOptions from '../repoFactory/options/PatchStateOptions';
 import Config from './Config';
+import { COLLECTION_NAME } from './utils/constants';
 import getStateFilter from './utils/getStateFilter';
 
 export default (config: Config) => {
   return async (opts: PatchStateOptions): Promise<void> => {
-    const collection = (await config.db).collection('states');
+    const collection = (await config.db).collection(COLLECTION_NAME);
 
     // Filters out non-JSON objects.
     const jsonObjectFilter = {
