@@ -25,6 +25,8 @@ script:
 
 after_script:
   - pkill mongod
+
+after_success:
   - npm prune --production
   - npm run semantic-release
   - greenkeeper-lockfile-upload
