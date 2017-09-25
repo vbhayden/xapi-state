@@ -28,3 +28,8 @@ after_script:
   - npm prune --production
   - npm run semantic-release
   - greenkeeper-lockfile-upload
+  - if [[ "$TRAVIS_BRANCH" =~ (master|^v[0-9]+) ]] && [ "$TRAVIS_PULL_REQUEST" == "false" ]; then
+    docker build -t $TRAVIS_REPO_SLUG:$TRAVIS_BRANCH .;
+    docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD";
+    docker push $TRAVIS_REPO_SLUG:$TRAVIS_BRANCH;
+    fi
