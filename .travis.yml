@@ -31,7 +31,7 @@ after_success:
   - npm run semantic-release
   - greenkeeper-lockfile-upload
   - if [[ "$TRAVIS_BRANCH" =~ (master|^v[0-9]+) ]] && [ "$TRAVIS_PULL_REQUEST" == "false" ]; then
-    docker build -t $DOCKER_REPO_SLUG:$TRAVIS_BRANCH .;
-    docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD";
+    docker build -t "$DOCKER_REPO_SLUG:$TRAVIS_BRANCH" .;
+    docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD";
     docker push $DOCKER_REPO_SLUG:$TRAVIS_BRANCH;
     fi
