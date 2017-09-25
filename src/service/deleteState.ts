@@ -24,8 +24,10 @@ export default (config: Config) => {
     if (deleteResult.contentType === 'application/json') {
       return;
     }
+
     await config.repo.deleteStateContent({
-      key: deleteResult.id,
+      key: `${deleteResult.id}.${deleteResult.extension}`,
+      lrs_id: client.lrs_id,
     });
   };
 };

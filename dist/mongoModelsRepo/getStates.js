@@ -44,6 +44,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 var _this = this;
 Object.defineProperty(exports, "__esModule", { value: true });
+var constants_1 = require("./utils/constants");
 var getSinceFilter_1 = require("./utils/getSinceFilter");
 var getStatesFilter_1 = require("./utils/getStatesFilter");
 exports.default = function (config) {
@@ -53,7 +54,7 @@ exports.default = function (config) {
             switch (_a.label) {
                 case 0: return [4 /*yield*/, config.db];
                 case 1:
-                    collection = (_a.sent()).collection('states');
+                    collection = (_a.sent()).collection(constants_1.COLLECTION_NAME);
                     filter = __assign({}, getStatesFilter_1.default(opts), getSinceFilter_1.default(opts.since));
                     return [4 /*yield*/, collection.find(filter).project({ stateId: 1 }).toArray()];
                 case 2:

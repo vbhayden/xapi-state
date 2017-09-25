@@ -37,6 +37,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 var _this = this;
 Object.defineProperty(exports, "__esModule", { value: true });
 var streamToString = require("stream-to-string");
+var getFileExtension_1 = require("../utils/getFileExtension");
 var parseJSON_1 = require("../utils/parseJSON");
 var checkStateWriteScopes_1 = require("./utils/checkStateWriteScopes");
 var createEtag_1 = require("./utils/createEtag");
@@ -45,7 +46,7 @@ var validateAgent_1 = require("./utils/validateAgent");
 var validateRegistration_1 = require("./utils/validateRegistration");
 exports.default = function (config) {
     return function (opts) { return __awaiter(_this, void 0, void 0, function () {
-        var etag, jsonContent, _a, _b, overwriteStateResult;
+        var etag, jsonContent, _a, _b, extension, overwriteStateResult;
         return __generator(this, function (_c) {
             switch (_c.label) {
                 case 0:
@@ -65,6 +66,7 @@ exports.default = function (config) {
                     _c.label = 3;
                 case 3:
                     jsonContent = (_a);
+                    extension = getFileExtension_1.default(opts.contentType);
                     return [4 /*yield*/, config.repo.overwriteState({
                             activityId: opts.activityId,
                             agent: opts.agent,
@@ -72,6 +74,7 @@ exports.default = function (config) {
                             content: jsonContent,
                             contentType: opts.contentType,
                             etag: etag,
+                            extension: extension,
                             registration: opts.registration,
                             stateId: opts.stateId,
                         })];
@@ -80,7 +83,9 @@ exports.default = function (config) {
                     if (!(opts.contentType !== 'application/json')) return [3 /*break*/, 6];
                     return [4 /*yield*/, config.repo.storeStateContent({
                             content: opts.content,
-                            key: overwriteStateResult.id,
+                            contentType: opts.contentType,
+                            key: overwriteStateResult.id + "." + extension,
+                            lrs_id: opts.client.lrs_id,
                         })];
                 case 5:
                     _c.sent();

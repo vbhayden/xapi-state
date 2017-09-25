@@ -1,4 +1,4 @@
-declare const _default: (since?: Date | undefined) => {} | {
+declare const _default: (since?: Date) => {} | {
     updatedAt: {
         $gt: Date;
     };

@@ -47,6 +47,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 /* tslint:disable:max-file-line-count */
 var lodash_1 = require("lodash");
 var NonJsonObject_1 = require("../errors/NonJsonObject");
+var constants_1 = require("./utils/constants");
 var getStateFilter_1 = require("./utils/getStateFilter");
 exports.default = function (config) {
     return function (opts) { return __awaiter(_this, void 0, void 0, function () {
@@ -55,7 +56,7 @@ exports.default = function (config) {
             switch (_a.label) {
                 case 0: return [4 /*yield*/, config.db];
                 case 1:
-                    collection = (_a.sent()).collection('states');
+                    collection = (_a.sent()).collection(constants_1.COLLECTION_NAME);
                     jsonObjectFilter = {
                         contentType: 'application/json',
                         isObjectContent: true,
@@ -68,6 +69,7 @@ exports.default = function (config) {
                         // Overwrites the content and contentType.
                         contentType: 'application/json',
                         etag: opts.etag,
+                        extension: 'json',
                         isObjectContent: true,
                         // Updates updatedAt time.
                         updatedAt: new Date(),

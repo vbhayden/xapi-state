@@ -60,6 +60,7 @@ exports.default = function (config) {
                     content: opts.content,
                     contentType: opts.contentType,
                     etag: opts.etag,
+                    extension: opts.extension,
                     updatedAt: new Date(),
                 };
                 updatedStates = storedStates.map(function (state) {
@@ -69,11 +70,11 @@ exports.default = function (config) {
                     return __assign({}, state, update_1);
                 });
                 config.state.states = updatedStates;
-                return [2 /*return*/, { id: matchingStates[0].id }];
+                return [2 /*return*/, { id: matchingStates[0].id, extension: matchingStates[0].extension }];
             }
             else {
                 createdState = createState_1.default(config, opts);
-                return [2 /*return*/, { id: createdState.id }];
+                return [2 /*return*/, { id: createdState.id, extension: createdState.extension }];
             }
             return [2 /*return*/];
         });

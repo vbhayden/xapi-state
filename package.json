@@ -37,6 +37,7 @@
     "npm": "^5.0.0"
   },
   "dependencies": {
+    "@types/mime-types": "^2.1.0",
     "atob": "^2.0.3",
     "aws-sdk": "^2.74.0",
     "bluebird": "^3.5.0",
@@ -47,6 +48,7 @@
     "fs-extra": "^3.0.1",
     "jscommons": "git+https://git@github.com/HT2-Labs/jscommons.git",
     "lodash": "^4.17.4",
+    "mime-types": "^2.1.17",
     "mongodb": "^2.2.26",
     "node-fetch": "^1.6.3",
     "rulr": "^3.0.0",

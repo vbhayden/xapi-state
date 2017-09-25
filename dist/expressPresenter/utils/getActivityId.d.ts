@@ -1,2 +1,2 @@
-declare const _default: (activityIdParam: string | undefined) => string;
+declare const _default: (activityIdParam: string) => string;
 export default _default;

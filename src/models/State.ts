@@ -5,6 +5,7 @@ interface Model {
   readonly agent: Agent;
   readonly content?: any;
   readonly contentType: string;
+  readonly extension: string;
   readonly etag: string;
   readonly id: string;
   readonly lrs: string;

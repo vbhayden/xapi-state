@@ -38,6 +38,7 @@ var _this = this;
 Object.defineProperty(exports, "__esModule", { value: true });
 /* tslint:disable:max-file-line-count */
 var lodash_1 = require("lodash");
+var constants_1 = require("./utils/constants");
 var getStateFilter_1 = require("./utils/getStateFilter");
 exports.default = function (config) {
     return function (opts) { return __awaiter(_this, void 0, void 0, function () {
@@ -46,12 +47,13 @@ exports.default = function (config) {
             switch (_a.label) {
                 case 0: return [4 /*yield*/, config.db];
                 case 1:
-                    collection = (_a.sent()).collection('states');
+                    collection = (_a.sent()).collection(constants_1.COLLECTION_NAME);
                     stateFilter = getStateFilter_1.default(opts);
                     update = {
                         content: opts.content,
                         contentType: opts.contentType,
                         etag: opts.etag,
+                        extension: opts.extension,
                         isObjectContent: lodash_1.isPlainObject(opts.content),
                         updatedAt: new Date(),
                     };
@@ -64,6 +66,7 @@ exports.default = function (config) {
                 case 2:
                     createOpResult = _a.sent();
                     return [2 /*return*/, {
+                            extension: createOpResult.value.extension,
                             id: createOpResult.value._id.toString(),
                         }];
             }

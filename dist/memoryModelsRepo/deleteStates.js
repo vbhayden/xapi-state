@@ -51,6 +51,7 @@ exports.default = function (config) {
             deletedStates = matchingStates.map(function (state) {
                 return {
                     contentType: state.contentType,
+                    extension: state.extension,
                     id: state.id,
                 };
             });

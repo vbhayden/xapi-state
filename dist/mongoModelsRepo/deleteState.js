@@ -37,6 +37,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 var _this = this;
 Object.defineProperty(exports, "__esModule", { value: true });
 var NoModel_1 = require("jscommons/dist/errors/NoModel");
+var constants_1 = require("./utils/constants");
 var getStateFilter_1 = require("./utils/getStateFilter");
 exports.default = function (config) {
     return function (opts) { return __awaiter(_this, void 0, void 0, function () {
@@ -45,7 +46,7 @@ exports.default = function (config) {
             switch (_a.label) {
                 case 0: return [4 /*yield*/, config.db];
                 case 1:
-                    collection = (_a.sent()).collection('states');
+                    collection = (_a.sent()).collection(constants_1.COLLECTION_NAME);
                     stateFilter = getStateFilter_1.default(opts);
                     return [4 /*yield*/, collection.findOneAndDelete(stateFilter, {})];
                 case 2:
@@ -57,6 +58,7 @@ exports.default = function (config) {
                         deletedDoc = opResult.value;
                         return [2 /*return*/, {
                                 contentType: deletedDoc.contentType,
+                                extension: deletedDoc.extension,
                                 id: deletedDoc._id.toString(),
                             }];
                     }

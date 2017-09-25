@@ -52,7 +52,11 @@ exports.default = function (config) {
             if (matchingStates.length > 0) {
                 existingState = matchingStates[0];
                 config.state.states = remainingStates;
-                return [2 /*return*/, { id: existingState.id, contentType: existingState.contentType }];
+                return [2 /*return*/, {
+                        contentType: existingState.contentType,
+                        extension: existingState.extension,
+                        id: existingState.id,
+                    }];
             }
             throw new NoModel_1.default('State');
         });

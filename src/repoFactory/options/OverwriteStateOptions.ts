@@ -10,6 +10,7 @@ interface Options {
   readonly etag: string;
   readonly registration?: string;
   readonly stateId: string;
+  readonly extension: string;
 }
 
 export default Options;

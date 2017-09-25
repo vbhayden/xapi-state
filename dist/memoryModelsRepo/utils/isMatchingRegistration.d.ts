@@ -1,2 +1,2 @@
-declare const _default: (storedRegistration?: string | undefined, registration?: string | undefined) => boolean;
+declare const _default: (storedRegistration?: string, registration?: string) => boolean;
 export default _default;
