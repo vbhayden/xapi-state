@@ -32,6 +32,7 @@ after_success:
   - greenkeeper-lockfile-upload
   - if [[ "$TRAVIS_BRANCH" =~ (master|^v[0-9]+) ]] && [ "$TRAVIS_PULL_REQUEST" == "false" ]; then
     docker build -t "$DOCKER_REPO_SLUG:$TRAVIS_BRANCH" .;
+    docker images;
     docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD";
     docker push $DOCKER_REPO_SLUG:$TRAVIS_BRANCH;
     fi
