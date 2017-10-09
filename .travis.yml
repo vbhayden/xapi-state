@@ -2,11 +2,11 @@ language: node_js
 node_js: node
 sudo: false
 
+notifications:
+  email: false
+
 env:
   - MONGODB=3.2.13
-
-before_install:
-  - npm install -g greenkeeper-lockfile@1
 
 before_script:
   - wget http://fastdl.mongodb.org/linux/mongodb-linux-x86_64-${MONGODB}.tgz
@@ -14,7 +14,6 @@ before_script:
   - ${PWD}/mongodb-linux-x86_64-${MONGODB}/bin/mongod --version
   - mkdir ${PWD}/mongodb-linux-x86_64-${MONGODB}/data
   - ${PWD}/mongodb-linux-x86_64-${MONGODB}/bin/mongod --dbpath ${PWD}/mongodb-linux-x86_64-${MONGODB}/data --logpath ${PWD}/mongodb-linux-x86_64-${MONGODB}/mongodb.log --fork
-  - greenkeeper-lockfile-update
   - npm prune
 
 script:
@@ -29,7 +28,6 @@ after_script:
 after_success:
   - npm prune --production
   - npm run semantic-release
-  - greenkeeper-lockfile-upload
   - if [[ "$TRAVIS_BRANCH" =~ (master|^v[0-9]+) ]] && [ "$TRAVIS_PULL_REQUEST" == "false" ]; then
     docker build -t "$DOCKER_REPO_SLUG:$TRAVIS_BRANCH" .;
     docker images;
