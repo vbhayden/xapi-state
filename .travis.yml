@@ -18,7 +18,7 @@ before_script:
 
 script:
   - npm run build
-  - npm run cover-all
+  - npm run cover-ci
   - npm run lint -- -c tslint.travis.json
   - npm run duplication -- --limit=5
 
