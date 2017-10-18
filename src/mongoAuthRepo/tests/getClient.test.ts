@@ -2,7 +2,7 @@ import * as assert from 'assert';
 import * as btoa from 'btoa';
 import NoModel from 'jscommons/dist/errors/NoModel';
 import assertError from 'jscommons/dist/tests/utils/assertError';
-import { MongoClient } from 'mongodb';
+import { MongoClient, ObjectID } from 'mongodb';
 import config from '../../config';
 import mongoAuthRepo from '../../mongoAuthRepo';
 import { TEST_CLIENT } from '../../utils/testValues';
@@ -23,17 +23,40 @@ describe('getClient from mongo client', () => {
         basic_key: TEST_BASIC_KEY,
         basic_secret: TEST_BASIC_SECRET,
       },
+      lrs_id: new ObjectID(TEST_CLIENT.lrs_id),
+      organisation: new ObjectID(TEST_CLIENT.organisation),
     };
     await (await db).collection('client').insertOne(testDocument);
 
-    const result = await authRepo.getClient({ authToken: TEST_TOKEN });
-    assert.equal(result.client.isTrusted, TEST_CLIENT.isTrusted);
-    assert.equal(result.client.lrs_id, TEST_CLIENT.lrs_id);
-    assert.equal(result.client.organisation, TEST_CLIENT.organisation);
-    assert.deepEqual(result.client.scopes, TEST_CLIENT.scopes);
+    const actualResult = await authRepo.getClient({ authToken: TEST_TOKEN });
+    const expectedResult = {
+      client: {
+        isTrusted: TEST_CLIENT.isTrusted,
+        lrs_id: TEST_CLIENT.lrs_id,
+        organisation: TEST_CLIENT.organisation,
+        scopes: TEST_CLIENT.scopes,
+      },
+    };
+    assert.deepEqual(actualResult, expectedResult);
   });
 
   it('should error when getting without any clients in the DB', async () => {
+    const promise = authRepo.getClient({ authToken: TEST_TOKEN });
+    await assertError(NoModel, promise);
+  });
+
+  it('should error when getting a client without an LRS', async () => {
+    const testDocument = {
+      ...TEST_CLIENT,
+      api: {
+        basic_key: TEST_BASIC_KEY,
+        basic_secret: TEST_BASIC_SECRET,
+      },
+      lrs_id: undefined,
+      organisation: new ObjectID(TEST_CLIENT.organisation),
+    };
+    await (await db).collection('client').insertOne(testDocument);
+
     const promise = authRepo.getClient({ authToken: TEST_TOKEN });
     await assertError(NoModel, promise);
   });
