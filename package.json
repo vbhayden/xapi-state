@@ -57,7 +57,7 @@
     "mime-types": "^2.1.17",
     "mongodb": "^2.2.26",
     "node-fetch": "^1.6.3",
-    "rulr": "^3.0.0",
+    "rulr": "^4.0.1",
     "sha1": "^1.1.1",
     "source-map-support": "^0.5.0",
     "stream-to-string": "^1.1.0",
