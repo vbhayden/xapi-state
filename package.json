@@ -11,15 +11,14 @@
   },
   "files": [
     "dist",
-    ".env.example",
-    "package-lock.json"
+    ".env.example"
   ],
   "scripts": {
     "acp": "git add -A && npm run commit && git push",
     "commit": "git-cz",
-    "build": "./node_modules/typescript/bin/tsc",
+    "build": "tsc",
     "start": "node dist/index.js",
-    "test": "./node_modules/mocha/bin/mocha $(find dist -name '*.test.js') --timeout 6000",
+    "test": "mocha $(find dist -name '*.test.js') --timeout 6000",
     "test-s3": "AUTH_REPO=test MODELS_REPO=memory STORAGE_REPO=s3 npm run test",
     "test-mongo": "AUTH_REPO=test MODELS_REPO=mongo STORAGE_REPO=local npm run test",
     "test-memory": "AUTH_REPO=test MODELS_REPO=memory STORAGE_REPO=local npm run test",
@@ -31,8 +30,8 @@
     "cover-ci": "nyc --lines 100 --check-coverage --exclude '(dist/fetchAuthRepo|dist/s3StorageRepo|dist/config.js)' npm run test-ci",
     "cover-all": "nyc --lines 100 --check-coverage --exclude '(dist/fetchAuthRepo|dist/config.js)' npm run test-all",
     "clean": "rm -rf dist",
-    "lint": "./node_modules/tslint/bin/tslint --project ./tsconfig.json",
-    "duplication": "./node_modules/jscpd/bin/jscpd",
+    "lint": "tslint --project ./tsconfig.json",
+    "duplication": "jscpd",
     "semantic-release": "semantic-release pre && npm publish && semantic-release post"
   },
   "config": {
