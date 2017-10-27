@@ -14,7 +14,7 @@ const rule = rulr.maybe(rulr.composeRules([
     openid: rulr.optional(xapi.iri),
   }),
   (data, path) => {
-    const trimmedAgent = pick<any, any>(data, ['account', 'mbox', 'mbox_sha1sum', 'openid']);
+    const trimmedAgent = pick<any>(data, ['account', 'mbox', 'mbox_sha1sum', 'openid']);
     const keys = Object.keys(trimmedAgent);
     if (keys.length > 1) {
       return [new IfiCountWarning(data, path, keys)];
