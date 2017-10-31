@@ -26,7 +26,7 @@ export default (config: Config) => {
     const createOpResult = await collection.findOneAndUpdate(
       stateFilter,
       {
-        $setOnInsert: update,
+        $set: update,
       },
       {
         returnOriginal: false, // Ensures the updated document is returned.

@@ -1,12 +1,17 @@
+import * as stringToStream from 'string-to-stream';
 import assertImmutableState from '../../../utils/assertImmutableState';
 import assertState from '../../../utils/assertState';
 import createImmutableState from '../../../utils/createImmutableState';
 import createTextState from '../../../utils/createTextState';
 import {
+  JSON_CONTENT_TYPE,
   TEST_ACCOUNT_AGENT,
+  TEST_CONTENT,
   TEST_IMMUTABLE_CONTENT,
   TEST_MBOX_AGENT,
   TEST_MBOXSHA1_AGENT,
+  TEST_OBJECT_CONTENT,
+  TEST_OBJECT_PATCH_CONTENT,
   TEST_OPENID_AGENT,
  } from '../../../utils/testValues';
 import { CLIENT_ERROR_400_HTTP_CODE, NO_CONTENT_204_HTTP_CODE } from '../../utils/httpCodes';
@@ -23,8 +28,17 @@ describe('expressPresenter.putState with existing model', () => {
 
   it('should overwrite model when overwriting an existing model', async () => {
     await createTextState();
+    await assertState(TEST_CONTENT);
     await overwriteState({}, TEST_IMMUTABLE_CONTENT).expect(NO_CONTENT_204_HTTP_CODE);
     await assertState(TEST_IMMUTABLE_CONTENT);
+  });
+
+  it('should overwrite model when overwriting existing JSON', async () => {
+    await createTextState({ content: stringToStream(TEST_OBJECT_CONTENT)});
+    await assertState(TEST_OBJECT_CONTENT);
+    await overwriteState({}, TEST_OBJECT_PATCH_CONTENT, JSON_CONTENT_TYPE)
+      .expect(NO_CONTENT_204_HTTP_CODE);
+    await assertState(TEST_OBJECT_PATCH_CONTENT);
   });
 
   it('should overwrite model when overwriting without a registration', async () => {
