@@ -4,15 +4,15 @@ import assertState from '../../../utils/assertState';
 import createImmutableState from '../../../utils/createImmutableState';
 import createTextState from '../../../utils/createTextState';
 import {
+  JSON_CONTENT_TYPE,
   TEST_ACCOUNT_AGENT,
   TEST_CONTENT,
   TEST_IMMUTABLE_CONTENT,
   TEST_MBOX_AGENT,
   TEST_MBOXSHA1_AGENT,
-  TEST_OPENID_AGENT,
   TEST_OBJECT_CONTENT,
   TEST_OBJECT_PATCH_CONTENT,
-  JSON_CONTENT_TYPE,
+  TEST_OPENID_AGENT,
  } from '../../../utils/testValues';
 import { CLIENT_ERROR_400_HTTP_CODE, NO_CONTENT_204_HTTP_CODE } from '../../utils/httpCodes';
 import setup from '../utils/setup';
