@@ -1,5 +1,6 @@
 import Agent from '../models/Agent';
 import ClientModel from '../models/ClientModel';
+import { jsonContentType } from '../utils/constants';
 import { ALL, XAPI_STATE_ALL } from './scopes';
 
 export const TEST_CLIENT: ClientModel = {
@@ -49,7 +50,7 @@ export const TEST_OBJECT_PATCH_CONTENT = '{"bar":2}';
 export const TEST_OBJECT_MERGED_CONTENT = '{"foo":1,"bar":2}';
 
 export const TEXT_CONTENT_TYPE = 'text/plain';
-export const JSON_CONTENT_TYPE = 'application/json';
+export const JSON_CONTENT_TYPE = jsonContentType;
 export const ALTERNATE_CONTENT_TYPE = 'application/x-www-form-urlencoded';
 
 export const TEST_MBOX_AGENT: Agent = {

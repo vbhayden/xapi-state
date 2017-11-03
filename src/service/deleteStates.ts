@@ -1,4 +1,5 @@
 import DeleteStatesOptions from '../serviceFactory/options/DeleteStatesOptions';
+import { jsonContentType } from '../utils/constants';
 import Config from './Config';
 import checkStateWriteScopes from './utils/checkStateWriteScopes';
 import validateActivityId from './utils/validateActivityId';
@@ -21,7 +22,7 @@ export default (config: Config) => {
     });
 
     const keysToDelete = deleteResult.states.filter((state) => {
-      return state.contentType !== 'application/json';
+      return state.contentType !== jsonContentType;
     }).map((state) => { return `${state.id}.${state.extension}`; });
 
     await config.repo.deleteStatesContent({

@@ -1,10 +1,11 @@
 import * as assert from 'assert';
+import { jsonContentType } from '../utils/constants';
 import getFileExtension from '../utils/getFileExtension';
 
 describe('getFileExtension', () => {
 
   it('should return json on application/json', async () => {
-    const ext = getFileExtension('application/json');
+    const ext = getFileExtension(jsonContentType);
     assert.equal(ext, 'json');
   });
 

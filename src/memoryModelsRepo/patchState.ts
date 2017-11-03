@@ -1,6 +1,7 @@
 import { isPlainObject } from 'lodash';
 import NonJsonObject from '../errors/NonJsonObject';
 import PatchStateOptions from '../repoFactory/options/PatchStateOptions';
+import { jsonContentType } from '../utils/constants';
 import Config from './Config';
 import createState from './utils/createState';
 import isMatchingState from './utils/isMatchingState';
@@ -19,7 +20,7 @@ export default (config: Config) => {
     }
 
     const update = {
-      contentType: 'application/json',
+      contentType: jsonContentType,
       etag: opts.etag,
       extension: 'json',
       updatedAt: new Date(),
@@ -28,7 +29,7 @@ export default (config: Config) => {
       if (!isMatchingState(state, opts)) {
         return state;
       }
-      if (state.contentType !== 'application/json' || !isPlainObject(state.content)) {
+      if (state.contentType !== jsonContentType || !isPlainObject(state.content)) {
         throw new NonJsonObject();
       }
       const content = {

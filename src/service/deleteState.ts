@@ -1,4 +1,5 @@
 import DeleteStateOptions from '../serviceFactory/options/DeleteStateOptions';
+import { jsonContentType } from '../utils/constants';
 import Config from './Config';
 import checkStateWriteScopes from './utils/checkStateWriteScopes';
 import validateActivityId from './utils/validateActivityId';
@@ -21,7 +22,7 @@ export default (config: Config) => {
       stateId: opts.stateId,
     });
 
-    if (deleteResult.contentType === 'application/json') {
+    if (deleteResult.contentType === jsonContentType) {
       return;
     }
 

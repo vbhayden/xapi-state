@@ -5,6 +5,7 @@ import InvalidContentType from '../../errors/InvalidContentType';
 import InvalidMethod from '../../errors/InvalidMethod';
 import { xapiHeaderVersion } from '../../utils/constants';
 import Config from '../Config';
+import { alternateContentTypePattern } from './contentTypePatterns';
 import getActivityId from './getActivityId';
 import getAgent from './getAgent';
 import getAlternateStateWriteOpts from './getAlternateStateWriteOpts';
@@ -25,8 +26,9 @@ const getHeader = (req: Request, name: string): string => {
 };
 
 export default async ({ config, method, req, res }: Options) => {
-  if (req.header('Content-Type') !== 'application/x-www-form-urlencoded') {
-    throw new InvalidContentType(req.header('Content-Type'));
+  const contentType = req.header('Content-Type');
+  if (contentType === undefined || !alternateContentTypePattern.test(contentType)) {
+    throw new InvalidContentType(contentType);
   }
 
   switch (method) {

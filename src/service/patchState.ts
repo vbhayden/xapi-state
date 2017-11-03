@@ -2,6 +2,7 @@ import { isPlainObject } from 'lodash';
 import * as streamToString from 'stream-to-string';
 import NonJsonObject from '../errors/NonJsonObject';
 import PatchStateOptions from '../serviceFactory/options/PatchStateOptions';
+import { jsonContentType } from '../utils/constants';
 import getFileExtension from '../utils/getFileExtension';
 import parseJSON from '../utils/parseJSON';
 import Config from './Config';
@@ -19,7 +20,7 @@ export default (config: Config) => {
     validateAgent(opts.agent);
     validateRegistration(opts.registration);
 
-    if (opts.contentType !== 'application/json') {
+    if (opts.contentType !== jsonContentType) {
       throw new NonJsonObject();
     }
 

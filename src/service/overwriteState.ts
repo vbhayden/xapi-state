@@ -1,5 +1,6 @@
 import * as streamToString from 'stream-to-string';
 import OverwriteStateOptions from '../serviceFactory/options/OverwriteStateOptions';
+import { jsonContentType } from '../utils/constants';
 import getFileExtension from '../utils/getFileExtension';
 import parseJSON from '../utils/parseJSON';
 import Config from './Config';
@@ -19,7 +20,7 @@ export default (config: Config) => {
     // Update or create State.
     const etag = createEtag();
     const jsonContent = (
-      opts.contentType === 'application/json'
+      opts.contentType === jsonContentType
         ? parseJSON(await streamToString(opts.content), ['body'])
         : undefined
     );
@@ -38,7 +39,7 @@ export default (config: Config) => {
       stateId: opts.stateId,
     });
 
-    if (opts.contentType !== 'application/json') {
+    if (opts.contentType !== jsonContentType) {
       await config.repo.storeStateContent({
         content: opts.content,
         contentType: opts.contentType,

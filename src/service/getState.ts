@@ -1,6 +1,7 @@
 import * as stringToStream from 'string-to-stream';
 import GetStateOptions from '../serviceFactory/options/GetStateOptions';
 import GetStateResult from '../serviceFactory/results/GetStateResult';
+import { jsonContentType } from '../utils/constants';
 import Config from './Config';
 import checkStateReadScopes from './utils/checkStateReadScopes';
 import validateActivityId from './utils/validateActivityId';
@@ -22,7 +23,7 @@ export default (config: Config) => {
       stateId: opts.stateId,
     });
 
-    if (state.contentType === 'application/json') {
+    if (state.contentType === jsonContentType) {
       return {
         content: stringToStream(JSON.stringify(state.content)),
         contentType: state.contentType,
