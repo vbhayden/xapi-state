@@ -11,13 +11,11 @@ export default (config: Config) => {
       const filePath = `${dir}/${opts.key}`;
       const writeStream = fs.createWriteStream(filePath);
       opts.content.pipe(writeStream);
-      opts.content.on('end', () => {
+      writeStream.on('finish', () => {
         resolve();
       });
-      opts.content.on('error', (err: any) => {
-        /* istanbul ignore next */
-        reject(err);
-      });
+      opts.content.on('error', reject);
+      writeStream.on('error', reject);
     });
   };
 };
