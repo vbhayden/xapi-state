@@ -1,6 +1,6 @@
 import {
   FORBIDDEN_403_HTTP_CODE,
-  NOT_FOUND_404_HTTP_CODE,
+  NO_CONTENT_204_HTTP_CODE,
 } from '../../utils/httpCodes';
 import setup from '../utils/setup';
 import deleteState from './utils/deleteState';
@@ -14,9 +14,9 @@ describe('expressPresenter.deleteState with scopes', () => {
       .expect(FORBIDDEN_403_HTTP_CODE);
   });
 
-  it('should throw no model error when using valid scopes', async () => {
+  it('should not error when using valid scopes', async () => {
     await deleteState()
       .set('Authorization', 'valid_scope_client')
-      .expect(NOT_FOUND_404_HTTP_CODE);
+      .expect(NO_CONTENT_204_HTTP_CODE);
   });
 });

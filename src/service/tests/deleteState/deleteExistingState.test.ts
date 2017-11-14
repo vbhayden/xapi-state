@@ -1,10 +1,10 @@
-import NoModel from 'jscommons/dist/errors/NoModel';
-import assertError from 'jscommons/dist/tests/utils/assertError';
 import assertDeleted from '../../../utils/assertDeleted';
+import assertState from '../../../utils/assertState';
 import createJsonState from '../../../utils/createJsonState';
 import createTextState from '../../../utils/createTextState';
 import {
   TEST_ACCOUNT_AGENT,
+  TEST_CONTENT,
   TEST_MBOX_AGENT,
   TEST_MBOXSHA1_AGENT,
   TEST_OPENID_AGENT,
@@ -35,8 +35,8 @@ describe('deleteState with existing state', () => {
 
   it('should error when deleting existing model without a registration with one', async () => {
     await createTextState({ registration: undefined });
-    const promise = deleteState();
-    await assertError(NoModel, promise);
+    await deleteState();
+    await assertState(TEST_CONTENT, { registration: undefined });
   });
 
   it('should delete when deleting with an mbox', async () => {

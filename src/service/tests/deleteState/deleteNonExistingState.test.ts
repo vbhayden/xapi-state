@@ -1,4 +1,3 @@
-import NoModel from 'jscommons/dist/errors/NoModel';
 import assertError from 'jscommons/dist/tests/utils/assertError';
 import { Warnings } from 'rulr';
 import {
@@ -12,9 +11,8 @@ import deleteState from './utils/deleteState';
 describe('deleteState with non-existing state', () => {
   setup();
 
-  it('should error when deleting', async () => {
-    const promise = deleteState();
-    await assertError(NoModel, promise);
+  it('should not error when deleting', async () => {
+    await deleteState();
   });
 
   it('should throw warnings when using an invalid activity id', async () => {

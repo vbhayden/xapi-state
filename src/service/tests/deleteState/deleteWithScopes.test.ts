@@ -1,5 +1,4 @@
 import Forbidden from 'jscommons/dist/errors/Forbidden';
-import NoModel from 'jscommons/dist/errors/NoModel';
 import assertError from 'jscommons/dist/tests/utils/assertError';
 import {
   TEST_INVALID_SCOPE_CLIENT,
@@ -18,10 +17,9 @@ describe('deleteState with scopes', () => {
     await assertError(Forbidden, promise);
   });
 
-  it('should throw no model error when using valid scopes', async () => {
-    const promise = deleteState({
+  it('should not error when using valid scopes', async () => {
+    await deleteState({
       client: TEST_VALID_SCOPE_CLIENT,
     });
-    await assertError(NoModel, promise);
   });
 });

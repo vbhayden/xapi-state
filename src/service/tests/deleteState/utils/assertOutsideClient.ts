@@ -1,8 +1,8 @@
-import NoModel from 'jscommons/dist/errors/NoModel';
-import assertError from 'jscommons/dist/tests/utils/assertError';
+import ClientModel from '../../../../models/ClientModel';
+import assertState from '../../../../utils/assertState';
 import deleteState from './deleteState';
 
-export default async () => {
-  const promise = deleteState();
-  await assertError(NoModel, promise);
+export default async (client: ClientModel, content: string) => {
+  await deleteState();
+  await assertState(content, { client });
 };

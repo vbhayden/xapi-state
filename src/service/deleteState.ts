@@ -1,3 +1,4 @@
+import NoModel from 'jscommons/dist/errors/NoModel';
 import DeleteStateOptions from '../serviceFactory/options/DeleteStateOptions';
 import { jsonContentType } from '../utils/constants';
 import Config from './Config';
@@ -14,21 +15,29 @@ export default (config: Config) => {
     validateAgent(opts.agent);
     validateRegistration(opts.registration);
 
-    const deleteResult = await config.repo.deleteState({
-      activityId: opts.activityId,
-      agent: opts.agent,
-      client,
-      registration: opts.registration,
-      stateId: opts.stateId,
-    });
+    try {
+      const deleteResult = await config.repo.deleteState({
+        activityId: opts.activityId,
+        agent: opts.agent,
+        client,
+        registration: opts.registration,
+        stateId: opts.stateId,
+      });
 
-    if (deleteResult.contentType === jsonContentType) {
-      return;
+      if (deleteResult.contentType === jsonContentType) {
+        return;
+      }
+
+      await config.repo.deleteStateContent({
+        key: `${deleteResult.id}.${deleteResult.extension}`,
+        lrs_id: client.lrs_id,
+      });
+    } catch (err) {
+      if (err instanceof NoModel) {
+        return;
+      }
+      /* istanbul ignore next */
+      throw err;
     }
-
-    await config.repo.deleteStateContent({
-      key: `${deleteResult.id}.${deleteResult.extension}`,
-      lrs_id: client.lrs_id,
-    });
   };
 };
