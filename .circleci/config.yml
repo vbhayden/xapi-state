@@ -1,0 +1,68 @@
+version: 2
+machine:
+  services:
+    - docker
+
+jobs:
+  build:
+    docker:
+      - image: node:8.8.0
+      - image: mongo:3.4.4
+    environment:
+      - DOCKER_REPO_SLUG: learninglocker/xapi-state
+      - DOCKER_USERNAME: ryansmith94
+      - NPM_CONFIG_LOGLEVEL: warn
+      - WINSTON_CONSOLE_LEVEL: none
+      - EXPRESS_PORT: 1337
+    working_directory: ~/repo
+    steps:
+      - checkout
+      - setup_remote_docker:
+          docker_layer_caching: true
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "package-lock.json" }}
+      - run:
+          name: Calculating Docker Tag
+          command: echo 'export DOCKER_TAG=$(echo $CIRCLE_BRANCH | sed -e "s/\//-/g")' >> $BASH_ENV
+      - run:
+          name: Installing Dependencies
+          command: npm install
+      - run:
+          name: Pruning Dependencies
+          command: npm prune
+      - save_cache:
+          paths:
+            - node_modules
+          key: v1-dependencies-{{ checksum "package-lock.json" }}
+      - run:
+          name: Compiling Code
+          command: npm run build
+      - run:
+          name: Running tests
+          command: npm run cover-ci
+      - run:
+          name: Linting Code
+          command: npm run lint -- -c tslint.ci.json
+      - run:
+          name: Checking Code Duplication
+          command: npm run duplication -- --limit 5
+      - run:
+          name: Docker Install
+          command: |
+            set -x
+            DOCKER_VERSION="17.03.0-ce"
+            curl -L -o /tmp/docker-$DOCKER_VERSION.tgz https://get.docker.com/builds/Linux/x86_64/docker-$DOCKER_VERSION.tgz
+            tar -xz -C /tmp -f /tmp/docker-$DOCKER_VERSION.tgz
+            mv /tmp/docker/* /usr/bin
+      - run:
+          name: Docker Build
+          command: docker build -t "$DOCKER_REPO_SLUG:$DOCKER_TAG" .
+      - deploy:
+          name: Semantic Release
+          command: npm run semantic-release || true
+      - deploy:
+          name: Docker Push
+          command: |
+            docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
+            docker push $DOCKER_REPO_SLUG:$DOCKER_TAG
