@@ -27,6 +27,7 @@ export default (config: Config) => {
     }
 
     const client: ClientModel = {
+      _id: document._id.toString() as string,
       isTrusted: document.isTrusted as boolean,
       lrs_id: document.lrs_id.toString() as string,
       organisation: document.organisation.toString() as string,

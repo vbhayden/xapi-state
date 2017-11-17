@@ -2,6 +2,7 @@ import * as express from 'express';
 import * as supertest from 'supertest';
 import config from '../../../config';
 import logger from '../../../logger';
+import tracker from '../../../tracker';
 import translatorFactory from '../../../translatorFactory';
 import service from '../../../utils/testService';
 import presenterFacade from '../../index';
@@ -15,6 +16,7 @@ const presenter = presenterFacade({
   logger,
   morganDirectory: config.express.morganDirectory,
   service,
+  tracker,
   translator,
 });
 

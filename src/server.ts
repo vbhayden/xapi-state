@@ -6,6 +6,7 @@ import config from './config';
 import presenter from './expressPresenter';
 import logger from './logger';
 import serviceFactory from './serviceFactory';
+import tracker from './tracker';
 import translatorFactory from './translatorFactory';
 
 const app = express();
@@ -19,6 +20,7 @@ const presenterFacade = presenter({
   logger,
   morganDirectory: config.express.morganDirectory,
   service: serviceFacade,
+  tracker,
   translator,
 });
 

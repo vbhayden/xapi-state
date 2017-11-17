@@ -31,6 +31,7 @@ describe('getClient from mongo client', () => {
     const actualResult = await authRepo.getClient({ authToken: TEST_TOKEN });
     const expectedResult = {
       client: {
+        _id: TEST_CLIENT._id,
         isTrusted: TEST_CLIENT.isTrusted,
         lrs_id: TEST_CLIENT.lrs_id,
         organisation: TEST_CLIENT.organisation,
