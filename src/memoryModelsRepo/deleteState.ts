@@ -18,7 +18,7 @@ export default (config: Config) => {
       const existingState = matchingStates[0];
       config.state.states = remainingStates;
       return {
-        contentType: existingState.contentType,
+        content: existingState.content,
         extension: existingState.extension,
         id: existingState.id,
       };

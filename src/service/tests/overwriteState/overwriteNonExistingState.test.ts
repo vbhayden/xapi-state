@@ -2,6 +2,7 @@ import assertError from 'jscommons/dist/tests/utils/assertError';
 import { Warnings } from 'rulr';
 import assertState from '../../../utils/assertState';
 import {
+  JSON_CONTENT_TYPE,
   TEST_CONTENT,
   TEST_INVALID_ACTIVITY_ID,
   TEST_INVALID_AGENT,
@@ -15,6 +16,13 @@ describe('overwriteState with non-existing model', () => {
 
   it('should create when using valid model', async () => {
     await overwriteState();
+    await assertState(TEST_CONTENT);
+  });
+
+  it('should not error when using non-JSON string as JSON', async () => {
+    await overwriteState({
+      contentType: JSON_CONTENT_TYPE,
+    }, TEST_CONTENT);
     await assertState(TEST_CONTENT);
   });
 

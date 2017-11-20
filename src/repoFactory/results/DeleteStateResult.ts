@@ -1,6 +1,6 @@
 interface Result {
   readonly id: string;
-  readonly contentType: string;
+  readonly content: any;
   readonly extension: string;
 }
 

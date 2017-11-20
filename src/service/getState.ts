@@ -23,9 +23,14 @@ export default (config: Config) => {
       stateId: opts.stateId,
     });
 
-    if (state.contentType === jsonContentType) {
+    if (state.content !== undefined) {
+      const content = (
+        state.contentType === jsonContentType
+        ? JSON.stringify(state.content)
+        : state.content
+      );
       return {
-        content: stringToStream(JSON.stringify(state.content)),
+        content: stringToStream(content),
         contentType: state.contentType,
         etag: state.etag,
         updatedAt: state.updatedAt,

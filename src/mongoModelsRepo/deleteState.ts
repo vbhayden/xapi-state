@@ -25,7 +25,7 @@ export default (config: Config) => {
     if (wasDeleted) {
       const deletedDoc = opResult.value;
       return {
-        contentType: deletedDoc.contentType,
+        content: deletedDoc.content,
         extension: deletedDoc.extension,
         id: deletedDoc._id.toString(),
       };

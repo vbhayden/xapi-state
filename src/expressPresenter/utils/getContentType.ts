@@ -1,6 +1,6 @@
 import { createRequiredWarning, Warnings } from 'rulr';
 import { jsonContentType } from '../../utils/constants';
-import { jsonContentTypePattern } from './contentTypePatterns';
+import { jsonContentTypePattern } from '../../utils/contentTypePatterns';
 
 export default (contentTypeHeader: string|undefined) => {
   /* istanbul ignore next - superagent always sends a content type */

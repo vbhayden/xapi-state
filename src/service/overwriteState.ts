@@ -1,11 +1,9 @@
-import * as streamToString from 'stream-to-string';
 import OverwriteStateOptions from '../serviceFactory/options/OverwriteStateOptions';
-import { jsonContentType } from '../utils/constants';
 import getFileExtension from '../utils/getFileExtension';
-import parseJSON from '../utils/parseJSON';
 import Config from './Config';
 import checkStateWriteScopes from './utils/checkStateWriteScopes';
 import createEtag from './utils/createEtag';
+import getContent from './utils/getContent';
 import validateActivityId from './utils/validateActivityId';
 import validateAgent from './utils/validateAgent';
 import validateRegistration from './utils/validateRegistration';
@@ -19,30 +17,28 @@ export default (config: Config) => {
 
     // Update or create State.
     const etag = createEtag();
-    const jsonContent = (
-      opts.contentType === jsonContentType
-        ? parseJSON(await streamToString(opts.content), ['body'])
-        : undefined
-    );
-
-    const extension = getFileExtension(opts.contentType);
+    const { content, contentType } = await getContent({
+      contentType: opts.contentType,
+      stream: opts.content,
+    });
+    const extension = getFileExtension(contentType);
 
     const overwriteStateResult = await config.repo.overwriteState({
       activityId: opts.activityId,
       agent: opts.agent,
       client: opts.client,
-      content: jsonContent,
-      contentType: opts.contentType,
+      content,
+      contentType,
       etag,
       extension,
       registration: opts.registration,
       stateId: opts.stateId,
     });
 
-    if (opts.contentType !== jsonContentType) {
+    if (content === undefined) {
       await config.repo.storeStateContent({
         content: opts.content,
-        contentType: opts.contentType,
+        contentType,
         key: `${overwriteStateResult.id}.${extension}`,
         lrs_id: opts.client.lrs_id,
       });

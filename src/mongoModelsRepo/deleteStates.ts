@@ -12,7 +12,7 @@ export default (config: Config) => {
     const stateFilter = getStatesFilter(opts);
 
     const stateDocuments = await collection.find(stateFilter)
-      .project({ _id: 1, contentType: 1, extension: 1 })
+      .project({ _id: 1, content: 1, extension: 1 })
       .toArray();
 
     const ids = stateDocuments.map((state: any) => {
@@ -23,7 +23,7 @@ export default (config: Config) => {
 
     const deletedStates = stateDocuments.map((state: any) => {
       return {
-        contentType: state.contentType,
+        content: state.content,
         extension: state.extension,
         id: state._id.toString(),
       };
