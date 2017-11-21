@@ -1,5 +1,5 @@
 import assertDeleted from '../../../utils/assertDeleted';
-import { xapiHeaderVersion } from '../../../utils/constants';
+import { route, xapiHeaderVersion } from '../../../utils/constants';
 import createTextState from '../../../utils/createTextState';
 import {
   ALTERNATE_CONTENT_TYPE,
@@ -16,7 +16,7 @@ describe('expressPresenter.deleteStates using the alternate request syntax', () 
   it('should delete when deleting text', async () => {
     await createTextState();
     await supertest
-      .post('/xAPI/activities/state')
+      .post(route)
       .set('Content-Type', ALTERNATE_CONTENT_TYPE)
       .set('X-Experience-API-Version', xapiHeaderVersion)
       .query({ method: 'DELETE' })

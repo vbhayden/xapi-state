@@ -1,5 +1,5 @@
 import assertState from '../../../utils/assertState';
-import { xapiHeaderVersion } from '../../../utils/constants';
+import { route, xapiHeaderVersion } from '../../../utils/constants';
 import createObjectState from '../../../utils/createObjectState';
 import {
   ALTERNATE_CONTENT_TYPE,
@@ -18,7 +18,7 @@ describe('expressPresenter.postState using the alternate request syntax', () => 
   it('should 400 without version header', async () => {
     await createObjectState();
     await supertest
-      .post('/xAPI/activities/state')
+      .post(route)
       .set('Content-Type', ALTERNATE_CONTENT_TYPE)
       .query({
         method: 'POST',
@@ -37,7 +37,7 @@ describe('expressPresenter.postState using the alternate request syntax', () => 
   it('should merge when patching with object content ', async () => {
     await createObjectState();
     await supertest
-      .post('/xAPI/activities/state')
+      .post(route)
       .set('Content-Type', ALTERNATE_CONTENT_TYPE)
       .set('X-Experience-API-Version', xapiHeaderVersion)
       .query({

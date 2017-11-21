@@ -1,5 +1,5 @@
 import assertState from '../../../utils/assertState';
-import { xapiHeaderVersion } from '../../../utils/constants';
+import { route, xapiHeaderVersion } from '../../../utils/constants';
 import {
   ALTERNATE_CONTENT_TYPE,
   JSON_CONTENT_TYPE,
@@ -18,7 +18,7 @@ describe(__filename, () => {
 
   it('should not error when using a charset for JSON ', async () => {
     await supertest
-      .post('/xAPI/activities/state')
+      .post(route)
       .set('Content-Type', `${JSON_CONTENT_TYPE}; charset=UTF-8`)
       .set('X-Experience-API-Version', xapiHeaderVersion)
       .query({
@@ -34,7 +34,7 @@ describe(__filename, () => {
 
   it('should not error when using a charset for alternate requests ', async () => {
     await supertest
-      .post('/xAPI/activities/state')
+      .post(route)
       .set('Content-Type', `${ALTERNATE_CONTENT_TYPE}; charset=UTF-8`)
       .set('X-Experience-API-Version', xapiHeaderVersion)
       .query({

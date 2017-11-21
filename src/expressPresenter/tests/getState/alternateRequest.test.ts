@@ -1,4 +1,4 @@
-import { xapiHeaderVersion } from '../../../utils/constants';
+import { route, xapiHeaderVersion } from '../../../utils/constants';
 import createTextState from '../../../utils/createTextState';
 import {
   ALTERNATE_CONTENT_TYPE,
@@ -17,7 +17,7 @@ describe('expressPresenter.getState', () => {
   it('should 400 without version header', async () => {
     await createTextState();
     await supertest
-      .post('/xAPI/activities/state')
+      .post(route)
       .set('Content-Type', ALTERNATE_CONTENT_TYPE)
       .query({ method: 'GET' })
       .send({
@@ -32,7 +32,7 @@ describe('expressPresenter.getState', () => {
   it('should get when getting text', async () => {
     await createTextState();
     await supertest
-      .post('/xAPI/activities/state')
+      .post(route)
       .set('X-Experience-API-Version', xapiHeaderVersion)
       .set('Content-Type', ALTERNATE_CONTENT_TYPE)
       .query({ method: 'GET' })

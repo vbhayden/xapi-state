@@ -8,6 +8,7 @@ import logger from './logger';
 import serviceFactory from './serviceFactory';
 import tracker from './tracker';
 import translatorFactory from './translatorFactory';
+import { route } from './utils/constants';
 
 const app = express();
 
@@ -34,7 +35,7 @@ const handleExit = (event: string) => {
   };
 };
 
-app.use('/xAPI/activities/state', presenterFacade);
+app.use(route, presenterFacade);
 
 app.listen(config.express.port, () => {
   logger.info(`Listening on port ${config.express.port}`);

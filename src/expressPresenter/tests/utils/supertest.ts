@@ -4,6 +4,7 @@ import config from '../../../config';
 import logger from '../../../logger';
 import tracker from '../../../tracker';
 import translatorFactory from '../../../translatorFactory';
+import { route } from '../../../utils/constants';
 import service from '../../../utils/testService';
 import presenterFacade from '../../index';
 
@@ -20,6 +21,6 @@ const presenter = presenterFacade({
   translator,
 });
 
-app.use(presenter);
+app.use(route, presenter);
 
 export default supertest(app);

@@ -1,5 +1,5 @@
 import { Test } from 'supertest';
-import { xapiHeaderVersion } from '../../../../utils/constants';
+import { route, xapiHeaderVersion } from '../../../../utils/constants';
 import {
   TEST_ACTIVITY_ID,
   TEST_CONTENT,
@@ -21,7 +21,7 @@ export default (
   const agent = JSON.stringify(TEST_MBOX_AGENT);
   const registration = TEST_REGISTRATION;
   const req = supertest
-    .put('/xAPI/activities/state')
+    .put(route)
     .set('Content-Type', contentType);
   if (sendVersion) {
     req.set('X-Experience-API-Version', xapiHeaderVersion);
