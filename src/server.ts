@@ -34,7 +34,7 @@ const handleExit = (event: string) => {
   };
 };
 
-app.use(presenterFacade);
+app.use('/xAPI/activities/state', presenterFacade);
 
 app.listen(config.express.port, () => {
   logger.info(`Listening on port ${config.express.port}`);

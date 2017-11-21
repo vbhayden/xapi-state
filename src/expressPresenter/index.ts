@@ -17,9 +17,10 @@ export default (config: Config): Router => {
   router.use(mixinHelmet());
   router.use(mixinMorgan(config.morganDirectory));
 
-  router.delete('/xAPI/activities/state', deleteState(config));
-  router.get('/xAPI/activities/state', getStates(config));
-  router.put('/xAPI/activities/state', putState(config));
-  router.post('/xAPI/activities/state', postState(config));
+  router.delete('', deleteState(config));
+  router.get('', getStates(config));
+  router.put('', putState(config));
+  router.post('', postState(config));
+
   return router;
 };
