@@ -11,11 +11,10 @@ export default (config: Config, handler: CommonHandler) => {
       const errorId = uuid();
       tracker('errorId', errorId);
       config.logger.silly(`${errorId}: xapi-state request`, {
-        body: req.body,
         headers: req.headers,
         method: req.method,
         query: req.query,
-        url: req.url,
+        url: req.originalUrl,
       });
       return handleError({ config, errorId, res, err });
     });

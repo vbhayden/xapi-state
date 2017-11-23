@@ -3,9 +3,6 @@ import stringPath from 'jscommons/dist/translatorFactory/utils/stringPath';
 import Translator from './Translator';
 
 const translator: Translator = {
-  invalidContentTypeError: (err) => (
-    `Content type (${err.contentType}) is invalid for alternate request syntax`
-  ),
   invalidMethodError: (err) => (
     `Method (${err.method}) is invalid for alternate request syntax`
   ),

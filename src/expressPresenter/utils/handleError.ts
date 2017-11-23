@@ -4,7 +4,6 @@ import { Options as CommonOptions } from 'jscommons/dist/expressPresenter/utils/
 import sendMessage from 'jscommons/dist/expressPresenter/utils/sendMessage';
 import sendObject from 'jscommons/dist/expressPresenter/utils/sendObject';
 import { Warnings } from 'rulr';
-import InvalidContentType from '../../errors/InvalidContentType';
 import InvalidMethod from '../../errors/InvalidMethod';
 import JsonSyntaxError from '../../errors/JsonSyntaxError';
 import NonJsonObject from '../../errors/NonJsonObject';
@@ -28,12 +27,6 @@ export default ({ config, errorId, res, err }: Options): Response => {
   if (err instanceof JsonSyntaxError) {
     const code = CLIENT_ERROR_400_HTTP_CODE;
     const message = translator.jsonSyntaxError(err);
-    logError(message);
-    return sendMessage({ res, code, errorId, message });
-  }
-  if (err instanceof InvalidContentType) {
-    const code = CLIENT_ERROR_400_HTTP_CODE;
-    const message = translator.invalidContentTypeError(err);
     logError(message);
     return sendMessage({ res, code, errorId, message });
   }

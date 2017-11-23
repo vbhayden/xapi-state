@@ -1,27 +1,42 @@
 import { Response } from 'express';
-import Agent from '../../models/Agent';
-import ClientModel from '../../models/ClientModel';
+import { get } from 'lodash';
 import { xapiHeaderVersion } from '../../utils/constants';
 import Config from '../Config';
+import getActivityId from './getActivityId';
+import getAgent from './getAgent';
+import getClient from './getClient';
+import getStateId from './getStateId';
 import { OK_200_HTTP_CODE } from './httpCodes';
+import validateVersionHeader from './validateVersionHeader';
 
 export interface Options {
-  readonly activityId: string;
-  readonly agent: Agent;
-  readonly client: ClientModel;
+  readonly query: any;
+  readonly headers: any;
   readonly config: Config;
-  readonly registration?: string;
-  readonly stateId: string;
   readonly res: Response;
 }
 
-export default async ({ config, res, ...opts }: Options) => {
-  const getStateResult = await config.service.getState(opts);
+export default async ({ config, res, query, headers }: Options) => {
+  const client = await getClient(config, get(headers, 'authorization'));
+  validateVersionHeader(get(headers, 'x-experience-api-version'));
+
+  const activityId = getActivityId(get(query, 'activityId'));
+  const agent = getAgent(get(query, 'agent'));
+  const registration = get(query, 'registration') as string | undefined;
+  const stateId = getStateId(get(query, 'stateId'));
+
+  const getStateResult = await config.service.getState({
+    activityId,
+    agent,
+    client,
+    registration,
+    stateId,
+  });
+
   res.status(OK_200_HTTP_CODE);
   res.setHeader('ETag', `"${getStateResult.etag}"`);
   res.setHeader('Last-Modified', getStateResult.updatedAt.toISOString());
   res.setHeader('X-Experience-API-Version', xapiHeaderVersion);
   res.setHeader('Content-Type', getStateResult.contentType);
   getStateResult.content.pipe(res);
-  return;
 };
