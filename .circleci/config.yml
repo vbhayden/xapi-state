@@ -61,10 +61,7 @@ jobs:
           command: docker build -t "$DOCKER_REPO_SLUG" .
       - deploy:
           name: Semantic Release
-          command: |
-            if [ "${CIRCLE_BRANCH}" == "master" ]; then
-               npm run semantic-release || true;
-            fi
+          command: npm run semantic-release
       - deploy:
           name: Docker Push
           command: |
