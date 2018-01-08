@@ -1,5 +1,5 @@
+import TypeWarning from '@learninglocker/xapi-validation/dist/warnings/TypeWarning';
 import CommonTranslator from 'jscommons/dist/translatorFactory/Translator';
-import TypeWarning from 'xapi-validation/dist/warnings/TypeWarning';
 import InvalidMethod from '../errors/InvalidMethod';
 import JsonSyntaxError from '../errors/JsonSyntaxError';
 import NonJsonObject from '../errors/NonJsonObject';

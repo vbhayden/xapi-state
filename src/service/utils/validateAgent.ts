@@ -1,8 +1,8 @@
+import * as xapi from '@learninglocker/xapi-validation/dist/factory';
+import IfiCountWarning from '@learninglocker/xapi-validation/dist/warnings/IfiCountWarning';
+import NoIfiWarning from '@learninglocker/xapi-validation/dist/warnings/NoIfiWarning';
 import { pick } from 'lodash';
 import * as rulr from 'rulr';
-import * as xapi from 'xapi-validation/dist/factory';
-import IfiCountWarning from 'xapi-validation/dist/warnings/IfiCountWarning';
-import NoIfiWarning from 'xapi-validation/dist/warnings/NoIfiWarning';
 
 const rule = rulr.maybe(rulr.composeRules([
   rulr.restrictToSchema({
