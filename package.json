@@ -44,7 +44,7 @@
     "npm": "3 - 5"
   },
   "dependencies": {
-    "@learninglocker/xapi-validation": "^2.1.5",
+    "@learninglocker/xapi-validation": "^2.1.6",
     "atob": "^2.0.3",
     "aws-sdk": "^2.74.0",
     "bluebird": "^3.5.0",
