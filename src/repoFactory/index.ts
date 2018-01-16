@@ -1,7 +1,9 @@
+import * as Storage from '@google-cloud/storage';
 import * as S3 from 'aws-sdk/clients/s3';
 import { MongoClient } from 'mongodb';
 import config from '../config';
 import fetchAuthRepo from '../fetchAuthRepo';
+import googleStorageRepo from '../googleStorageRepo';
 import localStorageRepo from '../localStorageRepo';
 import memoryModelsRepo from '../memoryModelsRepo';
 import State from '../models/State';
@@ -53,6 +55,15 @@ const getStorageRepo = (): StorageRepo => {
         bucketName: config.s3StorageRepo.bucketName,
         client: new S3(config.s3StorageRepo.awsConfig),
         subFolder: config.s3StorageRepo.subFolder,
+      });
+    case 'google':
+      return googleStorageRepo({
+        bucketName: config.google.bucketName,
+        storage: Storage({
+          keyFilename: config.google.keyFileName,
+          projectId: config.google.projectId,
+        }),
+        subFolder: config.google.subFolder.replace(/^\//, ''),
       });
     default:
     case 'local':
