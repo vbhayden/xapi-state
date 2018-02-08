@@ -11,6 +11,7 @@ import patchState from './patchState';
 
 export default (config: Config): Service => {
   return {
+    ...commonService(config),
     deleteState: deleteState(config),
     deleteStates: deleteStates(config),
     getClient: getClient(config),
@@ -18,7 +19,5 @@ export default (config: Config): Service => {
     getStates: getStates(config),
     overwriteState: overwriteState(config),
     patchState: patchState(config),
-
-    ...commonService(config),
   };
 };

@@ -12,7 +12,7 @@ export default (config: Config) => {
     const decodedAuthToken = atob(strippedAuthToken);
     const splitAuthToken = decodedAuthToken.split(':');
     const [key, secret] = splitAuthToken;
-    const document = await (await config.db).collection('client').findOne({
+    const document = await (await config.db()).collection('client').findOne({
       'api.basic_key': key,
       'api.basic_secret': secret,
     });

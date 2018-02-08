@@ -1,10 +1,12 @@
+// tslint:disable:max-file-line-count
 import * as Storage from '@google-cloud/storage';
 import * as S3 from 'aws-sdk/clients/s3';
-import { MongoClient } from 'mongodb';
+import connectToDb from 'jscommons/dist/mongoRepo/utils/connectToDb';
 import config from '../config';
 import fetchAuthRepo from '../fetchAuthRepo';
 import googleStorageRepo from '../googleStorageRepo';
 import localStorageRepo from '../localStorageRepo';
+import logger from '../logger';
 import memoryModelsRepo from '../memoryModelsRepo';
 import State from '../models/State';
 import mongoAuthRepo from '../mongoAuthRepo';
@@ -27,7 +29,11 @@ const getAuthRepo = (): AuthRepo => {
       });
     default: case 'mongo':
       return mongoAuthRepo({
-        db: MongoClient.connect(config.mongoModelsRepo.url),
+        db: connectToDb({
+          dbName: config.mongoModelsRepo.dbName,
+          logger,
+          url: config.mongoModelsRepo.url,
+        }),
       });
   }
 };
@@ -36,7 +42,11 @@ const getModelsRepo = (): ModelsRepo => {
   switch (config.repoFactory.modelsRepoName) {
     case 'mongo':
       return mongoModelsRepo({
-        db: MongoClient.connect(config.mongoModelsRepo.url),
+        db: connectToDb({
+          dbName: config.mongoModelsRepo.dbName,
+          logger,
+          url: config.mongoModelsRepo.url,
+        }),
       });
     default: case 'memory':
       return memoryModelsRepo({

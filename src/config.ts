@@ -5,6 +5,7 @@ import { S3 } from 'aws-sdk';
 import getBooleanOption from 'jscommons/dist/config/getBooleanOption';
 import getNumberOption from 'jscommons/dist/config/getNumberOption';
 import getStringOption from 'jscommons/dist/config/getStringOption';
+import getDbFromUrl from 'jscommons/dist/mongoRepo/utils/getDbFromUrl';
 import * as os from 'os';
 
 const DEFAULT_EXPRESS_PORT = 80;
@@ -15,6 +16,7 @@ const googleKeyFileName = `${process.cwd()}/google.keyfile.json`;
 const expressPort = getNumberOption(process.env.EXPRESS_PORT, DEFAULT_EXPRESS_PORT);
 const demoAuth = `http://localhost:${expressPort}/auth`;
 const accessLogsDir = `${storageDir}/accessLogs`;
+const mongoUrl = getStringOption(process.env.MONGO_URL, 'mongodb://localhost:27017/xapi-states');
 
 export default {
   defaultTimeout: getNumberOption(process.env.DEFAULT_TIMEOUT_MS, DEFAULT_TIMEOUT_MS),
@@ -39,7 +41,8 @@ export default {
     storageDir: getStringOption(process.env.FS_LOCAL_STORAGE_DIR, storageDir),
   },
   mongoModelsRepo: {
-    url: getStringOption(process.env.MONGO_URL, 'mongodb://localhost:27017/xapistate'),
+    dbName: getStringOption(process.env.MONGO_DB, getDbFromUrl(mongoUrl)),
+    url: mongoUrl,
   },
   repoFactory: {
     authRepoName: getStringOption(process.env.AUTH_REPO, 'mongo'),

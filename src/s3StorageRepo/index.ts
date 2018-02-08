@@ -8,10 +8,10 @@ import storeStateContent from './storeStateContent';
 
 export default (config: Config): StorageRepo => {
   return {
+    ...commonS3Repo(config),
     deleteStateContent: deleteStateContent(config),
     deleteStatesContent: deleteStatesContent(config),
     getStateContent: getStateContent(config),
     storeStateContent: storeStateContent(config),
-    ...commonS3Repo(config),
   };
 };

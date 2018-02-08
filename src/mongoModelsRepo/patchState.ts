@@ -9,7 +9,7 @@ import getStateFilter from './utils/getStateFilter';
 
 export default (config: Config) => {
   return async (opts: PatchStateOptions): Promise<void> => {
-    const collection = (await config.db).collection(COLLECTION_NAME);
+    const collection = (await config.db()).collection(COLLECTION_NAME);
 
     // Filters out non-JSON objects.
     const jsonObjectFilter = {

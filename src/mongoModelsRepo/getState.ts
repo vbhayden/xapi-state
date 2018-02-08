@@ -8,7 +8,7 @@ import getStateFilter from './utils/getStateFilter';
 
 export default (config: Config) => {
   return async (opts: GetStateOptions): Promise<GetStateResult> => {
-    const collection = (await config.db).collection(COLLECTION_NAME);
+    const collection = (await config.db()).collection(COLLECTION_NAME);
     const filter = getStateFilter(opts);
 
     // Docs: http://mongodb.github.io/node-mongodb-native/2.2/api/Collection.html#findOne

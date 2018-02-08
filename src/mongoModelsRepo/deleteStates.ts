@@ -7,7 +7,7 @@ import getStatesFilter from './utils/getStatesFilter';
 
 export default (config: Config) => {
   return async (opts: DeleteStatesOptions): Promise<DeleteStatesResult> => {
-    const collection = (await config.db).collection(COLLECTION_NAME);
+    const collection = (await config.db()).collection(COLLECTION_NAME);
 
     const stateFilter = getStatesFilter(opts);
 

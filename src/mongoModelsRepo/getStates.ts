@@ -8,7 +8,7 @@ import getStatesFilter from './utils/getStatesFilter';
 
 export default (config: Config) => {
   return async (opts: GetStatesOptions): Promise<GetStatesResult> => {
-    const collection = (await config.db).collection(COLLECTION_NAME);
+    const collection = (await config.db()).collection(COLLECTION_NAME);
 
     const filter = {
       ...getStatesFilter(opts),
