@@ -35,6 +35,28 @@ describe('getState with existing state', () => {
     await assertGetState(agentStateResult, TEST_CONTENT, TEXT_CONTENT_TYPE);
   });
 
+  it('should get when agent properties are in a different order', async () => {
+    // tslint:disable:object-literal-sort-keys
+    const creationAgent = {
+      objectType: 'Agent',
+      account: {
+        name: 'steely.eyed',
+        homePage: 'http://missile.man',
+      },
+    };
+    const retrievalAgent = {
+      objectType: 'Agent',
+      account: {
+        homePage: 'http://missile.man',
+        name: 'steely.eyed',
+      },
+    };
+    // tslint:enable:object-literal-sort-keys
+    await createTextState({ agent: creationAgent });
+    const agentStateResult = await getTestState({ agent: retrievalAgent });
+    await assertGetState(agentStateResult, TEST_CONTENT, TEXT_CONTENT_TYPE);
+  });
+
   it('should get when getting json', async () => {
     await createJsonState();
     const agentStateResult = await getTestState();

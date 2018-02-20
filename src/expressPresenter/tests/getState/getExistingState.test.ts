@@ -29,6 +29,27 @@ describe('expressPresenter.getState with existing state', () => {
     await getState().expect(OK_200_HTTP_CODE, TEST_CONTENT);
   });
 
+  it('should get when agent properties are in a different order', async () => {
+    // tslint:disable:object-literal-sort-keys
+    const creationAgent = {
+      objectType: 'Agent',
+      account: {
+        name: 'steely.eyed',
+        homePage: 'http://missile.man',
+      },
+    };
+    const retrievalAgent = JSON.stringify({
+      objectType: 'Agent',
+      account: {
+        homePage: 'http://missile.man',
+        name: 'steely.eyed',
+      },
+    });
+    // tslint:enable:object-literal-sort-keys
+    await createTextState({ agent: creationAgent });
+    await getState({ agent: retrievalAgent }).expect(OK_200_HTTP_CODE, TEST_CONTENT);
+  });
+
   it('should get when not using registration', async () => {
     await createTextState();
     await getState({ registration: undefined }).expect(OK_200_HTTP_CODE, TEST_CONTENT);
