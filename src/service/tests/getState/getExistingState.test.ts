@@ -1,3 +1,4 @@
+// tslint:disable:max-file-line-count
 import * as assert from 'assert';
 import NoModel from 'jscommons/dist/errors/NoModel';
 import assertError from 'jscommons/dist/tests/utils/assertError';
