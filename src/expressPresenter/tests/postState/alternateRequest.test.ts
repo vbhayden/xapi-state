@@ -1,3 +1,4 @@
+import { BAD_REQUEST, NO_CONTENT } from 'http-status-codes';
 import assertState from '../../../utils/assertState';
 import { route, xapiHeaderVersion } from '../../../utils/constants';
 import createObjectState from '../../../utils/createObjectState';
@@ -9,7 +10,6 @@ import {
   TEST_REGISTRATION,
   TEST_STATE_ID,
 } from '../../../utils/testValues';
-import { CLIENT_ERROR_400_HTTP_CODE, NO_CONTENT_204_HTTP_CODE } from '../../utils/httpCodes';
 import setup from '../utils/setup';
 
 describe('expressPresenter.postState using the alternate request syntax', () => {
@@ -31,7 +31,7 @@ describe('expressPresenter.postState using the alternate request syntax', () => 
         registration: TEST_REGISTRATION,
         stateId: TEST_STATE_ID,
       })
-      .expect(CLIENT_ERROR_400_HTTP_CODE);
+      .expect(BAD_REQUEST);
   });
 
   it('should merge when patching with object content ', async () => {
@@ -51,7 +51,7 @@ describe('expressPresenter.postState using the alternate request syntax', () => 
         registration: TEST_REGISTRATION,
         stateId: TEST_STATE_ID,
       })
-      .expect(NO_CONTENT_204_HTTP_CODE);
+      .expect(NO_CONTENT);
     await assertState('{"foo":1,"bar":2}');
   });
 });

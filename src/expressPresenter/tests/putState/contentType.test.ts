@@ -1,3 +1,4 @@
+import { NO_CONTENT } from 'http-status-codes';
 import assertState from '../../../utils/assertState';
 import { route, xapiHeaderVersion } from '../../../utils/constants';
 import {
@@ -8,7 +9,6 @@ import {
   TEST_REGISTRATION,
   TEST_STATE_ID,
 } from '../../../utils/testValues';
-import { NO_CONTENT_204_HTTP_CODE } from '../../utils/httpCodes';
 import setup from '../utils/setup';
 
 // These are regression tests for LearningLocker/learninglocker#999.
@@ -27,7 +27,7 @@ describe(__filename, () => {
         stateId: TEST_STATE_ID,
       })
       .send(TEST_OBJECT_CONTENT)
-      .expect(NO_CONTENT_204_HTTP_CODE);
+      .expect(NO_CONTENT);
     await assertState(TEST_OBJECT_CONTENT);
   });
 });

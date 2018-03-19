@@ -1,6 +1,6 @@
-import { NOT_FOUND_404_HTTP_CODE } from '../../../utils/httpCodes';
+import { NOT_FOUND } from 'http-status-codes';
 import getState from './getState';
 
 export default async () => {
-  await getState().expect(NOT_FOUND_404_HTTP_CODE);
+  await getState().expect(NOT_FOUND);
 };

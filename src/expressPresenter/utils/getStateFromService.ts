@@ -1,4 +1,5 @@
 import { Response } from 'express';
+import { OK } from 'http-status-codes';
 import { get } from 'lodash';
 import { xapiHeaderVersion } from '../../utils/constants';
 import Config from '../Config';
@@ -6,7 +7,6 @@ import getActivityId from './getActivityId';
 import getAgent from './getAgent';
 import getClient from './getClient';
 import getStateId from './getStateId';
-import { OK_200_HTTP_CODE } from './httpCodes';
 import validateVersionHeader from './validateVersionHeader';
 
 export interface Options {
@@ -33,7 +33,7 @@ export default async ({ config, res, query, headers }: Options) => {
     stateId,
   });
 
-  res.status(OK_200_HTTP_CODE);
+  res.status(OK);
   res.setHeader('ETag', `"${getStateResult.etag}"`);
   res.setHeader('Last-Modified', getStateResult.updatedAt.toISOString());
   res.setHeader('X-Experience-API-Version', xapiHeaderVersion);

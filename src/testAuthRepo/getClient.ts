@@ -1,10 +1,12 @@
 import NoModel from 'jscommons/dist/errors/NoModel';
+import ExpiredClientError from '../errors/ExpiredClientError';
 import GetClientOptions from '../repoFactory/options/GetClientOptions';
 import GetClientResult from '../repoFactory/results/GetClientResult';
 import {
   TEST_CLIENT,
   TEST_CLIENT_OUTSIDE_ORG,
   TEST_CLIENT_OUTSIDE_STORE,
+  TEST_EXPIRED_ORG_TOKEN,
   TEST_INVALID_SCOPE_CLIENT,
   TEST_INVALID_SCOPE_TOKEN,
   TEST_MISSING_TOKEN,
@@ -26,6 +28,8 @@ export default (_config: Config) => {
         return { client: TEST_CLIENT_OUTSIDE_ORG };
       case TEST_OUTSIDE_STORE_TOKEN:
         return { client: TEST_CLIENT_OUTSIDE_STORE };
+      case TEST_EXPIRED_ORG_TOKEN:
+        throw new ExpiredClientError();
       case TEST_MISSING_TOKEN:
         throw new NoModel('Client');
       default:

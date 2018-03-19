@@ -1,4 +1,5 @@
 import { Response } from 'express';
+import { NO_CONTENT } from 'http-status-codes';
 import { get } from 'lodash';
 import { xapiHeaderVersion } from '../../utils/constants';
 import Config from '../Config';
@@ -7,7 +8,6 @@ import getAgent from './getAgent';
 import getClient from './getClient';
 import getContentType from './getContentType';
 import getStateId from './getStateId';
-import { NO_CONTENT_204_HTTP_CODE } from './httpCodes';
 import validateVersionHeader from './validateVersionHeader';
 
 export interface Options {
@@ -37,7 +37,7 @@ export default async ({ config, res, query, headers, content }: Options) => {
     registration,
     stateId,
   });
-  res.status(NO_CONTENT_204_HTTP_CODE).setHeader('x-experience-api-version', xapiHeaderVersion);
+  res.status(NO_CONTENT).setHeader('x-experience-api-version', xapiHeaderVersion);
   res.send();
   return;
 };

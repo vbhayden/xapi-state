@@ -1,11 +1,11 @@
 import { Response } from 'express';
+import { OK } from 'http-status-codes';
 import { get } from 'lodash';
 import { xapiHeaderVersion } from '../../utils/constants';
 import Config from '../Config';
 import getActivityId from './getActivityId';
 import getAgent from './getAgent';
 import getClient from './getClient';
-import { OK_200_HTTP_CODE } from './httpCodes';
 import validateVersionHeader from './validateVersionHeader';
 
 export interface Options {
@@ -32,7 +32,7 @@ export default async ({ config, query, res, headers }: Options) => {
     since,
   });
 
-  res.status(OK_200_HTTP_CODE);
+  res.status(OK);
   res.setHeader('X-Experience-API-Version', xapiHeaderVersion);
   res.json(getStatesResult.stateIds);
 };

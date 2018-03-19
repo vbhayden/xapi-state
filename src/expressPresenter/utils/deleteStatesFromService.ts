@@ -1,11 +1,11 @@
 import { Response } from 'express';
+import { NO_CONTENT } from 'http-status-codes';
 import { get } from 'lodash';
 import { xapiHeaderVersion } from '../../utils/constants';
 import Config from '../Config';
 import getActivityId from './getActivityId';
 import getAgent from './getAgent';
 import getClient from './getClient';
-import { NO_CONTENT_204_HTTP_CODE } from './httpCodes';
 import validateVersionHeader from './validateVersionHeader';
 
 export interface Options {
@@ -24,6 +24,6 @@ export default async ({ config, res, query, headers }: Options) => {
   const registration = get(query, 'registration') as string | undefined;
 
   await config.service.deleteStates({ activityId, agent, client, registration });
-  res.status(NO_CONTENT_204_HTTP_CODE).setHeader('x-experience-api-version', xapiHeaderVersion);
+  res.status(NO_CONTENT).setHeader('x-experience-api-version', xapiHeaderVersion);
   res.send();
 };

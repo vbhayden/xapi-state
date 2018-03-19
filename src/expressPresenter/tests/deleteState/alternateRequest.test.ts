@@ -1,3 +1,4 @@
+import { NO_CONTENT } from 'http-status-codes';
 import assertDeleted from '../../../utils/assertDeleted';
 import { route, xapiHeaderVersion } from '../../../utils/constants';
 import createTextState from '../../../utils/createTextState';
@@ -8,7 +9,6 @@ import {
   TEST_REGISTRATION,
   TEST_STATE_ID,
 } from '../../../utils/testValues';
-import { NO_CONTENT_204_HTTP_CODE } from '../../utils/httpCodes';
 import setup from '../utils/setup';
 
 describe('expressPresenter.deleteState using the alternate request syntax', () => {
@@ -27,7 +27,7 @@ describe('expressPresenter.deleteState using the alternate request syntax', () =
         registration: TEST_REGISTRATION,
         stateId: TEST_STATE_ID,
       })
-      .expect(NO_CONTENT_204_HTTP_CODE);
+      .expect(NO_CONTENT);
     await assertDeleted();
   });
 });

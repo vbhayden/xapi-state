@@ -1,6 +1,6 @@
 import * as atob from 'atob';
 import NoModel from 'jscommons/dist/errors/NoModel';
-import { ObjectID } from 'mongodb';
+import ExpiredClientError from '../errors/ExpiredClientError';
 import ClientModel from '../models/ClientModel';
 import GetClientOptions from '../repoFactory/options/GetClientOptions';
 import GetClientResult from '../repoFactory/results/GetClientResult';
@@ -8,30 +8,43 @@ import Config from './Config';
 
 export default (config: Config) => {
   return async ({ authToken }: GetClientOptions): Promise<GetClientResult> => {
+    const db = await config.db();
     const strippedAuthToken = authToken.replace('Basic ', '');
     const decodedAuthToken = atob(strippedAuthToken);
     const splitAuthToken = decodedAuthToken.split(':');
     const [key, secret] = splitAuthToken;
-    const document = await (await config.db()).collection('client').findOne({
+    const clientDoc = await db.collection('client').findOne({
       'api.basic_key': key,
       'api.basic_secret': secret,
     });
 
-    const isMissingClient = (
-      document === null ||
-      document === undefined ||
-      !(document.lrs_id instanceof ObjectID)
-    );
-    if (isMissingClient) {
+    if (clientDoc === null || clientDoc === undefined) {
       throw new NoModel('Client');
     }
 
+    const [orgDoc, lrsDoc] = await Promise.all([
+      db.collection('organisation').findOne({
+        _id: clientDoc.organisation,
+      }),
+      db.collection('lrs').findOne({
+        _id: clientDoc.lrs_id,
+      }),
+    ]);
+
+    if (orgDoc === null || orgDoc === undefined || lrsDoc === null || lrsDoc === undefined) {
+      throw new NoModel('Client');
+    }
+
+    if (orgDoc.expiration < new Date()) {
+      throw new ExpiredClientError();
+    }
+
     const client: ClientModel = {
-      _id: document._id.toString() as string,
-      isTrusted: document.isTrusted as boolean,
-      lrs_id: document.lrs_id.toString() as string,
-      organisation: document.organisation.toString() as string,
-      scopes: document.scopes as string[],
+      _id: clientDoc._id.toString() as string,
+      isTrusted: clientDoc.isTrusted as boolean,
+      lrs_id: clientDoc.lrs_id.toString() as string,
+      organisation: clientDoc.organisation.toString() as string,
+      scopes: clientDoc.scopes as string[],
     };
 
     return { client };

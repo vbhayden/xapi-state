@@ -1,3 +1,4 @@
+import { NO_CONTENT } from 'http-status-codes';
 import assertDeleted from '../../../utils/assertDeleted';
 import { route, xapiHeaderVersion } from '../../../utils/constants';
 import createTextState from '../../../utils/createTextState';
@@ -7,7 +8,6 @@ import {
   TEST_MBOX_AGENT,
   TEST_REGISTRATION,
 } from '../../../utils/testValues';
-import { NO_CONTENT_204_HTTP_CODE } from '../../utils/httpCodes';
 import setup from '../utils/setup';
 
 describe('expressPresenter.deleteStates using the alternate request syntax', () => {
@@ -25,7 +25,7 @@ describe('expressPresenter.deleteStates using the alternate request syntax', () 
         agent: JSON.stringify(TEST_MBOX_AGENT),
         registration: TEST_REGISTRATION,
       })
-      .expect(NO_CONTENT_204_HTTP_CODE);
+      .expect(NO_CONTENT);
     await assertDeleted();
   });
 });

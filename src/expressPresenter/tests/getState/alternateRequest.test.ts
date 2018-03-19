@@ -1,3 +1,4 @@
+import { BAD_REQUEST, OK } from 'http-status-codes';
 import { route, xapiHeaderVersion } from '../../../utils/constants';
 import createTextState from '../../../utils/createTextState';
 import {
@@ -8,7 +9,6 @@ import {
   TEST_REGISTRATION,
   TEST_STATE_ID,
 } from '../../../utils/testValues';
-import { CLIENT_ERROR_400_HTTP_CODE, OK_200_HTTP_CODE } from '../../utils/httpCodes';
 import setup from '../utils/setup';
 
 describe('expressPresenter.getState', () => {
@@ -26,7 +26,7 @@ describe('expressPresenter.getState', () => {
         registration: TEST_REGISTRATION,
         stateId: TEST_STATE_ID,
       })
-      .expect(CLIENT_ERROR_400_HTTP_CODE);
+      .expect(BAD_REQUEST);
   });
 
   it('should get when getting text', async () => {
@@ -42,6 +42,6 @@ describe('expressPresenter.getState', () => {
         registration: TEST_REGISTRATION,
         stateId: TEST_STATE_ID,
       })
-      .expect(OK_200_HTTP_CODE, TEST_CONTENT);
+      .expect(OK, TEST_CONTENT);
   });
 });

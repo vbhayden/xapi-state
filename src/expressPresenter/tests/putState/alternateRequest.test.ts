@@ -1,3 +1,4 @@
+import { BAD_REQUEST, NO_CONTENT } from 'http-status-codes';
 import assertState from '../../../utils/assertState';
 import { route, xapiHeaderVersion } from '../../../utils/constants';
 import {
@@ -9,7 +10,6 @@ import {
   TEST_STATE_ID,
   TEXT_CONTENT_TYPE,
 } from '../../../utils/testValues';
-import { CLIENT_ERROR_400_HTTP_CODE, NO_CONTENT_204_HTTP_CODE } from '../../utils/httpCodes';
 import setup from '../utils/setup';
 
 describe('expressPresenter.putState using the alternate request syntax', () => {
@@ -30,7 +30,7 @@ describe('expressPresenter.putState using the alternate request syntax', () => {
         registration: TEST_REGISTRATION,
         stateId: TEST_STATE_ID,
       })
-      .expect(CLIENT_ERROR_400_HTTP_CODE);
+      .expect(BAD_REQUEST);
   });
 
   it('should create when using valid activity id', async () => {
@@ -49,7 +49,7 @@ describe('expressPresenter.putState using the alternate request syntax', () => {
         registration: TEST_REGISTRATION,
         stateId: TEST_STATE_ID,
       })
-      .expect(NO_CONTENT_204_HTTP_CODE);
+      .expect(NO_CONTENT);
     await assertState(TEST_CONTENT);
   });
 });

@@ -1,3 +1,4 @@
+import { BAD_REQUEST, OK } from 'http-status-codes';
 import { route, xapiHeaderVersion } from '../../../utils/constants';
 import {
   ALTERNATE_CONTENT_TYPE,
@@ -5,7 +6,6 @@ import {
   TEST_MBOX_AGENT,
   TEST_REGISTRATION,
 } from '../../../utils/testValues';
-import { CLIENT_ERROR_400_HTTP_CODE, OK_200_HTTP_CODE } from '../../utils/httpCodes';
 import setup from '../utils/setup';
 
 describe('expressPresenter.getStates using the alternate request syntax', () => {
@@ -21,7 +21,7 @@ describe('expressPresenter.getStates using the alternate request syntax', () => 
         agent: JSON.stringify(TEST_MBOX_AGENT),
         registration: TEST_REGISTRATION,
       })
-      .expect(CLIENT_ERROR_400_HTTP_CODE);
+      .expect(BAD_REQUEST);
   });
 
   it('should return no state ids when getting a non-existing activity id', async () => {
@@ -35,6 +35,6 @@ describe('expressPresenter.getStates using the alternate request syntax', () => 
         agent: JSON.stringify(TEST_MBOX_AGENT),
         registration: TEST_REGISTRATION,
       })
-      .expect(OK_200_HTTP_CODE, []);
+      .expect(OK, []);
   });
 });

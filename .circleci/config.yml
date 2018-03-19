@@ -47,7 +47,7 @@ jobs:
           command: npm run lint -- -c tslint.ci.json
       - run:
           name: Checking Code Duplication
-          command: npm run duplication -- --limit 5
+          command: npm run duplication -- --limit 6
       - run:
           name: Docker Install
           command: |

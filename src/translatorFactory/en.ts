@@ -3,6 +3,7 @@ import stringPath from 'jscommons/dist/translatorFactory/utils/stringPath';
 import Translator from './Translator';
 
 const translator: Translator = {
+  expiredClientError: () => `Your organisation has expired`,
   invalidMethodError: (err) => (
     `Method (${err.method}) is invalid for alternate request syntax`
   ),

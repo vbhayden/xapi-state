@@ -1,3 +1,4 @@
+import { BAD_REQUEST, OK } from 'http-status-codes';
 import { stringify as createQueryString } from 'query-string';
 import { route, xapiHeaderVersion } from '../../../utils/constants';
 import {
@@ -5,7 +6,6 @@ import {
   TEST_ACTIVITY_ID,
   TEST_MBOX_AGENT,
 } from '../../../utils/testValues';
-import { CLIENT_ERROR_400_HTTP_CODE, OK_200_HTTP_CODE } from '../../utils/httpCodes';
 import setup from '../utils/setup';
 
 describe('expressPresenter using the alternate request syntax', () => {
@@ -21,7 +21,7 @@ describe('expressPresenter using the alternate request syntax', () => {
         activityId: TEST_ACTIVITY_ID,
         agent: JSON.stringify(TEST_MBOX_AGENT),
       })
-      .expect(CLIENT_ERROR_400_HTTP_CODE);
+      .expect(BAD_REQUEST);
   });
 
   it('should not error when using an invalid content type', async () => {
@@ -35,6 +35,6 @@ describe('expressPresenter using the alternate request syntax', () => {
         activityId: TEST_ACTIVITY_ID,
         agent: JSON.stringify(TEST_MBOX_AGENT),
       }))
-      .expect(OK_200_HTTP_CODE, []);
+      .expect(OK, []);
   });
 });
