@@ -35,6 +35,7 @@ export const TEST_CLIENT_OUTSIDE_ORG: ClientModel = {
   organisation: '58fe13e34effd3c26a7fc4c6',
 };
 
+export const TEST_UNTRUSTED_TOKEN = 'untrusted_client';
 export const TEST_EXPIRED_ORG_TOKEN = 'expired_org_client';
 export const TEST_MISSING_TOKEN = 'Basic missing_token';
 

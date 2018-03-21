@@ -1,6 +1,7 @@
 import * as atob from 'atob';
 import NoModel from 'jscommons/dist/errors/NoModel';
 import ExpiredClientError from '../errors/ExpiredClientError';
+import UntrustedClientError from '../errors/UntrustedClientError';
 import ClientModel from '../models/ClientModel';
 import GetClientOptions from '../repoFactory/options/GetClientOptions';
 import GetClientResult from '../repoFactory/results/GetClientResult';
@@ -20,6 +21,10 @@ export default (config: Config) => {
 
     if (clientDoc === null || clientDoc === undefined) {
       throw new NoModel('Client');
+    }
+
+    if (clientDoc.isTrusted === false) {
+      throw new UntrustedClientError();
     }
 
     const [orgDoc, lrsDoc] = await Promise.all([

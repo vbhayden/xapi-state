@@ -9,6 +9,7 @@ import ExpiredClientError from '../../errors/ExpiredClientError';
 import InvalidMethod from '../../errors/InvalidMethod';
 import JsonSyntaxError from '../../errors/JsonSyntaxError';
 import NonJsonObject from '../../errors/NonJsonObject';
+import UntrustedClientError from '../../errors/UntrustedClientError';
 import { xapiHeaderVersion } from '../../utils/constants';
 import Config from '../Config';
 import translateWarning from './translateWarning';
@@ -56,6 +57,11 @@ export default ({ config, errorId, res, err }: Options): Response => {
   if (err instanceof ExpiredClientError) {
     const code = FORBIDDEN;
     const message = translator.expiredClientError(err);
+    return sendMessage({ res, code, errorId, message });
+  }
+  if (err instanceof UntrustedClientError) {
+    const code = FORBIDDEN;
+    const message = translator.untrustedClientError(err);
     return sendMessage({ res, code, errorId, message });
   }
   return commonErrorHandler({ config, errorId, res, err });
