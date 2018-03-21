@@ -28,7 +28,7 @@ export default (config: Config) => {
     }
 
     const [orgDoc, lrsDoc] = await Promise.all([
-      db.collection('organisation').findOne({
+      db.collection('organisations').findOne({
         _id: clientDoc.organisation,
       }),
       db.collection('lrs').findOne({
