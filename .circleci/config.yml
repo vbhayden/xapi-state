@@ -6,8 +6,8 @@ machine:
 jobs:
   build:
     docker:
-      - image: node:8.8.0
-      - image: mongo:3.4.4
+      - image: node:8.8.0@sha256:38fffe0479899db202a26b87da2a10e5be38e5525390f2c96820c058fbd177bc
+      - image: mongo:3.4.4@sha256:c4bc4644b967a4b58022a79cf5c9afcd25ed08180c958a74df57b7753cfc8649
     environment:
       - DOCKER_REPO_SLUG: learninglocker/xapi-state
       - DOCKER_USERNAME: ryansmith94
