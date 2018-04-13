@@ -40,7 +40,7 @@ export default (config: Config) => {
       throw new NoModel('Client');
     }
 
-    if (orgDoc.expiration < new Date()) {
+    if (orgDoc.expiration !== null && orgDoc.expiration < new Date()) {
       throw new ExpiredClientError();
     }
 
