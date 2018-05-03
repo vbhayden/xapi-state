@@ -6,7 +6,7 @@ machine:
 jobs:
   build:
     docker:
-      - image: node:8.11.1@sha256:b802a02ee6496c34e2dc0eb0379eb1c738331414956d650c0dffdfa0866acb2f
+      - image: node:8.11.1@sha256:9fef54193f605eb77fcb7eaae564e7cc9b3444a12d76a2e1c87b9789752852b3
       - image: mongo:3.7.7@sha256:50674e3e315d680beaeab904f7a24c87d2ba6ffe5132897cef664baf0d56cc26
     environment:
       - DOCKER_REPO_SLUG: learninglocker/xapi-state
