@@ -80,7 +80,7 @@
     "@types/lodash": "4.14.109",
     "@types/mime-types": "2.1.0",
     "@types/mongodb": "3.0.19",
-    "@types/mocha": "5.2.0",
+    "@types/mocha": "5.2.1",
     "@types/node": "9.6.20",
     "@types/node-fetch": "1.6.9",
     "@types/query-string": "5.1.0",
