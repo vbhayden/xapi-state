@@ -82,7 +82,7 @@
     "@types/mongodb": "3.0.21",
     "@types/mocha": "5.2.3",
     "@types/node": "9.6.22",
-    "@types/node-fetch": "1.6.9",
+    "@types/node-fetch": "2.1.1",
     "@types/query-string": "5.1.0",
     "@types/source-map-support": "0.4.1",
     "@types/supertest": "2.0.4",
