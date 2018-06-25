@@ -46,7 +46,7 @@
   },
   "dependencies": {
     "@google-cloud/storage": "^1.5.2",
-    "@learninglocker/xapi-validation": "^2.1.10",
+    "@learninglocker/xapi-validation": "git://github.com/vbhayden/xapi-validation",
     "atob": "^2.0.3",
     "aws-sdk": "^2.205.0",
     "bluebird": "^3.5.0",
