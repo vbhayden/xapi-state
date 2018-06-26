@@ -1,0 +1,1 @@
+{"version":3,"file":"getSinceFilter.js","sourceRoot":"","sources":["../../../src/mongoModelsRepo/utils/getSinceFilter.ts"],"names":[],"mappings":";;AAAA,mBAAe,UAAC,KAAY;IAC1B,IAAI,KAAK,KAAK,SAAS,EAAE;QACvB,OAAO,EAAE,CAAC;KACX;IACD,OAAO,EAAE,SAAS,EAAE,EAAE,GAAG,EAAE,KAAK,EAAE,EAAE,CAAC;AACvC,CAAC,EAAC"}

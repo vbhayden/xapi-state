@@ -1,0 +1,1 @@
+{"version":3,"file":"validateVersionHeader.js","sourceRoot":"","sources":["../../../src/expressPresenter/utils/validateVersionHeader.ts"],"names":[],"mappings":";;AAAA,wEAA0F;AAC1F,2BAA6B;AAE7B,IAAM,sBAAsB,GAAG,IAAI,CAAC,KAAK,CAAC,IAAI,CAAC,QAAQ,CAAC,iBAAe,CAAC,CAAC,CAAC;AAC1E,mBAAe,UAAC,SAAkB;IAChC,sBAAsB,CAAC,SAAS,EAAE,CAAC,QAAQ,EAAE,0BAA0B,CAAC,CAAC,CAAC;AAC5E,CAAC,EAAC"}
